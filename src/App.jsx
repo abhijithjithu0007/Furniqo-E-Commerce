@@ -1,8 +1,10 @@
-import Navbar from "./component/Navbar"
+import React from 'react';
+import RouterApp from './routing/RouterApp';
+
 export default function App() {
   return (
-    <h1 className="text-3xl text-red-700 font-bold underline">
-      <Navbar />
-    </h1>
-  )
+    <div>
+      <RouterApp />
+    </div>
+  );
 }
