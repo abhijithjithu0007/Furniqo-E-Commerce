@@ -1,23 +1,48 @@
-
 import React, { useContext, useState } from 'react';
 import { Mycontext } from '../Pages/SignUp';
 
 const Cart = () => {
-  const { myCart } = useContext(Mycontext);
-  console.log(myCart);
-  const [removeAll, setRemoveAll] = useState(true)
+  const { myCart, setMyCart } = useContext(Mycontext);
+
+  const handleRemove = (key) => {
+    const remove = myCart.filter((val) => val.id !== key);
+    setMyCart(remove);
+  };
+
+  const handleRemoveAll = () => {
+    setMyCart([]);
+  };
+
+  const increment = (key) => {
+    const updatedCart = myCart.map((item) => {
+      if (item.id === key) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    setMyCart(updatedCart);
+  };
+
+  const decrement = (key) => {
+    const updatedCart = myCart.map((item) => {
+      if (item.id === key && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setMyCart(updatedCart);
+  };
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">This is the cart</h1>
       {myCart.length === 0 ? (
-        <p className="text-center text-gray-500">Your cart is empty</p>
+        <p className="text-center text-2xl text-gray-500">Your cart is empty!</p>
       ) : (
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-2/3 md:pr-4">
             <div className="flex justify-between mb-4">
               <h2 className="text-xl font-semibold">My cart</h2>
-              <a href="#" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Remove all</a>
+              <a onClick={handleRemoveAll} href="#" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Remove all</a>
             </div>
             <div>
               {myCart.map((item, index) => (
@@ -31,28 +56,27 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <button className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded">-</button>
+                    <button onClick={() => decrement(item.id)} className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded">-</button>
                     <h4 className="px-4">{item.quantity}</h4>
-                    <button className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded">+</button>
+                    <button onClick={() => increment(item.id)} className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-1 px-2 rounded">+</button>
                   </div>
                   <div className="flex items-center">
-                    <h2 className="text-xl font-semibold">${item.price}</h2>
-                    <a href="#" className="text-red-500 ml-4 hover:text-red-600">remove</a>
+                    <h2 className="text-xl font-semibold">$ {(item.price * item.quantity).toFixed(2)}</h2>
+                    <a onClick={() => handleRemove(item.id)} href="#" className="text-red-500 ml-4 hover:text-red-600">remove</a>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="w-full md:w-1/3 mt-8 p-4 border rounded-lg shadow-md">
+          <div className="w-full md:w-1/3 mt-8 p-4 border rounded-lg shadow-md h-[350px]">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <div className="flex justify-between mb-2">
-              <h4 className="text-gray-700">Total Items</h4>
-              <h4 className="font-semibold">{myCart.length}</h4>
+              <h4 className="text-gray-700">Total Items:</h4>
+              <h4 className="font-semibold">{myCart.reduce((total, item) => total + item.quantity, 0)}</h4>
             </div>
             <div className="flex justify-between mb-4">
-              <h4 className="text-gray-700">Price</h4>
-              <h4 className="font-semibold">${(myCart.reduce((total, item) => total + item.price * item.quantity, 0))}</h4>
-
+              <h4 className="text-gray-700">Price:</h4>
+              <h4 className="font-semibold">$ {myCart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h4>
             </div>
             <div className="mb-4">
               <h2 className="text-lg font-semibold mb-2">Promo Code</h2>
@@ -62,9 +86,8 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex justify-between mb-4">
-              <h2 className="text-xl font-semibold">Total Cost</h2>
-              <h1 className="text-2xl font-bold"><h4 className="font-semibold">${Math.floor(myCart.reduce((total, item) => total + item.price * item.quantity, 0))}</h4>
-              </h1>
+              <h2 className="text-xl font-semibold">Sub Total:</h2>
+              <h1 className="text-2xl font-bold">$ {myCart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h1>
             </div>
             <div className="text-center">
               <button className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600">Checkout</button>
