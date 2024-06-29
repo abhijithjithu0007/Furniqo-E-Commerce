@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
+
 
 const Login = ({ setIsLoggedIn }) => {
   const [loginError, setLoginError] = useState({});
@@ -73,6 +74,9 @@ const Login = ({ setIsLoggedIn }) => {
         >
           Login
         </button>
+        <div>
+          <Link to={'/signup'}>Not have an account?</Link>
+        </div>
       </div>
     </div>
   );

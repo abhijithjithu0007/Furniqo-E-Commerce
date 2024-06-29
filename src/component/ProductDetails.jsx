@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Mycontext } from '../Pages/SignUp';
+import { Mycontext } from './SignUp';
 
 const ProductDetails = () => {
   const params = useParams();
@@ -8,6 +8,10 @@ const ProductDetails = () => {
   const [carts] = api.filter((val) => params.id == val.id);
   
   const addToCart = () => {
+    const isClicked = myCart.some(item => item.id === carts.id);
+   if(isClicked){
+    alert("Product already added")
+   }else{
     const newCartItem = {
       id: carts.id,
       name: carts.name,
@@ -15,12 +19,14 @@ const ProductDetails = () => {
       description: carts.description,
       image: carts.image,
       category: carts.category,
-      quantity: 1 
+      quantity: 1 ,
+      stars:carts.stars
     };
   
       setMyCart([...myCart, newCartItem]);
     
   };
+   }
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -29,42 +35,65 @@ const ProductDetails = () => {
   const related = api.filter((rel) => rel.category === carts.category);
 
   return (
-    <div>
-      <div className="flex justify-center items-center h-[500px] w-800">
-        <div className="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-          <div className="md:flex">
-            <div className="p-8 bg-gray-100">
-              <h1 className="block mt-1 text-lg leading-tight font-medium text-black">{carts.name}</h1>
-              <p className="mt-2 text-gray-500">{carts.description}</p>
-              <p>Category : {carts.category}</p>
-              <p className="text-red-600 p-2">Price : ${carts.price}</p>
-              <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center">
-                </div>
-                <button onClick={addToCart} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 ml-6 px-4 rounded">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-            <div className="md:flex-shrink-0">
-              <img className="h-60 w-full object-cover md:w-60" src={carts.image} alt={carts.name} />
-            </div>
+    <div className="container mx-auto p-4">
+      <div className="flex flex-col md:flex-row md:space-x-8">
+        <img
+          src={carts.image}
+          className="w-full md:w-[350px] rounded h-[350px]"
+        />
+        <div className="md:w-1/2">
+          <h2 className="text-3xl font-bold mb-2">{carts.name}</h2>
+          <p className="text-yellow-500 text-3xl">{'★'.repeat(carts.stars)}{'☆'.repeat(5 - carts.stars)}</p>
+          <p className="text-3xl font-semibold mt-2 mb-4">Price: $<span className='text-red-600'>{carts.price}</span></p>
+          <p className="mb-4">
+           {carts.description}
+          </p>
+          <div className="flex items-center space-x-4 mb-4">
+           
+            <button onClick={addToCart} className="bg-btnColor text-white px-4 py-2 rounded hover:bg-black">
+              Add to cart
+            </button>
           </div>
+          <p className="text-gray-500">Categories: {carts.category}</p>
         </div>
       </div>
-      <div className="related-products text-center my-8">
-        <h2 className="text-2xl font-bold mb-4">Related Products</h2>
-        <div className="related-items flex flex-wrap justify-center">
-          {related.map((item, key) => (
-            <Link to={`/collections/${item.id}`} key={key}>
-              <div onClick={scrollToTop} className="related-item border rounded-lg m-4 p-4 w-64 shadow-lg transform transition-transform hover:scale-105">
-                <img src={item.image} alt={item.name} className="related-item-image w-full h-48 object-cover rounded-md" />
-                <h2 className="related-item-name text-lg font-semibold mt-4">{item.name}</h2>
-                <h3 className="related-item-price text-green-500 text-xl mt-2">${item.price}</h3>
-                <p className="related-item-description text-gray-600 mt-2">{item.description}</p>
-              </div>
-            </Link>
-          ))}
+      <div className="mt-8">
+        <div className="border-b border-gray-300">
+          <ul className="flex space-x-8">
+            <li className="pb-2 border-b-2 border-btnColor">Description</li>
+            <li  className="pb-2">Additional Information</li>
+            <li className="pb-2">Reviews (5)</li>
+          </ul>
+        </div>
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold">Product Description</h3>
+          <p className="mt-2">
+            Pellentesque habitant morbi tristique senectus et netus et malesuada
+            fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
+            ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+            egestas semper. Aenean ultricies mi vitae est. Mauris placerat
+            eleifend leo.
+          </p>
+        </div>
+      </div>
+      <div className="mt-8">
+        <h3 className="text-2xl font-semibold mb-4 border-b-2 border-btnColor">You may also like...</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {related.map((item, key) => (
+          <Link onClick={scrollToTop} to={`/collections/${item.id}`} key={key}>
+          <div className="rounded p-4 w-[250px] text-center">
+            <img
+              src={item.image}
+              className="w-full rounded mb-4 h-[200px]"
+            />
+            <h4 className="text-lg font-semibold mb-2">{item.name}</h4>
+            <p className="text-yellow-500 text-xl">{'★'.repeat(carts.stars)}{'☆'.repeat(5 - carts.stars)}</p>
+            <p className="text-xl font-semibold mb-2">{item.price}</p>
+           
+          </div>
+          </Link>
+        ))}
+         
         </div>
       </div>
     </div>

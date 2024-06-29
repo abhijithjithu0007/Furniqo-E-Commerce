@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mycontext } from './SignUp';
+import { Mycontext } from '../component/SignUp';
 
 const Profile = () => {
   const { userData, setIsLoggedIn } = useContext(Mycontext);

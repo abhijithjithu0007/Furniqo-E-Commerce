@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SignUp, { Mycontext } from '../Pages/SignUp';
+import SignUp, { Mycontext } from '../component/SignUp';
 import Products from '../component/Products';
 import Home from '../Pages/Home'
 import Navbar from '../NavBar/Navbar';
 import ContactUs from '../Pages/ContactUs';
-import Login from '../Pages/Login';
+import Login from '../component/Login';
 import Profile from '../Pages/Profile';
 import ProductDetails from '../component/ProductDetails';
 import Cart from '../component/Cart';
 import { babyProducts } from '../db/Api';
+import Categories from '../Pages/Categories';
+import ShoppingCart from '../component/sample';
+
+
 
 
 const RouterApp = () => {
@@ -24,7 +28,7 @@ const RouterApp = () => {
       <Navbar isLoggedIn={isLoggedIn} />   
        <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<Home />}/>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/collections" element={<Products />} />
@@ -32,8 +36,10 @@ const RouterApp = () => {
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} /> 
           <Route path='/collections/:id' element={<ProductDetails/>}/>
           <Route path='/cart' element={<Cart/>}/>
+          <Route path='/category' element={<Categories/>}/>
         </Routes>
       </Mycontext.Provider>
+      {/* <ShoppingCart/> */}
     </div>
   );
 };

@@ -1,70 +1,51 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FaFacebookF, FaTwitter, FaInstagram, FaPinterestP, FaLinkedinIn } from 'react-icons/fa';
+import { MdLocationOn, MdEmail, MdPhone } from 'react-icons/md';
 
 const ContactUs = () => {
-    return (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center py-16">
-            <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8 flex flex-wrap">
-                <div className="w-full md:w-1/2 mb-8 md:mb-0 mt-10">
-                    <div className="mb-8">
-                        <h1 className="text-2xl font-bold text-gray-800 flex items-center">
-                            <FontAwesomeIcon icon={faPhone} className="text-blue-700 mr-2" />
-                            Call Us
-                        </h1>
-                        <h2 className="text-lg text-gray-600 mt-2">10100101001010</h2>
-                    </div>
-                    <div className="mb-8">
-                        <h1 className="text-2xl font-bold text-gray-800 flex items-center">
-                            <FontAwesomeIcon icon={faMapMarkerAlt} className="text-blue-700 mr-2" />
-                            Location
-                        </h1>
-                        <h2 className="text-lg text-gray-600 mt-2">Thurakkal , Manjeri</h2>
-                    </div>
-                    <div className="mb-8">
-                        <h1 className="text-2xl font-bold text-gray-800 flex items-center">
-                            <FontAwesomeIcon icon={faEnvelope} className="text-blue-700 mr-2" />
-                            Email
-                        </h1>
-                        <h2 className="text-lg text-gray-600 mt-2">www.littlenest@gmail.com</h2>
-                    </div>
-                </div>
-                <div className="w-full md:w-1/2">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-6">Contact Us</h1>
-                    <form>
-                        <div className="mb-4">
-                            <input
-                                type="text"
-                                placeholder="Enter Your Name"
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <input
-                                type="email"
-                                placeholder="Enter Valid Email"
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <textarea
-                                placeholder="Your Message"
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent h-32"
-                            />
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-500 transition duration-300"
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  return (
+    <div className="flex justify-center items-center min-h-screen p-8">
+      <div className="bg-white shadow-lg flex rounded-lg overflow-hidden">
+        <div className="bg-btnColor text-white p-8 w-1/3">
+          <h2 className="text-2xl font-semibold mb-6">Contact Info</h2>
+          <div className="flex items-center mb-4">
+            <MdLocationOn className="text-xl mr-3" />
+            <p>2912 Meadowbrook Road<br />Los Angeles, CA<br />90017</p>
+          </div>
+          <div className="flex items-center mb-4">
+            <MdEmail className="text-xl mr-3" />
+            <p>lorem@ipsum.com</p>
+          </div>
+          <div className="flex items-center mb-8">
+            <MdPhone className="text-xl mr-3" />
+            <p>310-386-1623</p>
+          </div>
+          <div className="flex space-x-4">
+            <FaFacebookF />
+            <FaTwitter />
+            <FaInstagram />
+            <FaPinterestP />
+            <FaLinkedinIn />
+          </div>
         </div>
-    );
+        <div className="p-8 w-2/3">
+          <h2 className="text-2xl font-semibold mb-6">Send a Message</h2>
+          <form>
+            <div className="flex mb-4">
+              <input type="text" placeholder="First Name" className="w-1/2 mr-2 p-2 border-b" />
+              <input type="text" placeholder="Last Name" className="w-1/2 ml-2 p-2 border-b" />
+            </div>
+            <div className="flex mb-4">
+              <input type="email" placeholder="Email Address" className="w-1/2 mr-2 p-2 border-b" />
+              <input type="tel" placeholder="Mobile Number" className="w-1/2 ml-2 p-2 border-b" />
+            </div>
+            <textarea placeholder="Write your message here..." className="w-full p-2 mb-4 border-b h-32"></textarea>
+            <button type="submit" className="bg-black text-white py-2 px-6 rounded">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ContactUs;
