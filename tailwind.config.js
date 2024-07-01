@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        greenColor: '#b1f2bc',
+        greenColor: '#fec36a',
         whiteColor:'#f1facf',
         btnColor:'#f08080',
       },

@@ -3,7 +3,7 @@ import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser } from '@fort
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
-import img from '../assets/logo.png'
+import img from '../assets/logo.png';
 
 const Navbar = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,18 +12,14 @@ const Navbar = ({ isLoggedIn }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const navigate = useNavigate();
-  const { api, setApi, myCart } = useContext(Mycontext);
+  const { api, myCart } = useContext(Mycontext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleProfile = () => {
-    if (isLoggedIn) {
-      navigate('/profile');
-    } else {
-      navigate('/login');
-    }
+    navigate(isLoggedIn ? '/profile' : '/login');
     setIsMenuOpen(false);
   };
 
@@ -44,35 +40,27 @@ const Navbar = ({ isLoggedIn }) => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-greenColor opacity-95">
+    <div className="sticky top-0 z-50 bg-greenColor opacity-95 md:h-[90px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to='/home'>
-          <div className="flex items-center">
-            <img src={img} alt="Logo" className="h-12 md:h-16" />
-          </div>
+          <img src={img} alt="Logo" className="h-10 md:h-16" />
         </Link>
         <ul className="hidden md:flex space-x-6 font-bold">
-          <li><Link to="/" className="hover:text-gray-500">Home</Link></li>
-          <li><Link to="/category" className="hover:text-gray-500">Category</Link></li>
-          <li><Link to="/collections" className="hover:text-gray-500">Collections</Link></li>
-          <li><Link to="/contactus" className="hover:text-gray-500">Contact Us</Link></li>
+          <li><Link to="/" className="hover:text-gray-500 text-lg">Home</Link></li>
+          <li><Link to="/category" className="hover:text-gray-500 text-lg">Category</Link></li>
+          <li><Link to="/contactus" className="hover:text-gray-500 text-lg">Contact Us</Link></li>
         </ul>
-        <div className="flex items-center justify-end space-x-4 relative">
+        <div className="flex items-center space-x-4 relative">
           <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search here' className="w-full text-black md:w-auto px-3 py-2 rounded-lg bg-white border focus:outline-none focus:ring-2 focus:ring-black" />
           {isOpen && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-35 flex justify-center items-start pt-20 z-50">
               <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl relative overflow-auto max-h-screen">
                 <h2 className="text-2xl font-bold mb-4 text-blue-600">Search Results</h2>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
-                >
-                  X
-                </button>
+                <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900">X</button>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
-                      <Link key={index} to={`/collections/${product.id}`} onClick={linkClick}>
+                      <Link key={index} to={`/category/${product.id}`} onClick={linkClick}>
                         <div className="border rounded-lg p-4 shadow-lg transform hover:scale-105 transition duration-150 bg-white hover:bg-gray-100">
                           <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md" />
                           <h2 className="text-lg font-semibold mt-4 text-blue-700">{product.name}</h2>
@@ -90,15 +78,9 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/cart'} className="flex items-center text-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl relative bottom-5 right-3">{myCart.length}</span>
+            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-7 right-6">{myCart.length}</span>
           </Link>
-          <div className="relative">
-            <FontAwesomeIcon
-              icon={faUser}
-              className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer"
-              onClick={handleProfile}
-            />
-          </div>
+          <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
         </div>
         <button onClick={toggleMenu} className="md:hidden focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 hover:text-gray-900" viewBox="0 0 20 20" fill="currentColor">
@@ -109,10 +91,9 @@ const Navbar = ({ isLoggedIn }) => {
       {isMenuOpen && (
         <div className="md:hidden bg-gray-200 py-2">
           <ul className="flex flex-col items-center space-y-2">
-            <li><Link to="/" className="text-gray-800 hover:text-gray-600" onClick={() => { toggleMenu(); navigate('/home'); }}>Home</Link></li>
-            <li><Link to="/category" className="text-gray-800 hover:text-gray-600" onClick={() => { toggleMenu(); navigate('/category'); }}>Category</Link></li>
-            <li><Link to="/collections" className="text-gray-800 hover:text-gray-600" onClick={() => { toggleMenu(); navigate('/collections'); }}>Collections</Link></li>
-            <li><Link to="/contactus" className="text-gray-800 hover:text-gray-600" onClick={() => { toggleMenu(); navigate('/contactus'); }}>Contact Us</Link></li>
+            <li><Link to="/" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Home</Link></li>
+            <li><Link to="/category" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Category</Link></li>
+            <li><Link to="/contactus" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Contact Us</Link></li>
           </ul>
         </div>
       )}

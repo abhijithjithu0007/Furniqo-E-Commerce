@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SignUp, { Mycontext } from '../component/SignUp';
-import Products from '../component/Products';
+
 import Home from '../Pages/Home'
 import Navbar from '../NavBar/Navbar';
 import ContactUs from '../Pages/ContactUs';
@@ -11,8 +11,8 @@ import ProductDetails from '../component/ProductDetails';
 import Cart from '../component/Cart';
 import { babyProducts } from '../db/Api';
 import Categories from '../Pages/Categories';
-import ShoppingCart from '../component/sample';
-
+import ScrollToTop from '../component/Scroll';
+import Footer from '../component/Footer';
 
 
 
@@ -31,15 +31,16 @@ const RouterApp = () => {
           <Route path="/home" element={<Home />}/>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/collections" element={<Products />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} /> 
-          <Route path='/collections/:id' element={<ProductDetails/>}/>
+          <Route path="/profile" element={isLoggedIn ? <Profile /> :<Login setIsLoggedIn={setIsLoggedIn} />} /> 
+          <Route path='/category/:id' element={<ProductDetails/>}/>
           <Route path='/cart' element={<Cart/>}/>
           <Route path='/category' element={<Categories/>}/>
         </Routes>
+        <Footer/>
+        <ScrollToTop/>
       </Mycontext.Provider>
-      {/* <ShoppingCart/> */}
+      
     </div>
   );
 };
