@@ -1,24 +1,33 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../component/Footer';
+
 import { TiTick } from "react-icons/ti";
 import Testimonials from '../component/Testimonials';
 import ScrollReveal from 'scrollreveal';
-
-
+import homelogo from '../assets/homelogo.jpg';
 
 const Home = () => {
   useEffect(() => {
-      ScrollReveal().reveal('.scrollsample', {
-        origin: 'left',
-        distance: '800px',
-        duration: 900,
-        delay: 100,
-        reset: true,
-      });
-      
-
+    ScrollReveal().reveal('.scrollsample', {
+      origin: 'left',
+      distance: '800px',
+      duration: 900,
+      delay: 100,
+      reset: true,
+    });
   }, []);
+
+
+  useEffect(() => {
+    ScrollReveal().reveal('.imgclass', {
+      origin: "right",
+      distance: "40px",
+      duration: 1000,
+      delay: 100,
+      easing: "ease",
+      reset:true,
+    });
+  },[]);
 
   const products = [
     { image: 'https://i.pinimg.com/564x/cd/0d/03/cd0d037d458637f4164df24443f66a8d.jpg', title: 'Baby Outfit Combo', price: 549 },
@@ -28,31 +37,31 @@ const Home = () => {
   ];
 
   return (
-    <div className="bg-cover bg-center relative">
-      <img src="https://images.unsplash.com/photo-1471938537155-7de0bd123d0c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className='absolute -z-10 h-[800px] w-full' />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start justify-start h-screen">
-          <div  className="scrollsample md:w-1/2 md:pr-8 mb-40 p-8 rounded-lg">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-8 font-serif text-black mt-20">
-              Because every baby deserves the <span className="text-btnColor">Best.</span>
-            </h1>
-            <div className="mb-8">
-              <div className='flex'>
-                <TiTick className='text-2xl text-green-700' />
-                <p className="text-lg mb-7 text-black">Premium Products</p>
-              </div>
-              <div className='flex'>
-                <TiTick className='text-2xl text-green-700' />
-                <p className="text-lg text-black">Trusted By Everyone</p>
-              </div>
+    <div className="bg-cover bg-homeBg bg-center relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center justify-between h-screen">
+        <div className="md:w-1/2 w-full">
+          <img src={homelogo}  alt="" className={`w-[500px] imgclass`} />
+        </div>
+        <div className="scrollsample md:w-1/2 md:pr-8 mb-40 p-8 rounded-lg">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-8 font-serif text-black mt-20">
+            Because every baby deserves the <span className="text-btnColor">Best.</span>
+          </h1>
+          <div className="mb-8">
+            <div className="flex">
+              <TiTick className="text-2xl text-green-700" />
+              <p className="text-lg mb-7 text-black">Premium Products</p>
             </div>
-            <div>
-              <Link to={'/category'}>
-                <button className="bg-btnColor text-white py-3 px-6 rounded-lg shadow-lg hover:bg-black transition duration-300 mt-6">
-                  Shop Now
-                </button>
-              </Link>
+            <div className="flex">
+              <TiTick className="text-2xl text-green-700" />
+              <p className="text-lg text-black">Trusted By Everyone</p>
             </div>
+          </div>
+          <div>
+            <Link to={'/category'}>
+              <button className="bg-btnColor text-white py-3 px-6 rounded-lg shadow-lg hover:bg-black transition duration-300 mt-6">
+                Shop Now
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -60,16 +69,16 @@ const Home = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Upcoming Arrivals</h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
-             <div key={index} className="relative border p-4 text-center bg-white shadow-md">
-             <img src={product.image} alt={product.title} className="w-full h-64 object-cover mb-4" />
-             <div className="absolute top-4 left-4 flex flex-col space-y-2">
-               <button className="p-2 bg-white rounded-full shadow-md">👁️</button>
-               <button className="p-2 bg-white rounded-full shadow-md">❤️</button>
-               <button className="p-2 bg-white rounded-full shadow-md">🛒</button>
-             </div>
-             <h3 className="text-lg font-semibold mt-4">{product.title}</h3>
-             <p className="text-gray-700">₹{product.price}</p>
-           </div>
+            <div key={index} className="relative border p-4 text-center bg-white shadow-md">
+              <img src={product.image} alt={product.title} className="w-full h-64 object-cover mb-4" />
+              <div className="absolute top-4 left-4 flex flex-col space-y-2">
+                <button className="p-2 bg-white rounded-full shadow-md">👁️</button>
+                <button className="p-2 bg-white rounded-full shadow-md">❤️</button>
+                <button className="p-2 bg-white rounded-full shadow-md">🛒</button>
+              </div>
+              <h3 className="text-lg font-semibold mt-4">{product.title}</h3>
+              <p className="text-gray-700">₹{product.price}</p>
+            </div>
           ))}
         </div>
       </div>

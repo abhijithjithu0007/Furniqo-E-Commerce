@@ -18,6 +18,11 @@ const Navbar = ({ isLoggedIn }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const user = localStorage.getItem('currentUser')
+  const isLog = JSON.parse(localStorage.getItem('isLogin'))
+
+  const { name = '' } = user ? JSON.parse(user) : {};
+console.log(name);
   const handleProfile = () => {
     navigate(isLoggedIn ? '/profile' : '/login');
     setIsMenuOpen(false);
@@ -40,7 +45,7 @@ const Navbar = ({ isLoggedIn }) => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-greenColor opacity-95 md:h-[90px]">
+    <div className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[95px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to='/home'>
           <img src={img} alt="Logo" className="h-10 md:h-16" />
@@ -78,9 +83,13 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/cart'} className="flex items-center text-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-7 right-6">{myCart.length}</span>
+            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-12 right-9">{myCart.length}</span>
           </Link>
-          <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
+          <div className='mt-6'>
+            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
+          {isLog?(<p>{name}</p>):""}  
+          </div>
+
         </div>
         <button onClick={toggleMenu} className="md:hidden focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 hover:text-gray-900" viewBox="0 0 20 20" fill="currentColor">

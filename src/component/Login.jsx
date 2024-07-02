@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate ,Link} from 'react-router-dom';
-
+import React, { useContext, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Mycontext } from './SignUp';
 
 const Login = ({ setIsLoggedIn }) => {
   const [loginError, setLoginError] = useState({});
   const [userName, setUserName] = useState('');
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
+
+  const { adminData } = useContext(Mycontext);
+  const { adminName, adminEmail } = adminData;
 
   const handleName = (e) => {
     setUserName(e.target.value);
@@ -16,23 +19,31 @@ const Login = ({ setIsLoggedIn }) => {
     setUserPass(e.target.value);
   };
 
-  const name = localStorage.getItem('username');
-  const pass = localStorage.getItem('password');
-
   const handleClick = () => {
     const errors = {};
-    if (userName !== name) {
-      errors.nameErr = '* Name does not match';
-    }
-    if (userPass !== pass) {
-      errors.passErr = '* Password does not match';
-    }
-    setLoginError(errors);
+    const storedUserData = localStorage.getItem('userData');
+    const users = storedUserData ? JSON.parse(storedUserData) : [];
 
-    if (userName === name && userPass === pass) {
+    const user = users.find(user => user.name === userName && user.password === userPass);
+
+    if (userName === adminName && userPass === adminEmail) {
+      localStorage.setItem('currentUser', JSON.stringify({ name: adminName, email: adminEmail }));
       localStorage.setItem('isLogin', JSON.stringify(true));
-      setIsLoggedIn(true)
-      navigate('/profile')
+      setIsLoggedIn(true);
+      navigate('/admin');
+    } else if (!user) {
+      if (!users.find(user => user.name === userName)) {
+        errors.nameErr = '* Name does not match';
+      }
+      if (!users.find(user => user.password === userPass)) {
+        errors.passErr = '* Password does not match';
+      }
+      setLoginError(errors);
+    } else {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem('isLogin', JSON.stringify(true));
+      setIsLoggedIn(true);
+      navigate('/profile');
     }
   };
 
@@ -52,7 +63,7 @@ const Login = ({ setIsLoggedIn }) => {
               className="mt-1 block w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Enter your name"
             />
-            {loginError.nameErr && <p>{loginError.nameErr}</p>}
+            {loginError.nameErr && <p className="text-red-700">{loginError.nameErr}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -65,7 +76,7 @@ const Login = ({ setIsLoggedIn }) => {
               className="mt-1 block w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Enter your password"
             />
-            {loginError.passErr && <p>{loginError.passErr}</p>}
+            {loginError.passErr && <p className="text-red-700">{loginError.passErr}</p>}
           </div>
         </div>
         <button

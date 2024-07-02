@@ -2,7 +2,7 @@ export const babyProducts = [
   {
     id: 1,
     name: "Baby Suit",
-    description: "Soft cotton onesie for newborns",
+    description: "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
     price: 200,
     image: "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
     category: "Boy fashion",
@@ -11,7 +11,7 @@ export const babyProducts = [
   {
     id: 2,
     name: "Baby Frock",
-    description: "Cozy fleece blanket for infants",
+    description: "Soft and breathable fabric for all-day comfort. ",
     price: 159,
     image: "https://i.pinimg.com/564x/90/ce/58/90ce5849d2cebf0e72453f697674af93.jpg",
     category: "Girl fashion",
@@ -29,7 +29,7 @@ export const babyProducts = [
   {
     id: 4,
     name: "Baby Frock",
-    description: "Compact and lightweight stroller",
+    description: "Soft and breathable fabric for all-day comfort.",
     price: 149,
     image: "https://babiesfrock.in/cdn/shop/products/imgonline-com-ua-resize-9u51T1EhlSzHvvRe.jpg?v=1675062223",
     category: "Girl fashion",
@@ -56,7 +56,7 @@ export const babyProducts = [
   {
     id: 7,
     name: "Baby Dress",
-    description: "Spacious diaper bag with multiple compartments",
+    description: "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
     price: 299,
     image: "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
     category: "Boy fashion",
@@ -74,7 +74,7 @@ export const babyProducts = [
   {
     id: 9,
     name: "Baby Frock",
-    description: "Video and audio monitor for baby surveillance",
+    description: "Soft and breathable fabric for all-day comfort. ",
     price: 229,
     image: "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
     category: "Girl fashion",
@@ -83,7 +83,7 @@ export const babyProducts = [
   {
     id: 10,
     name: "Baby Boy Dress",
-    description: "Soothing toys for teething babies",
+    description: "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
     price: 349,
     image: "https://image.made-in-china.com/202f0j00uqzUrDInHCkv/All-Over-Print-Cotton-Infant-Newborn-Clothing-for-Baby-Boys-Girls-Jumpsuits.webp",
     category: "Boy fashion",
@@ -119,7 +119,7 @@ export const babyProducts = [
   {
     id: 14,
     name: "Baby Suit",
-    description: "Interactive play mat for sensory development",
+    description: "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
     price: 279,
     image: "https://image.made-in-china.com/202f0j00ygLfFEpdaGqY/Baby-Boys-Girls-Clothes-Baby-Sculpt-Rompers-Baby-Winter-Warm-Clothes-babies-Hoodie.jpg",
     category: "Boy fashion",
@@ -137,7 +137,7 @@ export const babyProducts = [
   {
     id: 16,
     name: "Baby Top",
-    description: "Set of colorful rattles for infants",
+    description: "Soft and breathable fabric for all-day comfort. ",
     price: 199,
     image: "https://i.pinimg.com/736x/3f/c7/39/3fc73939d2c5a23e48cfc08122a3a243.jpg",
     category: "Girl fashion",
@@ -164,7 +164,7 @@ export const babyProducts = [
   {
     id: 19,
     name: "Baby Dress",
-    description: "Complete bedding set for cribs",
+    description: "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
     price: 349,
     image: "https://i.pinimg.com/564x/b2/a3/1a/b2a31a402be3dc03d96a08816638a7b3.jpg",
     category: "Boy fashion",
@@ -173,7 +173,7 @@ export const babyProducts = [
   {
     id: 20,
     name: "Baby Pant",
-    description: "Adjustable safety gate for stairs and doorways",
+    description: "Dress your little princess in our Baby Girl Floral Print Dress. ",
     price: 99,
     image: "https://images.pexels.com/photos/7282448/pexels-photo-7282448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     category: "Girl fashion",

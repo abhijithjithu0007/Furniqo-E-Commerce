@@ -7,9 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        greenColor: '#fec36a',
+        greenColor: '#e40443',
         whiteColor:'#f1facf',
-        btnColor:'#f08080',
+        btnColor:'#e40443',
+        homeBg:'#f7f7f7',
       },
     },
   },

@@ -1,11 +1,23 @@
-import React from 'react';
+import React ,{useEffect}from 'react';
+
+import ScrollReveal from 'scrollreveal';
+
 
 function Testimonials() {
+  useEffect(() => {
+    ScrollReveal().reveal('.test', {
+      origin: 'left',
+      distance: '800px',
+      duration: 700,
+      delay: 100,
+      reset: true,
+    });
+  }, []);
   return (
     <div className="bg-gray-100 py-12">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-2xl font-bold mb-4">Wide Range of Products</h2>
-        <div className="bg-white rounded-lg shadow-lg p-6 my-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 my-6 test">
           <p className="text-lg italic mb-4">
             "Littlenest offers an extensive selection of baby products, from clothing and toys to nursery furniture and feeding supplies."
           </p>

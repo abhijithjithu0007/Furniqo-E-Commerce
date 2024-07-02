@@ -100,9 +100,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
     </div>
   );
 };

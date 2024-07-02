@@ -3,22 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
 
 const Profile = () => {
-  const { userData, setIsLoggedIn } = useContext(Mycontext);
+  const { userData, setIsLoggedIn ,myCart,setMyCart} = useContext(Mycontext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.setItem('isLogin', JSON.stringify(false));
     setIsLoggedIn(false);
     navigate('/login');
+    setMyCart([])
   };
 
-  const name = localStorage.getItem('username');
-  const email = localStorage.getItem('email');
+  const adress = localStorage.getItem('currentUser');
+
+  const { name = '', email='' } = adress ? JSON.parse(adress) : {};
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-3xl">
-        <div className="bg-white py-8 px-6 shadow-md rounded-lg sm:px-10">
+        <div className="bg-gray-300 py-8 px-6 shadow-md rounded-lg sm:px-10">
           <h2 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
             Profile
           </h2>

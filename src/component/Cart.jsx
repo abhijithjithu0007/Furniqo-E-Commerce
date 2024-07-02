@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Mycontext } from './SignUp';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 
 const Cart = () => {
@@ -45,10 +45,21 @@ const Cart = () => {
     setShowPopup(false);
   };
 
+  const navigate = useNavigate()
+
+  const handlePay = () => {
+    alert("Payment Successful")
+    navigate('/category')
+    setMyCart([])
+  }
+
   return (
     <div className="container mx-auto p-4">
       {myCart.length === 0 ? (
-        <p className="text-center text-2xl text-gray-500">Your cart is empty!</p>
+        <div>
+          <p className="text-center text-2xl text-gray-500">Your cart is empty!</p>
+          <Link to={'/category'}><p className='text-center text-red-400 mt-10 underline'>Add some products! Click here</p></Link>
+        </div>
       ) : (
         <div className="container mx-auto ">
           <div className="flex justify-between items-center mb-4">
@@ -224,7 +235,7 @@ const Cart = () => {
                 </div>
               )}
 
-              <button className="w-full bg-teal-500 text-white rounded-md py-2">
+              <button onClick={handlePay} className="w-full bg-teal-500 text-white rounded-md py-2">
                 Pay ₹{(myCart.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}
               </button>
             </div>

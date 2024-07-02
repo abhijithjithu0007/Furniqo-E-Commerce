@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext,createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Mycontext = createContext();
@@ -20,17 +20,31 @@ const SignUp = () => {
     e.preventDefault();
     setFormError(validating(validate));
     setIsSubmit(true);
-    setUserData([...userData, { username: validate.name, password: validate.password, email: validate.email }]);
+
+    // Retrieve existing user data from local storage
+    const storedUserData = localStorage.getItem('userData');
+    const existingUserData = storedUserData ? JSON.parse(storedUserData) : [];
+
+    // Create a new user's data object
+    const newUserData = { name: validate.name, password: validate.password, email: validate.email };
+
+    // Append the new user's data to the existing array
+    const updatedUserData = [...existingUserData, newUserData];
+
+    // Save the updated array back to local storage
+    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+
+    // Save the current user's data separately
+    localStorage.setItem('currentUser', JSON.stringify(newUserData));
+
+    // Set the user data in the context (if necessary)
+    setUserData(updatedUserData);
   };
 
   useEffect(() => {
     if (Object.keys(formError).length === 0 && isSubmit) {
       alert("Registration Completed");
       navigate('/login');
-      localStorage.setItem('username', validate.name);
-      localStorage.setItem('password', validate.password);
-      localStorage.setItem('email', validate.email);
-
     }
   }, [formError, isSubmit, navigate]);
 
