@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { Admincontext } from './ContextAdmin';
 
 const Users = () => {
-  // Fetching user data from localStorage
-  const allUser = localStorage.getItem('userData');
-  const users = allUser ? JSON.parse(allUser) : [];
+  const { usersData } = useContext(Admincontext);
 
   return (
-    <div className="max-w-lg mx-auto mt-8">
+    <div className="w-full max-w-lg mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Users List</h1>
-      {users.length > 0 ? (
+      {usersData.length > 0 ? (
         <div className="grid gap-4">
-          {users.map((item, id) => (
-            <div key={id} className="bg-white shadow-md p-4 rounded-lg">
-              <h2 className="text-xl font-bold mb-2">{item.name}</h2>
-              <p className="text-gray-600">{item.email}</p>
-            </div>
+          {usersData.map((item, id) => (
+            <Link key={id} to={`/admin/users/${item.id}`} className="block">
+              <div className="bg-white shadow-md p-4 rounded-lg flex items-center">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/8847/8847419.png"
+                  alt="Profile Icon"
+                  className="h-16 w-16 rounded-full object-cover mr-4"
+                />
+                <div>
+                  <h2 className="text-lg font-bold mb-1">{item.name}</h2>
+                  <p className="text-gray-600">{item.email}</p>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       ) : (

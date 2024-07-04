@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import SignUp, { Mycontext } from '../component/SignUp';
 import Home from '../Pages/Home';
 import Navbar from '../NavBar/Navbar';
@@ -8,26 +8,28 @@ import Login from '../component/Login';
 import Profile from '../Pages/Profile';
 import ProductDetails from '../component/ProductDetails';
 import Cart from '../component/Cart';
-import { babyProducts } from '../db/Api';
+
 import Categories from '../Pages/Categories';
 import ScrollToTop from '../component/Scroll';
 import Footer from '../component/Footer';
-import ProtectedRoute from '../component/ProtectedRoute'; 
+import ProtectedRoute from '../component/ProtectedRoute';
 import Admin from '../Admin/Admin';
 import DashBoard from '../Admin/DashBoard';
-
+import useFetchProducts from '../component/CoustumeHook';
 
 const RouterApp = () => {
   const [userData, setUserData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [myCart, setMyCart] = useState([]);
-  const [api, setApi] = useState(babyProducts);
+  const { products, loading, error } = useFetchProducts();
   const [adminData, setAdminData] = useState({ adminName: 'admin', adminEmail: 'nest@admin' });
+
+  const location = useLocation();
 
   return (
     <div>
-      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, api, setApi, adminData, setAdminData }}>
-        <Navbar isLoggedIn={isLoggedIn} />
+      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData }}>
+        {location.pathname.startsWith('/admin') ? null : <Navbar isLoggedIn={isLoggedIn} />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />

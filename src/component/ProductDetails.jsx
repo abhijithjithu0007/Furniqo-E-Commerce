@@ -1,23 +1,31 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Mycontext } from './SignUp';
 import Footer from './Footer';
+import useFetchProducts from './CoustumeHook';
 
 const ProductDetails = () => {
   const params = useParams();
-  const { myCart, setMyCart, api } = useContext(Mycontext);
-  const [carts] = api.filter((val) => params.id == val.id);
+  const { products, loading, error } = useFetchProducts();
+  const { myCart, setMyCart } = useContext(Mycontext);
+  const [carts, setCarts] = useState(null)
+
+  useEffect(() => {
+    const foundProduct = products.find((val) => val.id === params.id);
+    setCarts(foundProduct)
+  }, [products, params.id]);
 
   const navigate = useNavigate();
   const value = localStorage.getItem('isLogin');
   const isLogin = JSON.parse(value);
 
   const addToCart = () => {
-    const isClicked = myCart.find(item => item.id === carts.id);
+    
+    const isClicked = myCart.find((item) => item.id === carts.id);
     if (isClicked) {
-      alert("Product already added");
+      alert('Product already added');
     } else if (!isLogin) {
-      alert("You don't have an account. Please login.");
+      alert('You don\'t have an account. Please login.');
       navigate('/signup');
     } else {
       const newCartItem = {
@@ -28,40 +36,41 @@ const ProductDetails = () => {
         image: carts.image,
         category: carts.category,
         quantity: 1,
-        stars: carts.stars
+        stars: carts.stars,
       };
 
       setMyCart([...myCart, newCartItem]);
     }
-  }
+  };
 
-  
-
-  const related = api.filter((rel) => rel.category === carts.category);
+  const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
   return (
     <div>
       <div className="container mx-auto p-4">
-        <div className="flex flex-col md:flex-row md:space-x-8">
-          <img
-            src={carts.image}
-            className="w-full md:w-[350px] rounded h-[350px] object-cover"
-          />
-          <div className="md:w-1/2 mt-4 md:mt-0">
-            <h2 className="text-3xl font-bold mb-2">{carts.name}</h2>
-            <p className="text-yellow-500 text-3xl">{'★'.repeat(carts.stars)}{'☆'.repeat(5 - carts.stars)}</p>
-            <p className="text-3xl font-semibold mt-2 mb-4">Price: ₹<span className='text-red-600'>{carts.price}</span></p>
-            <p className="mb-4">
-              {carts.description}
-            </p>
-            <div className="flex items-center space-x-4 mb-4">
-              <button onClick={addToCart} className="bg-btnColor text-white px-4 py-2 rounded hover:bg-black">
-                Add to cart
-              </button>
+        {carts && (
+          <div className="flex flex-col md:flex-row md:space-x-8">
+            <img
+              src={carts.image}
+              className="w-full md:w-[350px] rounded h-[350px] object-cover"
+            />
+            <div className="md:w-1/2 mt-4 md:mt-0">
+              <h2 className="text-3xl font-bold mb-2">{carts.name}</h2>
+              <p className="text-yellow-500 text-3xl">{'★'.repeat(carts.stars)}{'☆'.repeat(5 - carts.stars)}</p>
+              <p className="text-3xl font-semibold mt-2 mb-4">Price: ₹<span className='text-red-600'>{carts.price}</span></p>
+              <p className="mb-4">
+                {carts.description}
+              </p>
+              <div className="flex items-center space-x-4 mb-4">
+                <button onClick={addToCart} className="bg-btnColor text-white px-4 py-2 rounded hover:bg-black">
+                  Add to cart
+                </button>
+              </div>
+              <p className="text-gray-500">Categories: {carts.category}</p>
             </div>
-            <p className="text-gray-500">Categories: {carts.category}</p>
           </div>
-        </div>
+        )}
+
         <div className="mt-8">
           <div className="border-b border-gray-300">
             <ul className="flex space-x-8 overflow-x-auto">
@@ -85,7 +94,7 @@ const ProductDetails = () => {
           <h3 className="text-2xl font-semibold mb-4 border-b-2 border-btnColor">You may also like...</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((item, key) => (
-              <Link  to={`/category/${item.id}`} key={key}>
+              <Link to={`/category/${item.id}`} key={key}>
                 <div className="rounded p-4 w-full text-center">
                   <img
                     src={item.image}
@@ -100,6 +109,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

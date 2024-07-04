@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useContext, useEffect, createContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Mycontext = createContext();
@@ -7,47 +7,57 @@ const SignUp = () => {
   const [validate, setValidate] = useState({ name: "", email: "", password: "", confirm: "" });
   const [formError, setFormError] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
   const { userData, setUserData } = useContext(Mycontext);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+    const handleChange = (e) => {
     const { name, value } = e.target;
     setValidate({ ...validate, [name]: value });
   };
 
-  const handleClick = (e) => {
+ 
+  const handleClick = async (e) => {
     e.preventDefault();
     setFormError(validating(validate));
     setIsSubmit(true);
 
-    // Retrieve existing user data from local storage
-    const storedUserData = localStorage.getItem('userData');
-    const existingUserData = storedUserData ? JSON.parse(storedUserData) : [];
+    if (Object.keys(formError).length === 0) {
+      try {
+        
+        const usersResponse = await fetch('http://localhost:3000/user');
+        const users = await usersResponse.json();
+        const nextId = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
 
-    // Create a new user's data object
-    const newUserData = { name: validate.name, password: validate.password, email: validate.email };
+        
+        const response = await fetch('http://localhost:3000/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: nextId,
+            name: validate.name,
+            email: validate.email,
+            password: validate.password
+          }),
+        });
 
-    // Append the new user's data to the existing array
-    const updatedUserData = [...existingUserData, newUserData];
+        if (!response.ok) {
+          throw new Error('Failed to register user');
+        }
 
-    // Save the updated array back to local storage
-    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+        const newUser = await response.json();
+        setUserData(prevData => [...prevData, newUser]);
 
-    // Save the current user's data separately
-    localStorage.setItem('currentUser', JSON.stringify(newUserData));
-
-    // Set the user data in the context (if necessary)
-    setUserData(updatedUserData);
+        alert("Registration Completed");
+        navigate('/login');
+      } catch (error) {
+        console.error('Error registering user:', error);
+      }
+    }
   };
 
-  useEffect(() => {
-    if (Object.keys(formError).length === 0 && isSubmit) {
-      alert("Registration Completed");
-      navigate('/login');
-    }
-  }, [formError, isSubmit, navigate]);
-
+  
   const validating = (values) => {
     const errors = {};
     const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -67,7 +77,7 @@ const SignUp = () => {
     } else if (values.password.length > 8) {
       errors.password = "* Password must contain less than 8 characters";
     } else if (values.password !== values.confirm) {
-      errors.confirm = "*The passwords do not match";
+      errors.confirm = "* The passwords do not match";
     }
     return errors;
   };

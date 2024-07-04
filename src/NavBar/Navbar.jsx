@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
 import img from '../assets/logo.png';
+import useFetchProducts from '../component/CoustumeHook';
 
 const Navbar = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +13,8 @@ const Navbar = ({ isLoggedIn }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const navigate = useNavigate();
-  const { api, myCart } = useContext(Mycontext);
+  const { products, loading, error } = useFetchProducts();
+  const { myCart } = useContext(Mycontext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -30,7 +32,7 @@ console.log(name);
 
   useEffect(() => {
     if (search) {
-      const filteredPro = api.filter((product) =>
+      const filteredPro = products.filter((product) =>
         product.name.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredProducts(filteredPro);
@@ -38,7 +40,7 @@ console.log(name);
     } else {
       setIsOpen(false);
     }
-  }, [search, api]);
+  }, [search, products]);
 
   const linkClick = () => {
     setIsOpen(false);

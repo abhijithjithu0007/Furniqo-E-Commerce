@@ -1,0 +1,196 @@
+{
+    "user": [
+        {
+            "id": 1,
+            "fullname": "abhi",
+            "email": "abhi@123@gmail.com"
+        },
+        {
+            "id" : 2,
+            "fullname" :"sahad",
+            "email" :"sah@gmail.com"
+        }
+    ],
+   "products": [
+        {
+            "id": 1,
+            "name": "Baby Suit",
+            "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+            "price": 200,
+            "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
+            "category": "Boy fashion",
+            "stars": 4.5
+        },
+        {
+            "id": 2,
+            "name": "Baby Frock",
+            "description": "Soft and breathable fabric for all-day comfort. ",
+            "price": 159,
+            "image": "https://i.pinimg.com/564x/90/ce/58/90ce5849d2cebf0e72453f697674af93.jpg",
+            "category": "Girl fashion",
+            "stars": 4.2
+        },
+        {
+            "id": 3,
+            "name": "Baby Lotions",
+            "description": "BPA-free bottle for feeding",
+            "price": 549,
+            "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
+            "category": "Lotions",
+            "stars": 3.8
+        },
+        {
+            "id": 4,
+            "name": "Baby Frock",
+            "description": "Soft and breathable fabric for all-day comfort.",
+            "price": 149,
+            "image": "https://babiesfrock.in/cdn/shop/products/imgonline-com-ua-resize-9u51T1EhlSzHvvRe.jpg?v=1675062223",
+            "category": "Girl fashion",
+            "stars": 4
+        },
+        {
+            "id": 5,
+            "name": "Baby Toy",
+            "description": "Educational toy set for toddlers",
+            "price": 299,
+            "image": "https://i.pinimg.com/564x/11/bc/16/11bc1638d03163e42d0c54b7d15d5299.jpg",
+            "category": "Toys",
+            "stars": 4.7
+        },
+        {
+            "id": 6,
+            "name": "Baby Play Book",
+            "description": "Comfortable and safe bath tub for babies",
+            "price": 40,
+            "image": "https://i.pinimg.com/564x/62/5b/b7/625bb704f88e6001196b6f664537a6f5.jpg",
+            "category": "Books",
+            "stars": 4.3
+        },
+        {
+            "id": 7,
+            "name": "Baby Dress",
+            "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+            "price": 299,
+            "image": "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
+            "category": "Boy fashion",
+            "stars": 4.1
+        },
+        {
+            "id": 8,
+            "name": "Baby Feeding Kit",
+            "description": "Adjustable high chair for feeding",
+            "price": 299,
+            "image": "https://e2simages.excess2sell.com/images/products/generapbaba1610687679152_1610687680_lg.jpg",
+            "category": "Feeding",
+            "stars": 4.5
+        },
+        {
+            "id": 9,
+            "name": "Baby Frock",
+            "description": "Soft and breathable fabric for all-day comfort. ",
+            "price": 229,
+            "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
+            "category": "Girl fashion",
+            "stars": 4.2
+        },
+        {
+            "id": 10,
+            "name": "Baby Boy Dress",
+            "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+            "price": 349,
+            "image": "https://image.made-in-china.com/202f0j00uqzUrDInHCkv/All-Over-Print-Cotton-Infant-Newborn-Clothing-for-Baby-Boys-Girls-Jumpsuits.webp",
+            "category": "Boy fashion",
+            "stars": 4.6
+        },
+        {
+            "id": 11,
+            "name": "Baby Bath Tub",
+            "description": "Safety-tested car seat for infants",
+            "price": 1589,
+            "image": "https://images.pexels.com/photos/914253/pexels-photo-914253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "category": "Accessories",
+            "stars": 4
+        },
+        {
+            "id": 12,
+            "name": "Baby Footwear",
+            "description": "Colorful mobile for crib entertainment",
+            "price": 129,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIpWP1GtszfSLSQquDSH0tLI5DJgp9GhYtA&s",
+            "category": "Footwear",
+            "stars": 4.3
+        },
+        {
+            "id": 13,
+            "name": "Baby Bed",
+            "description": "Soft and breathable swaddle blanket",
+            "price": 249,
+            "image": "https://rukminim2.flixcart.com/image/850/1000/kjym9ow0/baby-bed/w/u/l/baby-nest-bed-with-3-pc-baby-pillow-luxury-baby-mattress-bed-original-imafzffagubf6vck.jpeg?q=90&crop=false",
+            "category": "Bed",
+            "stars": 4.1
+        },
+        {
+            "id": 14,
+            "name": "Baby Suit",
+            "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+            "price": 279,
+            "image": "https://image.made-in-china.com/202f0j00ygLfFEpdaGqY/Baby-Boys-Girls-Clothes-Baby-Sculpt-Rompers-Baby-Winter-Warm-Clothes-babies-Hoodie.jpg",
+            "category": "Boy fashion",
+            "stars": 4.4
+        },
+        {
+            "id": 15,
+            "name": "Baby Book",
+            "description": "Sturdy changing table with storage",
+            "price": 49,
+            "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHI-_W65qEkIBYtmvSyjP1atFDXasSsvr3Y2SM4_g9698ivOyUC3EdYLdFVoZgSAEkTlIdk8fa3lLQpckxqDoQgUg5RIeVHd0rc1oz2v3NXCDqvHNPaJi-BATRxMsW6a77f2Xg93cmUkox/s1600/Childrens-Book-Review-Baby-Baby.jpg",
+            "category": "Books",
+            "stars": 4.7
+        },
+        {
+            "id": 16,
+            "name": "Baby Top",
+            "description": "Soft and breathable fabric for all-day comfort. ",
+            "price": 199,
+            "image": "https://i.pinimg.com/736x/3f/c7/39/3fc73939d2c5a23e48cfc08122a3a243.jpg",
+            "category": "Girl fashion",
+            "stars": 4.6
+        },
+        {
+            "id": 17,
+            "name": "Baby Foot Wear",
+            "description": "Fast and safe bottle warmer for feeding",
+            "price": 119,
+            "image": "https://i.pinimg.com/564x/46/87/4b/46874bdb8c83aa6919894e1e02941dae.jpg",
+            "category": "Footwear",
+            "stars": 4.2
+        },
+        {
+            "id": 18,
+            "name": "Baby Toy Kit",
+            "description": "Cute and practical pacifier clips",
+            "price": 239,
+            "image": "https://i.pinimg.com/564x/3a/15/17/3a151742af71f67247828a93f26316eb.jpg",
+            "category": "Books",
+            "stars": 4
+        },
+        {
+            "id": 19,
+            "name": "Baby Dress",
+            "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+            "price": 349,
+            "image": "https://i.pinimg.com/564x/b2/a3/1a/b2a31a402be3dc03d96a08816638a7b3.jpg",
+            "category": "Boy fashion",
+            "stars": 4.3
+        },
+        {
+            "id": 20,
+            "name": "Baby Pant",
+            "description": "Dress your little princess in our Baby Girl Floral Print Dress. ",
+            "price": 99,
+            "image": "https://images.pexels.com/photos/7282448/pexels-photo-7282448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "category": "Girl fashion",
+            "stars": 4.5
+        }
+    ]
+}

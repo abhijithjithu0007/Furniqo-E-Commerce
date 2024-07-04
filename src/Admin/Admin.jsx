@@ -1,26 +1,30 @@
-import React from 'react'
-import { Routes,Route } from 'react-router-dom'
-import SideBar from './SideBar'
-import Products from './Products'
-import Users from './Users'
-import DashBoard from './DashBoard'
-
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import SideBar from './SideBar';
+import Products from './Products';
+import Users from './Users';
+import DashBoard from './DashBoard';
+import ContextAdmin from './ContextAdmin';
+import UserDetails from './UserDetails';
 
 const Admin = () => {
   return (
-    <div>
-      <div className="flex h-screen">
-      <SideBar />
-      <div className="w-4/5 p-8 bg-gray-100">
-        <Routes>
-          <Route path="dashboard" element={<DashBoard />} />
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
-        </Routes>
+    <ContextAdmin>
+      <div>
+        <div className="flex h-screen">
+          <SideBar />
+          <div className="w-4/5 p-8 bg-gray-100">
+            <Routes>
+              <Route path="/dashboard" element={<DashBoard />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/users/:id" element={<UserDetails />} />
+            </Routes>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
-  )
+    </ContextAdmin>
+  );
 }
 
-export default Admin
+export default Admin;

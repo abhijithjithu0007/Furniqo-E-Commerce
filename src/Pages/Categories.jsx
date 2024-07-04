@@ -1,21 +1,22 @@
 import React, { useContext, useState } from 'react';
 import { Mycontext } from '../component/SignUp';
 import { Link } from 'react-router-dom';
+import useFetchProducts from '../component/CoustumeHook';
 
 const Categories = () => {
-  const { api } = useContext(Mycontext);
+  const { products, loading, error } = useFetchProducts();
   const [cate, setCate] = useState([]);
   const [fullFilter, setFullFilter] = useState(false);
   const [sort, setSort] = useState('');
 
   const handleCategory = (category) => {
-    const filtering = api.filter((item) => item.category === category);
+    const filtering = products.filter((item) => item.category === category);
     setCate(filtering);
     setFullFilter(true);
   };
 
   const handleAll = () => {
-    setCate(api);
+    setCate(products);
     setFullFilter(false);
   };
 
@@ -24,7 +25,7 @@ const Categories = () => {
   };
 
   const sortedProducts = () => {
-    let sorted = fullFilter ? [...cate] : [...api];
+    let sorted = fullFilter ? [...cate] : [...products];
 
     switch (sort) {
       case 'price-asc':
