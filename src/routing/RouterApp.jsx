@@ -26,10 +26,13 @@ const RouterApp = () => {
 
   const location = useLocation();
 
+  // Function to determine if footer should be displayed
+  const shouldDisplayFooter = !location.pathname.startsWith('/admin');
+
   return (
     <div>
       <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData }}>
-        {location.pathname.startsWith('/admin') ? null : <Navbar isLoggedIn={isLoggedIn} />}
+        {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -42,7 +45,7 @@ const RouterApp = () => {
           <Route path="/category" element={<Categories />} />
           <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         </Routes>
-        <Footer />
+        {shouldDisplayFooter && <Footer />}
         <ScrollToTop />
       </Mycontext.Provider>
     </div>

@@ -1,27 +1,32 @@
 {
   "user": [
     {
-      "id": 1,
+      "id": "1",
       "name": "abhijith",
       "email": "dasf@d.dsfs",
       "password": "121212"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "qq",
       "email": "abhijithabhi36151@gmail.com",
       "password": "212121"
+    },
+    {
+      "id": "3",
+      "name": "ss",
+      "email": "layak3353@gmail.com",
+      "password": "232323"
     }
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Baby Suit",
+      "name": "Baby Suit ",
       "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-      "price": 200,
+      "price": "249",
       "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
       "category": "Boy fashion",
-      "stars": 4.5
+      "id": "1"
     },
     {
       "id": "2",
@@ -76,15 +81,6 @@
       "image": "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
       "category": "Boy fashion",
       "stars": 4.1
-    },
-    {
-      "id": "8",
-      "name": "Baby Feeding Kit",
-      "description": "Adjustable high chair for feeding",
-      "price": 299,
-      "image": "https://e2simages.excess2sell.com/images/products/generapbaba1610687679152_1610687680_lg.jpg",
-      "category": "Feeding",
-      "stars": 4.5
     },
     {
       "id": "9",
@@ -177,15 +173,6 @@
       "stars": 4
     },
     {
-      "id": "19",
-      "name": "Baby Dress",
-      "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-      "price": 349,
-      "image": "https://i.pinimg.com/564x/b2/a3/1a/b2a31a402be3dc03d96a08816638a7b3.jpg",
-      "category": "Boy fashion",
-      "stars": 4.3
-    },
-    {
       "id": "20",
       "name": "Baby Pant",
       "description": "Dress your little princess in our Baby Girl Floral Print Dress. ",
@@ -193,6 +180,14 @@
       "image": "https://images.pexels.com/photos/7282448/pexels-photo-7282448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       "category": "Girl fashion",
       "stars": 4.5
+    },
+    {
+      "id": "eb22",
+      "name": "Baby doll",
+      "description": "best toy for your kid",
+      "price": "399",
+      "image": "https://i.pinimg.com/564x/ff/1c/9f/ff1c9fefbaaf66cc3786ea2b3006e593.jpg",
+      "category": "Toys"
     }
   ]
 }

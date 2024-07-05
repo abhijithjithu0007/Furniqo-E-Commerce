@@ -4,7 +4,7 @@ import { Admincontext } from './ContextAdmin';
 
 const Users = () => {
   const { usersData } = useContext(Admincontext);
-
+console.log(usersData);
   return (
     <div className="w-full max-w-lg mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-4">Users List</h1>

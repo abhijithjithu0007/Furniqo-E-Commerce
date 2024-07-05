@@ -11,17 +11,17 @@ const ContextAdmin = ({children}) => {
     useEffect(() => {
       const userFetch = async () => {
         try {
-          const datas = await fetch("http://localhost:3000/user")
+          const datas = await fetch("https://6b6lwvt1-3000.inc1.devtunnels.ms/user")
           const jsonUser = await datas.json()
           setUsersData(jsonUser)
         } catch (error) {
           console.log("Err", error);
         }
       }
+      
       userFetch()
     }, [])
   
-
 
     return (
         <Admincontext.Provider value={{usersData,setUsersData}}>

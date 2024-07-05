@@ -10,10 +10,15 @@ const ProductDetails = () => {
   const { myCart, setMyCart } = useContext(Mycontext);
   const [carts, setCarts] = useState(null)
 
+
   useEffect(() => {
-    const foundProduct = products.find((val) => val.id === params.id);
+
+    const foundProduct = products.find((val) => val.id.toString() === params.id);
     setCarts(foundProduct)
+    
   }, [products, params.id]);
+ 
+console.log(products);
 
   const navigate = useNavigate();
   const value = localStorage.getItem('isLogin');
@@ -109,7 +114,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

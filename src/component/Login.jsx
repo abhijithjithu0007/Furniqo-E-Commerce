@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mycontext } from './SignUp';
 
+
+
 const Login = ({ setIsLoggedIn }) => {
   const [loginError, setLoginError] = useState({});
   const [userName, setUserName] = useState('');
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
-
   const { adminData } = useContext(Mycontext);
   const { adminName, adminEmail } = adminData;
 
@@ -19,31 +20,39 @@ const Login = ({ setIsLoggedIn }) => {
     setUserPass(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const errors = {};
-    const storedUserData = localStorage.getItem('userData');
-    const users = storedUserData ? JSON.parse(storedUserData) : [];
-
-    const user = users.find(user => user.name === userName && user.password === userPass);
-
-    if (userName === adminName && userPass === adminEmail) {
-      localStorage.setItem('currentUser', JSON.stringify({ name: adminName, email: adminEmail }));
-      localStorage.setItem('isLogin', JSON.stringify(true));
-      setIsLoggedIn(true);
-      navigate('/admin');
-    } else if (!user) {
-      if (!users.find(user => user.name === userName)) {
-        errors.nameErr = '* Name does not match';
+    try {
+      const response = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user');
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
       }
-      if (!users.find(user => user.password === userPass)) {
-        errors.passErr = '* Password does not match';
+      const users = await response.json();
+
+      const user = users.find((user) => user.name === userName && user.password === userPass);
+
+      if (userName === adminName && userPass === adminEmail) {
+        localStorage.setItem('currentUser', JSON.stringify({ name: adminName, email: adminEmail }));
+        localStorage.setItem('isLogin', JSON.stringify(true));
+        setIsLoggedIn(true);
+        navigate('/admin');
+      } else if (!user) {
+        if (!users.find((user) => user.name === userName)) {
+          errors.nameErr = '* Name does not match';
+        }
+        if (!users.find((user) => user.password === userPass)) {
+          errors.passErr = '* Password does not match';
+        }
+        setLoginError(errors);
+      } else {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('isLogin', JSON.stringify(true));
+        setIsLoggedIn(true);
+        navigate('/profile');
       }
-      setLoginError(errors);
-    } else {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('isLogin', JSON.stringify(true));
-      setIsLoggedIn(true);
-      navigate('/profile');
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setLoginError({ nameErr: '* Error fetching user data' });
     }
   };
 

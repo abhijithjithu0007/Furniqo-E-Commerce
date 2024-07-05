@@ -24,12 +24,12 @@ const SignUp = () => {
     if (Object.keys(formError).length === 0) {
       try {
         
-        const usersResponse = await fetch('http://localhost:3000/user');
+        const usersResponse = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user');
         const users = await usersResponse.json();
         const nextId = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
 
         
-        const response = await fetch('http://localhost:3000/user', {
+        const response = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

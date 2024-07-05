@@ -58,7 +58,7 @@ const Home = () => {
           </div>
           <div>
             <Link to={'/category'}>
-              <button className="bg-btnColor text-white py-3 px-6 rounded-lg shadow-lg hover:bg-black transition duration-300 mt-6">
+              <button className="bg-btnColor text-white py-3 px-6 rounded-lg shadow-lg hover:bg-black transition duration-300 ">
                 Shop Now
               </button>
             </Link>

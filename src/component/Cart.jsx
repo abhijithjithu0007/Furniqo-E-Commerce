@@ -79,7 +79,7 @@ const Cart = () => {
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">
                       <h2 className="font-bold">{item.name}</h2>
-                      <p className="text-gray-500">₹{item.price.toFixed(2)}</p>
+                      <p className="text-gray-500">₹{item.price}</p>
                     </div>
                     <div className="flex-row items-center space-x-2 sm:space-x-0 sm:space-y-2 mr-7 sm:mr-0 sm:flex-col">
                       <button onClick={() => decrement(item.id)} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col ">-</button>

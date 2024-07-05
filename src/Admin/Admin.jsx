@@ -7,13 +7,14 @@ import DashBoard from './DashBoard';
 import ContextAdmin from './ContextAdmin';
 import UserDetails from './UserDetails';
 
+
 const Admin = () => {
   return (
     <ContextAdmin>
       <div>
         <div className="flex h-screen">
           <SideBar />
-          <div className="w-4/5 p-8 bg-gray-100">
+          <div className="w-full p-8 bg-gray-100">
             <Routes>
               <Route path="/dashboard" element={<DashBoard />} />
               <Route path="/users" element={<Users />} />
