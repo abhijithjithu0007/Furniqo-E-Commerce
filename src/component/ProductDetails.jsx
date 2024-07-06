@@ -18,19 +18,16 @@ const ProductDetails = () => {
     
   }, [products, params.id]);
  
-console.log(products);
-
   const navigate = useNavigate();
   const value = localStorage.getItem('isLogin');
   const isLogin = JSON.parse(value);
 
   const addToCart = () => {
-    
     const isClicked = myCart.find((item) => item.id === carts.id);
     if (isClicked) {
       alert('Product already added');
     } else if (!isLogin) {
-      alert('You don\'t have an account. Please login.');
+      alert('You don t have an account. Please login.');
       navigate('/signup');
     } else {
       const newCartItem = {

@@ -17,6 +17,9 @@ import Admin from '../Admin/Admin';
 import DashBoard from '../Admin/DashBoard';
 import useFetchProducts from '../component/CoustumeHook';
 
+
+
+
 const RouterApp = () => {
   const [userData, setUserData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
@@ -26,12 +29,15 @@ const RouterApp = () => {
 
   const location = useLocation();
 
-  // Function to determine if footer should be displayed
+
+  const [currentUser,setCurrentUser] = useState()
+
+
   const shouldDisplayFooter = !location.pathname.startsWith('/admin');
 
   return (
     <div>
-      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData }}>
+      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData,currentUser,setCurrentUser }}>
         {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
         <Routes>
           <Route path="/" element={<Home />} />

@@ -24,7 +24,6 @@ const Navbar = ({ isLoggedIn }) => {
   const isLog = JSON.parse(localStorage.getItem('isLogin'))
 
   const { name = '' } = user ? JSON.parse(user) : {};
-console.log(name);
   const handleProfile = () => {
     navigate(isLoggedIn ? '/profile' : '/login');
     setIsMenuOpen(false);

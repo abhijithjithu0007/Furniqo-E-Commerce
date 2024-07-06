@@ -1,22 +1,16 @@
 {
   "user": [
     {
-      "id": "1",
+      "id": 1,
       "name": "abhijith",
       "email": "dasf@d.dsfs",
-      "password": "121212"
+      "password": "111222"
     },
     {
-      "id": "2",
-      "name": "qq",
-      "email": "abhijithabhi36151@gmail.com",
-      "password": "212121"
-    },
-    {
-      "id": "3",
+      "id": 2,
       "name": "ss",
       "email": "layak3353@gmail.com",
-      "password": "232323"
+      "password": "22222"
     }
   ],
   "products": [
