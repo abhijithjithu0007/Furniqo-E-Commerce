@@ -5,13 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
 import img from '../assets/logo.png';
 import useFetchProducts from '../component/CoustumeHook';
+import { cartContext } from '../component/CartContext';
 
 const Navbar = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  const {total}= useContext(cartContext)
   const navigate = useNavigate();
   const { products, loading, error } = useFetchProducts();
   const { myCart } = useContext(Mycontext);
@@ -84,7 +85,7 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/cart'} className="flex items-center text-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-12 right-9">{myCart.length}</span>
+            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-12 right-9">{total.length}</span>
           </Link>
           <div className='mt-6'>
             <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />

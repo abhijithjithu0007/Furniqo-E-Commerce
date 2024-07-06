@@ -1,40 +1,47 @@
-import React, { useContext, useState } from 'react';
-import { Mycontext } from './SignUp';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
 
 const Cart = () => {
-  const { myCart, setMyCart } = useContext(Mycontext);
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
+  const [myPro, setMyPro] = useState([]);
+  const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+  const myID = currentUserData.id;
+  const navigate = useNavigate();
 
   const handleRemove = (key) => {
-    const remove = myCart.filter((val) => val.id !== key);
-    setMyCart(remove);
+    const updatedCart = myPro.filter(item => item.id !== key);
+    setMyPro(updatedCart);
   };
 
-  const handleRemoveAll = () => {
-    setMyCart([]);
-  };
+  useEffect(() => {
+    fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`)
+      .then(response => response.json())
+      .then(data => {
+        setMyPro(data.cart || []);
+      })
+      .catch(error => console.error('Error fetching user data:', error));
+  }, [myID]);
 
   const increment = (key) => {
-    const updatedCart = myCart.map((item) => {
+    const updatedCart = myPro.map((item) => {
       if (item.id === key) {
         return { ...item, quantity: item.quantity + 1 };
       }
       return item;
     });
-    setMyCart(updatedCart);
+    setMyPro(updatedCart);
   };
 
   const decrement = (key) => {
-    const updatedCart = myCart.map((item) => {
+    const updatedCart = myPro.map((item) => {
       if (item.id === key && item.quantity > 1) {
         return { ...item, quantity: item.quantity - 1 };
       }
       return item;
     });
-    setMyCart(updatedCart);
+    setMyPro(updatedCart);
   };
 
   const openCheckoutPopup = () => {
@@ -45,20 +52,20 @@ const Cart = () => {
     setShowPopup(false);
   };
 
-  const navigate = useNavigate()
-
   const handlePay = () => {
-    alert("Payment Successful")
-    navigate('/category')
-    setMyCart([])
-  }
+    alert("Payment Successful");
+    navigate('/category');
+    setMyPro([]);
+  };
 
   return (
     <div className="container mx-auto p-4">
-      {myCart.length === 0 ? (
+      {myPro.length === 0 ? (
         <div>
           <p className="text-center text-2xl text-gray-500">Your cart is empty!</p>
-          <Link to={'/category'}><p className='text-center text-red-400 mt-10 underline'>Add some products! Click here</p></Link>
+          <Link to={'/category'}>
+            <p className='text-center text-red-400 mt-10 underline'>Add some products! Click here</p>
+          </Link>
         </div>
       ) : (
         <div className="container mx-auto ">
@@ -74,7 +81,7 @@ const Cart = () => {
           <div className="flex flex-col lg:flex-row lg:space-x-8">
             <div className="flex-1">
               <div className="border-b border-gray-300 pb-4 mb-4">
-                {myCart.map((item, index) => (
+                {myPro.map((item, index) => (
                   <div key={index} className="flex justify-between items-center mb-4">
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">
@@ -99,11 +106,11 @@ const Cart = () => {
               <h2 className="text-xl font-bold mb-4">Cart Totals</h2>
               <div className="flex justify-between mb-2">
                 <p>Items</p>
-                <p>{myCart.reduce((acc, item) => acc + item.quantity, 0)}</p>
+                <p>{myPro.reduce((acc, item) => acc + item.quantity, 0)}</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p>Subtotal</p>
-                <p>₹{myCart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}</p>
+                <p>₹{myPro.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p>Shipping</p>
@@ -115,7 +122,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between font-bold mb-4">
                 <p>Total</p>
-                <p className='text-xl'>₹{(myCart.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}</p>
+                <p className='text-xl'>₹{(myPro.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}</p>
               </div>
               <button onClick={openCheckoutPopup} className="bg-black text-white w-full py-2 rounded">Proceed to Checkout</button>
               <Link to={'/category'} className="block text-center text-gray-600 mt-4">Continue Shopping</Link>
@@ -131,7 +138,7 @@ const Cart = () => {
               <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
             </button>
             <div className='h-[200px] overflow-y-scroll'>
-              {myCart.map((item, key) => (
+              {myPro.map((item, key) => (
                 <div key={key} className="flex items-center gap-4 border-b pb-4 mb-4">
                   <img className="w-16 h-16 object-cover rounded" src={item.image} alt={item.name} />
                   <div>
@@ -236,7 +243,7 @@ const Cart = () => {
               )}
 
               <button onClick={handlePay} className="w-full bg-teal-500 text-white rounded-md py-2">
-                Pay ₹{(myCart.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}
+                Pay ₹{(myPro.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}
               </button>
             </div>
           </div>

@@ -16,6 +16,7 @@ import ProtectedRoute from '../component/ProtectedRoute';
 import Admin from '../Admin/Admin';
 import DashBoard from '../Admin/DashBoard';
 import useFetchProducts from '../component/CoustumeHook';
+import CartContextProvider from '../component/CartContext';
 
 
 
@@ -30,28 +31,30 @@ const RouterApp = () => {
   const location = useLocation();
 
 
-  const [currentUser,setCurrentUser] = useState()
+  const [currentUser, setCurrentUser] = useState()
 
 
   const shouldDisplayFooter = !location.pathname.startsWith('/admin');
 
   return (
     <div>
-      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData,currentUser,setCurrentUser }}>
-        {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/category/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/category" element={<Categories />} />
-          <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-        </Routes>
-        {shouldDisplayFooter && <Footer />}
+      <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData, currentUser, setCurrentUser }}>
+        <CartContextProvider>
+          {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/category/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/category" element={<Categories />} />
+            <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          </Routes>
+          {shouldDisplayFooter && <Footer />}
+        </CartContextProvider>
         <ScrollToTop />
       </Mycontext.Provider>
     </div>

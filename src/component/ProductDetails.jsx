@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Mycontext } from './SignUp';
 import Footer from './Footer';
@@ -8,40 +8,80 @@ const ProductDetails = () => {
   const params = useParams();
   const { products, loading, error } = useFetchProducts();
   const { myCart, setMyCart } = useContext(Mycontext);
-  const [carts, setCarts] = useState(null)
-
-
-  useEffect(() => {
-
-    const foundProduct = products.find((val) => val.id.toString() === params.id);
-    setCarts(foundProduct)
-    
-  }, [products, params.id]);
- 
+  const [carts, setCarts] = useState(null);
   const navigate = useNavigate();
   const value = localStorage.getItem('isLogin');
   const isLogin = JSON.parse(value);
 
-  const addToCart = () => {
-    const isClicked = myCart.find((item) => item.id === carts.id);
-    if (isClicked) {
-      alert('Product already added');
-    } else if (!isLogin) {
-      alert('You don t have an account. Please login.');
-      navigate('/signup');
-    } else {
-      const newCartItem = {
-        id: carts.id,
-        name: carts.name,
-        price: carts.price,
-        description: carts.description,
-        image: carts.image,
-        category: carts.category,
-        quantity: 1,
-        stars: carts.stars,
-      };
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/products/${params.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      setMyCart([...myCart, newCartItem]);
+        if (!response.ok) {
+          throw new Error('Failed to fetch product details');
+        }
+
+        const productData = await response.json();
+        setCarts(productData);
+      } catch (error) {
+        console.error('Error fetching product details:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [params.id]);
+
+  const addToCart = async () => {
+    try {
+      const isClicked = myCart.find((item) => item.id === carts.id);
+      if (isClicked) {
+        alert('Product already added');
+      } else if (!isLogin) {
+        alert('You don’t have an account. Please login.');
+        navigate('/signup');
+      } else {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        currentUser.cart = currentUser.cart || [];
+        currentUser.cart.push({
+          id: carts.id,
+          name: carts.name,
+          price: carts.price,
+          description: carts.description,
+          image: carts.image,
+          category: carts.category,
+          quantity: 1,
+          stars: carts.stars,
+        });
+
+        const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...currentUser,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update cart on server');
+        }
+
+        const updatedUser = await response.json();
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+        alert('Product added to cart successfully');
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      alert('Failed to add product to cart');
     }
   };
 
@@ -55,6 +95,7 @@ const ProductDetails = () => {
             <img
               src={carts.image}
               className="w-full md:w-[350px] rounded h-[350px] object-cover"
+              alt={carts.name}
             />
             <div className="md:w-1/2 mt-4 md:mt-0">
               <h2 className="text-3xl font-bold mb-2">{carts.name}</h2>
@@ -101,6 +142,7 @@ const ProductDetails = () => {
                   <img
                     src={item.image}
                     className="w-full rounded mb-4 h-[200px] object-cover"
+                    alt={item.name}
                   />
                   <h4 className="text-lg font-semibold mb-2">{item.name}</h4>
                   <p className="text-yellow-500 text-xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
