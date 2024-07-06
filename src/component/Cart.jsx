@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
+import { cartContext } from './CartContext';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [myPro, setMyPro] = useState([]);
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+  const {setTotal} = useContext(cartContext)
   const myID = currentUserData.id;
   const navigate = useNavigate();
 
@@ -14,6 +16,11 @@ const Cart = () => {
     const updatedCart = myPro.filter(item => item.id !== key);
     setMyPro(updatedCart);
   };
+
+
+useEffect(()=>{
+  setTotal(myPro)
+})
 
   useEffect(() => {
     fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`)
