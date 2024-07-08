@@ -4,8 +4,6 @@ import React,{createContext, useState} from 'react'
 
 export const cartContext = createContext()
 
-
-
 const CartContextProvider = ({children}) => {
     const [total,setTotal] = useState([])
   return (

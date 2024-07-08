@@ -15,7 +15,7 @@ const Navbar = ({ isLoggedIn }) => {
   const {total}= useContext(cartContext)
   const navigate = useNavigate();
   const { products, loading, error } = useFetchProducts();
-  const { myCart } = useContext(Mycontext);
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -100,13 +100,38 @@ const Navbar = ({ isLoggedIn }) => {
         </button>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-200 py-2">
-          <ul className="flex flex-col items-center space-y-2">
-            <li><Link to="/" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Home</Link></li>
-            <li><Link to="/category" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Category</Link></li>
-            <li><Link to="/contactus" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>Contact Us</Link></li>
-          </ul>
-        </div>
+       <div className="md:hidden bg-gray-800 py-4">
+  <ul className="flex flex-col items-center space-y-4">
+    <li>
+      <Link
+        to="/"
+        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+        onClick={toggleMenu}
+      >
+        Home
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/category"
+        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+        onClick={toggleMenu}
+      >
+        Category
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/contactus"
+        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+        onClick={toggleMenu}
+      >
+        Contact Us
+      </Link>
+    </li>
+  </ul>
+</div>
+
       )}
     </div>
   );

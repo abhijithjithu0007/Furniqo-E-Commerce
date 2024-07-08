@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
+import { cartContext } from '../component/CartContext';
 
 const Profile = () => {
-  const { userData, setIsLoggedIn ,myCart,setMyCart} = useContext(Mycontext);
+  const { userData, setIsLoggedIn} = useContext(Mycontext);
+  const {setTotal} = useContext(cartContext)
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.setItem('isLogin', JSON.stringify(false));
     setIsLoggedIn(false);
     navigate('/login');
-    setMyCart([])
+    setTotal([])
   };
 
   const adress = localStorage.getItem('currentUser');
-
   const { name = '', email='' } = adress ? JSON.parse(adress) : {};
   
 

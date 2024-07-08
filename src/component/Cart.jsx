@@ -12,15 +12,29 @@ const Cart = () => {
   const myID = currentUserData.id;
   const navigate = useNavigate();
 
-  const handleRemove = (key) => {
+  const handleRemove = async (key) => {
     const updatedCart = myPro.filter(item => item.id !== key);
-    setMyPro(updatedCart);
+    try {
+      const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cart: updatedCart }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update cart');
+      }
+      setMyPro(updatedCart);
+    } catch (error) {
+      console.error('Error updating cart:', error);
+    }
   };
 
 
 useEffect(()=>{
   setTotal(myPro)
-})
+},[handleRemove])
 
   useEffect(() => {
     fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`)
@@ -64,6 +78,7 @@ useEffect(()=>{
     navigate('/category');
     setMyPro([]);
   };
+  
 
   return (
     <div className="container mx-auto p-4">
@@ -89,18 +104,19 @@ useEffect(()=>{
             <div className="flex-1">
               <div className="border-b border-gray-300 pb-4 mb-4">
                 {myPro.map((item, index) => (
+                  
                   <div key={index} className="flex justify-between items-center mb-4">
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">
                       <h2 className="font-bold">{item.name}</h2>
                       <p className="text-gray-500">₹{item.price}</p>
+                      <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                     <div className="flex-row items-center space-x-2 sm:space-x-0 sm:space-y-2 mr-7 sm:mr-0 sm:flex-col">
                       <button onClick={() => decrement(item.id)} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col ">-</button>
                       <span className="px-1">{item.quantity}</span>
                       <button onClick={() => increment(item.id)} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col">+</button>
                     </div>
-
                     <p className="font-bold mr-7">₹{(item.price * item.quantity).toFixed(2)}</p>
                     <button onClick={() => handleRemove(item.id)} className="text-gray-500">
                       <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
@@ -145,8 +161,8 @@ useEffect(()=>{
               <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
             </button>
             <div className='h-[200px] overflow-y-scroll'>
-              {myPro.map((item, key) => (
-                <div key={key} className="flex items-center gap-4 border-b pb-4 mb-4">
+              {myPro.map((item, id) => (
+                <div key={id} className="flex items-center gap-4 border-b pb-4 mb-4">
                   <img className="w-16 h-16 object-cover rounded" src={item.image} alt={item.name} />
                   <div>
                     <h2 className="text-xl font-semibold">{item.name}</h2>

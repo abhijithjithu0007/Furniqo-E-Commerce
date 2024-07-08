@@ -123,8 +123,8 @@ const Categories = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {sortedProducts().map((item, key) => (
-            <Link to={`/category/${item.id}`} key={key} className="w-full">
+          {sortedProducts().map((item, id) => (
+            <Link to={`/category/${item.id}`} key={id} className="w-full">
               <div className="shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white">
                 <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
                 <div className="p-4">

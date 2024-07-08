@@ -17,247 +17,34 @@
           "stars": 4.2
         },
         {
-          "id": "20",
-          "name": "Baby Pant",
-          "price": 99,
-          "description": "Dress your little princess in our Baby Girl Floral Print Dress. ",
-          "image": "https://images.pexels.com/photos/7282448/pexels-photo-7282448.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.5
-        },
-        {
-          "id": "1",
-          "name": "Baby Suit ",
-          "price": "249",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
-          "quantity": 1
-        },
-        {
-          "id": "7",
-          "name": "Baby Dress",
-          "price": 299,
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
-          "category": "Boy fashion",
-          "quantity": 1,
-          "stars": 4.1
-        },
-        {
-          "id": "7",
-          "name": "Baby Dress",
-          "price": 299,
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
-          "category": "Boy fashion",
-          "quantity": 1,
-          "stars": 4.1
-        },
-        {
-          "id": "3",
-          "name": "Baby Lotions",
-          "price": 549,
-          "description": "BPA-free bottle for feeding",
-          "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
-          "category": "Lotions",
-          "quantity": 1,
-          "stars": 3.8
-        },
-        {
-          "id": "3",
-          "name": "Baby Lotions",
-          "price": 549,
-          "description": "BPA-free bottle for feeding",
-          "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
-          "category": "Lotions",
-          "quantity": 1,
-          "stars": 3.8
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "9",
-          "name": "Baby Frock",
-          "price": 229,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "4",
-          "name": "Baby Frock",
-          "price": 149,
-          "description": "Soft and breathable fabric for all-day comfort.",
-          "image": "https://babiesfrock.in/cdn/shop/products/imgonline-com-ua-resize-9u51T1EhlSzHvvRe.jpg?v=1675062223",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4
-        },
-        {
-          "id": "3",
-          "name": "Baby Lotions",
-          "price": 549,
-          "description": "BPA-free bottle for feeding",
-          "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
-          "category": "Lotions",
-          "quantity": 1,
-          "stars": 3.8
-        },
-        {
-          "id": "7",
-          "name": "Baby Dress",
-          "price": 299,
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://images-na.ssl-images-amazon.com/images/I/518hBZ0S6kL.jpg",
-          "category": "Boy fashion",
-          "quantity": 1,
-          "stars": 4.1
-        },
-        {
-          "id": "1",
-          "name": "Baby Suit ",
-          "price": "249",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
-          "quantity": 1
-        },
-        {
-          "id": "1",
-          "name": "Baby Suit ",
-          "price": "249",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
-          "quantity": 1
-        },
-        {
-          "id": "1",
-          "name": "Baby Suit ",
-          "price": "249",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
-          "quantity": 1
-        },
-        {
-          "id": "3",
-          "name": "Baby Lotions",
-          "price": 549,
-          "description": "BPA-free bottle for feeding",
-          "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
-          "category": "Lotions",
-          "quantity": 1,
-          "stars": 3.8
-        },
-        {
-          "id": "3",
-          "name": "Baby Lotions",
-          "price": 549,
-          "description": "BPA-free bottle for feeding",
-          "image": "https://i.pinimg.com/564x/e9/11/19/e91119b5b124ba183368f0e3d72218d8.jpg",
-          "category": "Lotions",
-          "quantity": 1,
-          "stars": 3.8
-        },
-        {
-          "id": "11",
-          "name": "Baby Bath Tub",
-          "price": 1589,
-          "description": "Safety-tested car seat for infants",
-          "image": "https://images.pexels.com/photos/914253/pexels-photo-914253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          "category": "Accessories",
-          "quantity": 1,
-          "stars": 4
-        },
-        {
-          "id": "2",
-          "name": "Baby Frock",
-          "price": 159,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/564x/90/ce/58/90ce5849d2cebf0e72453f697674af93.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": "1",
-          "name": "Baby Suit ",
-          "price": "249",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
+          "id": 17,
+          "name": "Baby Foot Wear",
+          "description": "Fast and safe bottle warmer for feeding",
+          "price": 119,
+          "image": "https://i.pinimg.com/564x/46/87/4b/46874bdb8c83aa6919894e1e02941dae.jpg",
+          "category": "Footwear",
+          "stars": 4.2,
           "quantity": 1
         }
       ]
     },
     {
-      "id": "550c",
-      "userId": 1,
-      "productId": "1",
-      "productName": "Baby Suit ",
-      "quantity": 1,
-      "price": "249"
-    },
-    {
-      "id": "c89a",
-      "userId": 1,
-      "productId": "14",
-      "productName": "Baby Suit",
-      "quantity": 1,
-      "price": 279
+      "id": "2",
+      "name": "jithu",
+      "email": "layak3353@gmail.com",
+      "password": "00000",
+      "cart": [
+        {
+          "id": 11,
+          "name": "Baby Bath Tub",
+          "description": "Safety-tested car seat for infants",
+          "price": 1589,
+          "image": "https://images.pexels.com/photos/914253/pexels-photo-914253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "category": "Accessories",
+          "stars": 4,
+          "quantity": 1
+        }
+      ]
     }
   ],
   "products": [

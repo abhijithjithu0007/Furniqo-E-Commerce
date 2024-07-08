@@ -36,47 +36,56 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [params.id]);
+  
 
   const addToCart = async () => {
     try {
-      const isClicked = myCart.find((item) => item.id === carts.id);
-      if (isClicked) {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+  
+      const userData = await response.json();
+      const userCart = userData.cart || [];
+  
+      // Convert carts.id to a number
+      const productId = +carts.id;
+  
+      const isProductInCart = userCart.find((item) => item.id === productId);
+      if (isProductInCart) {
         alert('Product already added');
       } else if (!isLogin) {
         alert('You don’t have an account. Please login.');
         navigate('/signup');
       } else {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        currentUser.cart = currentUser.cart || [];
-        currentUser.cart.push({
-          id: carts.id,
-          name: carts.name,
-          price: carts.price,
-          description: carts.description,
-          image: carts.image,
-          category: carts.category,
-          quantity: 1,
-          stars: carts.stars,
-        });
-
-        const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
+        userCart.push({ ...carts, id: productId , quantity:1 });
+  
+        const updateResponse = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            ...currentUser,
+            ...userData,
+            cart: userCart,
           }),
         });
-
-        if (!response.ok) {
+  
+        if (!updateResponse.ok) {
           throw new Error('Failed to update cart on server');
         }
-
-        const updatedUser = await response.json();
+  
+        const updatedUser = await updateResponse.json();
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-
+        setMyCart(userCart);
+  
         alert('Product added to cart successfully');
       }
     } catch (error) {
@@ -84,6 +93,7 @@ const ProductDetails = () => {
       alert('Failed to add product to cart');
     }
   };
+  
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
@@ -136,8 +146,8 @@ const ProductDetails = () => {
         <div className="mt-8">
           <h3 className="text-2xl font-semibold mb-4 border-b-2 border-btnColor">You may also like...</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {related.map((item, key) => (
-              <Link to={`/category/${item.id}`} key={key}>
+            {related.map((item, id) => (
+              <Link to={`/category/${item.id}`} key={id}>
                 <div className="rounded p-4 w-full text-center">
                   <img
                     src={item.image}
