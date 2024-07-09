@@ -22,7 +22,7 @@ const Home = () => {
     ScrollReveal().reveal('.imgclass', {
       origin: "right",
       distance: "40px",
-      duration: 1000,
+      duration: 2000,
       delay: 100,
       easing: "ease",
       reset:true,

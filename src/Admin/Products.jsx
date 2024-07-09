@@ -41,9 +41,7 @@ const Products = () => {
         setProductData(updatedProducts);
         setProducts(updatedProducts.filter(product => !product.deleted))
         alert("Product temporarily deleted");
-      } else {
-        console.error('Failed to delete the product');
-      }
+      } 
     } catch (error) {
       console.error('Error:', error);
     }

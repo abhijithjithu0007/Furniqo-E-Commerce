@@ -6,7 +6,7 @@ import useFetchProducts from './CoustumeHook';
 
 const ProductDetails = () => {
   const params = useParams();
-  const { products, loading, error } = useFetchProducts();
+  const { products } = useFetchProducts();
   const { myCart, setMyCart } = useContext(Mycontext);
   const [carts, setCarts] = useState(null);
   const navigate = useNavigate();
@@ -54,8 +54,6 @@ const ProductDetails = () => {
   
       const userData = await response.json();
       const userCart = userData.cart || [];
-  
-      // Convert carts.id to a number
       const productId = +carts.id;
   
       const isProductInCart = userCart.find((item) => item.id === productId);

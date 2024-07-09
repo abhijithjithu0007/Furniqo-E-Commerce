@@ -24,7 +24,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
-    </ContextAdmin>
+    </ContextAdmin>  
   );
 }
 

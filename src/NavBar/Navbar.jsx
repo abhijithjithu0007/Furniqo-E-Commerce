@@ -50,27 +50,27 @@ const Navbar = ({ isLoggedIn }) => {
     <div className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[95px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to='/home'>
-          <img src={img} alt="Logo" className="h-10 md:h-16" />
+          <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
         <ul className="hidden md:flex space-x-6 font-bold">
-          <li><Link to="/" className="hover:text-gray-500 text-lg">Home</Link></li>
-          <li><Link to="/category" className="hover:text-gray-500 text-lg">Category</Link></li>
-          <li><Link to="/contactus" className="hover:text-gray-500 text-lg">Contact Us</Link></li>
+          <li><Link to="/" className="hover:text-gray-500 text-sm">Home</Link></li>
+          <li><Link to="/category" className="hover:text-gray-500 text-sm">Category</Link></li>
+          <li><Link to="/contactus" className="hover:text-gray-500 text-sm">Contact Us</Link></li>
         </ul>
         <div className="flex items-center space-x-4 relative">
           <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search here' className="w-full text-black md:w-auto px-3 py-2 rounded-lg bg-white border focus:outline-none focus:ring-2 focus:ring-black" />
           {isOpen && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-35 flex justify-center items-start pt-20 z-50">
               <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl relative overflow-auto max-h-screen">
-                <h2 className="text-2xl font-bold mb-4 text-blue-600">Search Results</h2>
-                <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900">X</button>
+                <h2 className="text-2xl font-bold mb-4 text-btnColor">Search Results</h2>
+                <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-600  hover:text-gray-900">X</button>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
                       <Link key={index} to={`/category/${product.id}`} onClick={linkClick}>
                         <div className="border rounded-lg p-4 shadow-lg transform hover:scale-105 transition duration-150 bg-white hover:bg-gray-100">
                           <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md" />
-                          <h2 className="text-lg font-semibold mt-4 text-blue-700">{product.name}</h2>
+                          <h2 className="text-lg font-semibold mt-4 text-black">{product.name}</h2>
                           <p className="text-green-500 text-xl mt-2">${product.price}</p>
                           <p className="text-gray-600 mt-2">{product.description}</p>
                         </div>

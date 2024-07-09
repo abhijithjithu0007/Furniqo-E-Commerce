@@ -22,12 +22,9 @@ const Cart = () => {
         },
         body: JSON.stringify({ cart: updatedCart }),
       });
-      if (!response.ok) {
-        throw new Error('Failed to update cart');
-      }
       setMyPro(updatedCart);
     } catch (error) {
-      console.error('Error updating cart:', error);
+      console.error(error);
     }
   };
 
@@ -180,7 +177,7 @@ useEffect(()=>{
                   <img
                     src="https://www.yesbank.in/content/published/api/v1.1/assets/CONT5B67344201F14EB887CF99754FB0F6F8/native/BYOC-CARD.png?channelToken=580bc0ffbe3a47d690505e5f6d06e1c8"
                     alt="Card"
-                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'card' ? 'border-2 border-teal-500 rounded-full' : ''}`}
+                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'card' ? 'border-2 border-btnColor rounded-full' : ''}`}
                     onClick={() => setPaymentMethod('card')}
                   />
                   <span className="mt-2">Card</span>
@@ -189,7 +186,7 @@ useEffect(()=>{
                   <img
                     src="https://m.economictimes.com/thumb/msid-74960608,width-1200,height-900,resizemode-4,imgsize-49172/upi-twitter.jpg"
                     alt="UPI"
-                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'upi' ? 'border-2 border-teal-500 rounded-full' : ''}`}
+                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'upi' ? 'border-2 border-btnColor rounded-full' : ''}`}
                     onClick={() => setPaymentMethod('upi')}
                   />
                   <span className="mt-2">UPI</span>
@@ -198,7 +195,7 @@ useEffect(()=>{
                   <img
                     src="https://okcredit-blog-images-prod.storage.googleapis.com/2021/05/cashondelivery1.jpg"
                     alt="Cash on Delivery"
-                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'cod' ? 'border-2 border-teal-500 rounded-full' : ''}`}
+                    className={`w-16 h-16 cursor-pointer ${paymentMethod === 'cod' ? 'border-2 border-btnColor rounded-full' : ''}`}
                     onClick={() => setPaymentMethod('cod')}
                   />
                   <span className="mt-2">COD</span>
@@ -265,7 +262,7 @@ useEffect(()=>{
                 </div>
               )}
 
-              <button onClick={handlePay} className="w-full bg-teal-500 text-white rounded-md py-2">
+              <button onClick={handlePay} className="w-full bg-btnColor text-white rounded-md py-2">
                 Pay ₹{(myPro.reduce((acc, item) => acc + item.price * item.quantity, 0) + 5.25).toFixed(2)}
               </button>
             </div>

@@ -25,6 +25,34 @@
           "category": "Footwear",
           "stars": 4.2,
           "quantity": 1
+        },
+        {
+          "name": "Baby Suit ",
+          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+          "price": "249",
+          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
+          "category": "Boy fashion",
+          "id": 1,
+          "quantity": 1
+        },
+        {
+          "id": 14,
+          "name": "Baby Suit",
+          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+          "price": 279,
+          "image": "https://image.made-in-china.com/202f0j00ygLfFEpdaGqY/Baby-Boys-Girls-Clothes-Baby-Sculpt-Rompers-Baby-Winter-Warm-Clothes-babies-Hoodie.jpg",
+          "category": "Boy fashion",
+          "stars": 4.4,
+          "quantity": 1
+        },
+        {
+          "name": "Baby Shoe",
+          "description": "Comfort Smooth Shoe For Your Babies",
+          "price": "290",
+          "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
+          "category": "Footwear",
+          "id": null,
+          "quantity": 1
         }
       ]
     },
@@ -42,6 +70,32 @@
           "image": "https://images.pexels.com/photos/914253/pexels-photo-914253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
           "category": "Accessories",
           "stars": 4,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "kannan",
+      "email": "kannan@gmail.com",
+      "password": "0000",
+      "cart": [
+        {
+          "id": null,
+          "name": "Baby doll",
+          "description": "best toy for your kid",
+          "price": "399",
+          "image": "https://i.pinimg.com/564x/ff/1c/9f/ff1c9fefbaaf66cc3786ea2b3006e593.jpg",
+          "category": "Toys",
+          "quantity": 1
+        },
+        {
+          "name": "Baby Shoe",
+          "description": "Comfort Smooth Shoe For Your Babies",
+          "price": "290",
+          "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
+          "category": "Footwear",
+          "id": null,
           "quantity": 1
         }
       ]
@@ -138,15 +192,6 @@
       "stars": 4
     },
     {
-      "id": "12",
-      "name": "Baby Footwear",
-      "description": "Colorful mobile for crib entertainment",
-      "price": 129,
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdIpWP1GtszfSLSQquDSH0tLI5DJgp9GhYtA&s",
-      "category": "Footwear",
-      "stars": 4.3
-    },
-    {
       "id": "13",
       "name": "Baby Bed",
       "description": "Soft and breathable swaddle blanket",
@@ -216,6 +261,14 @@
       "price": "399",
       "image": "https://i.pinimg.com/564x/ff/1c/9f/ff1c9fefbaaf66cc3786ea2b3006e593.jpg",
       "category": "Toys"
+    },
+    {
+      "name": "Baby Shoe",
+      "description": "Comfort Smooth Shoe For Your Babies",
+      "price": "290",
+      "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
+      "category": "Footwear",
+      "id": "cfd3"
     }
   ]
 }

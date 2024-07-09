@@ -28,7 +28,6 @@ const SignUp = () => {
         const users = await usersResponse.json();
         const nextId = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
       const mainId = nextId.toString()
-      console.log(mainId);
         
         const response = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user', {
           method: 'POST',

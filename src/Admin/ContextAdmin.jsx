@@ -7,7 +7,6 @@ const ContextAdmin = ({children}) => {
 
     const [usersData, setUsersData] = useState([])
 
-
     useEffect(() => {
       const userFetch = async () => {
         try {
