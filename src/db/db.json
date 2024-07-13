@@ -97,6 +97,16 @@
           "category": "Footwear",
           "id": null,
           "quantity": 1
+        },
+        {
+          "id": 9,
+          "name": "Baby Frock",
+          "description": "Soft and breathable fabric for all-day comfort. ",
+          "price": 229,
+          "image": "https://i.pinimg.com/736x/09/be/23/09be2368425c3e7f347097561bded13e.jpg",
+          "category": "Girl fashion",
+          "stars": 4.2,
+          "quantity": 1
         }
       ]
     }

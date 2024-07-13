@@ -2,8 +2,7 @@ import React, { createContext, useState ,useEffect} from 'react'
 
 
 export const Admincontext = createContext()
-const ContextAdmin = ({children}) => {
-    
+const ContextAdmin = ({children}) => { 
 
     const [usersData, setUsersData] = useState([])
 
@@ -17,7 +16,6 @@ const ContextAdmin = ({children}) => {
           console.log("Err", error);
         }
       }
-      
       userFetch()
     }, [])
   

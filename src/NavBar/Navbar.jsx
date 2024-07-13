@@ -12,7 +12,7 @@ const Navbar = ({ isLoggedIn }) => {
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const {total}= useContext(cartContext)
+  const { total } = useContext(cartContext)
   const navigate = useNavigate();
   const { products, loading, error } = useFetchProducts();
 
@@ -85,13 +85,14 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/cart'} className="flex items-center text-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl absolute bottom-12 right-9">{total.length}</span>
+            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl relative bottom-5 right-3">{total.length}</span>
           </Link>
-          <div className='mt-6'>
-            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
-          {isLog?(<p>{name}</p>):""}  
+          <div className='mt-2'>
+            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 sticky" onClick={handleProfile} />
+            <div>
+            {isLog ? (<p className=''>{name}</p>) : ""}
+            </div>
           </div>
-
         </div>
         <button onClick={toggleMenu} className="md:hidden focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 hover:text-gray-900" viewBox="0 0 20 20" fill="currentColor">
@@ -100,37 +101,37 @@ const Navbar = ({ isLoggedIn }) => {
         </button>
       </div>
       {isMenuOpen && (
-       <div className="md:hidden bg-gray-800 py-4">
-  <ul className="flex flex-col items-center space-y-4">
-    <li>
-      <Link
-        to="/"
-        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
-        onClick={toggleMenu}
-      >
-        Home
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/category"
-        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
-        onClick={toggleMenu}
-      >
-        Category
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/contactus"
-        className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
-        onClick={toggleMenu}
-      >
-        Contact Us
-      </Link>
-    </li>
-  </ul>
-</div>
+        <div className="md:hidden bg-gray-800 py-4">
+          <ul className="flex flex-col items-center space-y-4">
+            <li>
+              <Link
+                to="/"
+                className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={toggleMenu}
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/category"
+                className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={toggleMenu}
+              >
+                Category
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/contactus"
+                className="text-white hover:text-btnColor transition duration-300 ease-in-out transform hover:scale-105"
+                onClick={toggleMenu}
+              >
+                Contact Us
+              </Link>
+            </li>
+          </ul>
+        </div>
 
       )}
     </div>

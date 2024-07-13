@@ -8,13 +8,11 @@ import Login from '../component/Login';
 import Profile from '../Pages/Profile';
 import ProductDetails from '../component/ProductDetails';
 import Cart from '../component/Cart';
-
 import Categories from '../Pages/Categories';
 import ScrollToTop from '../component/Scroll';
 import Footer from '../component/Footer';
 import ProtectedRoute from '../component/ProtectedRoute';
 import Admin from '../Admin/Admin';
-import DashBoard from '../Admin/DashBoard';
 import useFetchProducts from '../component/CoustumeHook';
 import CartContextProvider from '../component/CartContext';
 
@@ -32,8 +30,6 @@ const RouterApp = () => {
 
 
   const [currentUser, setCurrentUser] = useState()
-
-
   const shouldDisplayFooter = !location.pathname.startsWith('/admin');
 
   return (
