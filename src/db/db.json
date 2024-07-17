@@ -7,51 +7,42 @@
       "password": "111222",
       "cart": [
         {
-          "id": "2",
-          "name": "Baby Frock",
-          "price": 159,
-          "description": "Soft and breathable fabric for all-day comfort. ",
-          "image": "https://i.pinimg.com/564x/90/ce/58/90ce5849d2cebf0e72453f697674af93.jpg",
-          "category": "Girl fashion",
-          "quantity": 1,
-          "stars": 4.2
-        },
-        {
-          "id": 17,
-          "name": "Baby Foot Wear",
-          "description": "Fast and safe bottle warmer for feeding",
-          "price": 119,
-          "image": "https://i.pinimg.com/564x/46/87/4b/46874bdb8c83aa6919894e1e02941dae.jpg",
-          "category": "Footwear",
-          "stars": 4.2,
+          "id": 6,
+          "name": "Baby Play Book",
+          "description": "Comfortable and safe bath tub for babies",
+          "price": 40,
+          "image": "https://i.pinimg.com/564x/62/5b/b7/625bb704f88e6001196b6f664537a6f5.jpg",
+          "category": "Books",
+          "stars": 4.3,
           "quantity": 1
         },
         {
-          "name": "Baby Suit ",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "price": "249",
-          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
-          "category": "Boy fashion",
-          "id": 1,
+          "id": 13,
+          "name": "Baby Bed",
+          "description": "Soft and breathable swaddle blanket",
+          "price": 249,
+          "image": "https://rukminim2.flixcart.com/image/850/1000/kjym9ow0/baby-bed/w/u/l/baby-nest-bed-with-3-pc-baby-pillow-luxury-baby-mattress-bed-original-imafzffagubf6vck.jpeg?q=90&crop=false",
+          "category": "Bed",
+          "stars": 4.1,
           "quantity": 1
         },
         {
-          "id": 14,
-          "name": "Baby Suit",
-          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
-          "price": 279,
-          "image": "https://image.made-in-china.com/202f0j00ygLfFEpdaGqY/Baby-Boys-Girls-Clothes-Baby-Sculpt-Rompers-Baby-Winter-Warm-Clothes-babies-Hoodie.jpg",
-          "category": "Boy fashion",
-          "stars": 4.4,
+          "id": 5,
+          "name": "Baby Toy",
+          "description": "Educational toy set for toddlers",
+          "price": 299,
+          "image": "https://i.pinimg.com/564x/11/bc/16/11bc1638d03163e42d0c54b7d15d5299.jpg",
+          "category": "Toys",
+          "stars": 4.7,
           "quantity": 1
         },
         {
-          "name": "Baby Shoe",
-          "description": "Comfort Smooth Shoe For Your Babies",
-          "price": "290",
-          "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
-          "category": "Footwear",
           "id": null,
+          "name": "razeem",
+          "description": "adopt him",
+          "price": "free",
+          "image": "https://i.natgeofe.com/n/82fddbcc-4cbb-4373-bf72-dbc30068be60/drill-monkey-01.jpg?w=2560&h=1920",
+          "category": "Toys",
           "quantity": 1
         }
       ]
@@ -296,14 +287,6 @@
       "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
       "category": "Footwear",
       "id": "cfd3"
-    },
-    {
-      "id": "f301",
-      "name": "razeem",
-      "description": "adopt him",
-      "price": "free",
-      "image": "https://i.natgeofe.com/n/82fddbcc-4cbb-4373-bf72-dbc30068be60/drill-monkey-01.jpg?w=2560&h=1920",
-      "category": "Toys"
     }
   ]
 }

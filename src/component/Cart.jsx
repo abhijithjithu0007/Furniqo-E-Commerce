@@ -6,9 +6,8 @@ import { cartContext } from './CartContext';
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [myPro, setMyPro] = useState([]);
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  const {setTotal} = useContext(cartContext)
+  const {setTotal,myPro,setMyPro} = useContext(cartContext)
   const myID = currentUserData? currentUserData.id:'' 
   const navigate = useNavigate();
   
@@ -30,23 +29,15 @@ const Cart = () => {
   };
 
 
-useEffect(()=>{
-  setTotal(myPro)
-},[handleRemove])
+// useEffect(()=>{
+//   setTotal(myPro)
+// },[handleRemove])
 
-  useEffect(() => {
-    fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`)
-      .then(response => response.json())
-      .then(data => {
-        setMyPro(data.cart || []);
-      })
-      .catch(error => console.error('Error fetching user data:', error));
-  }, [myID]);
 
   const increment = (key) => {
     const updatedCart = myPro.map((item) => {
       if (item.id === key) {
-        return { ...item, quantity: item.quantity + 1 };
+        return { ...item, quantity: item.quantity + 1 }
       }
       return item;
     });

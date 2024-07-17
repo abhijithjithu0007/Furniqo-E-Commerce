@@ -12,9 +12,9 @@ const Navbar = ({ isLoggedIn }) => {
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { total } = useContext(cartContext)
+  const { myPro } = useContext(cartContext)
   const navigate = useNavigate();
-  const { products, loading, error } = useFetchProducts();
+  const { products } = useFetchProducts();
 
 
   const toggleMenu = () => {
@@ -85,7 +85,7 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/cart'} className="flex items-center text-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl relative bottom-5 right-3">{total.length}</span>
+            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl relative bottom-5 right-3">{myPro.length}</span>
           </Link>
           <div className='mt-2'>
             <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 sticky" onClick={handleProfile} />
