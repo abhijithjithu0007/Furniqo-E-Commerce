@@ -9,11 +9,12 @@ const Cart = () => {
   const [myPro, setMyPro] = useState([]);
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
   const {setTotal} = useContext(cartContext)
-  const myID = currentUserData.id;
+  const myID = currentUserData? currentUserData.id:'' 
   const navigate = useNavigate();
+  
 
   const handleRemove = async (key) => {
-    const updatedCart = myPro.filter(item => item.id !== key);
+    const updatedCart = myPro.filter(item => item.id !== key)
     try {
       const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`, {
         method: 'PATCH',

@@ -109,6 +109,23 @@
           "quantity": 1
         }
       ]
+    },
+    {
+      "id": "4",
+      "name": "adil mubarak",
+      "email": "aadilmubarake@gmail.com",
+      "password": "12345678",
+      "cart": [
+        {
+          "name": "Baby Suit ",
+          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+          "price": "249",
+          "image": "https://5.imimg.com/data5/OS/OA/MY-35841556/new-born-baba-suit.jpg",
+          "category": "Boy fashion",
+          "id": 1,
+          "quantity": 1
+        }
+      ]
     }
   ],
   "products": [
@@ -279,6 +296,14 @@
       "image": "https://i.pinimg.com/564x/21/08/2e/21082e574b2364bd6ff17100a9c833fa.jpg",
       "category": "Footwear",
       "id": "cfd3"
+    },
+    {
+      "id": "f301",
+      "name": "razeem",
+      "description": "adopt him",
+      "price": "free",
+      "image": "https://i.natgeofe.com/n/82fddbcc-4cbb-4373-bf72-dbc30068be60/drill-monkey-01.jpg?w=2560&h=1920",
+      "category": "Toys"
     }
   ]
 }
