@@ -53,9 +53,32 @@ const Navbar = ({ isLoggedIn }) => {
           <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
         <ul className="hidden md:flex space-x-6 font-bold">
-          <li><Link to="/" className="hover:text-gray-500 text-sm">Home</Link></li>
-          <li><Link to="/category" className="hover:text-gray-500 text-sm">Category</Link></li>
-          <li><Link to="/contactus" className="hover:text-gray-500 text-sm">Contact Us</Link></li>
+
+
+          <Link to='/'>
+            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Home</a></li>
+          </Link>
+          <li class="text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
+            </svg>
+          </li>
+          <Link to='/category'>
+            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Category</a></li>
+          </Link>
+          <li class="text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
+            </svg>
+          </li>
+          <Link to='/contactus'>
+            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact Us</a></li>
+          </Link>
+          <li class="text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
+            </svg>
+          </li>
         </ul>
         <div className="flex items-center space-x-4 relative">
           <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search here' className="w-full text-black md:w-auto px-3 py-2 rounded-lg bg-white border focus:outline-none focus:ring-2 focus:ring-black" />
@@ -90,7 +113,7 @@ const Navbar = ({ isLoggedIn }) => {
           <div className='mt-2'>
             <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 sticky" onClick={handleProfile} />
             <div>
-            {isLog ? (<p className=''>{name}</p>) : ""}
+              {isLog ? (<p className=''>{name}</p>) : ""}
             </div>
           </div>
         </div>
