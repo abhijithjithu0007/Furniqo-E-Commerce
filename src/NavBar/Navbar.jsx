@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mycontext } from '../component/SignUp';
 import img from '../assets/logo.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../component/CartContext';
@@ -53,32 +52,25 @@ const Navbar = ({ isLoggedIn }) => {
           <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
         <ul className="hidden md:flex space-x-6 font-bold">
-
-
           <Link to='/'>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Home</a></li>
+            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Home</a></li>
           </Link>
           <li class="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-7 current-fill" viewBox="0 0 20 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
             </svg>
           </li>
           <Link to='/category'>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Category</a></li>
+            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Category</a></li>
           </Link>
-          <li class="text-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+          <li class="text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-7 current-fill" viewBox="0 0 20 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
             </svg>
           </li>
           <Link to='/contactus'>
-            <li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">Contact Us</a></li>
-          </Link>
-          <li class="text-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
-            </svg>
-          </li>
+            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Contact Us</a></li>
+          </Link>   
         </ul>
         <div className="flex items-center space-x-4 relative">
           <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search here' className="w-full text-black md:w-auto px-3 py-2 rounded-lg bg-white border focus:outline-none focus:ring-2 focus:ring-black" />
