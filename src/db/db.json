@@ -35,15 +35,6 @@
           "category": "Toys",
           "stars": 4.7,
           "quantity": 1
-        },
-        {
-          "id": null,
-          "name": "razeem",
-          "description": "adopt him",
-          "price": "free",
-          "image": "https://i.natgeofe.com/n/82fddbcc-4cbb-4373-bf72-dbc30068be60/drill-monkey-01.jpg?w=2560&h=1920",
-          "category": "Toys",
-          "quantity": 1
         }
       ]
     },

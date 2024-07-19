@@ -142,13 +142,19 @@ const Categories = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedProducts().map((item, id) => (
             <Link to={`/category/${item.id}`} key={id} className="w-full">
-              <div className="shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white">
-                <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.name}</h2>
-                  <p className="text-gray-600 mb-2">{item.description}</p>
-                  <p className="text-yellow-500">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
-                  <h2 className="text-lg font-semibold text-gray-700">₹{item.price}</h2>
+              <div class="container flex justify-center">
+                <div class="max-w-sm ">
+                  <div class="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
+                  <img class="rounded-t-lg md:h-[250px] w-72" src={item.image} alt="" />
+                    <div class="py-6 px-8 rounded-lg bg-white">
+                      <h1 class="text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">{item.name}</h1>
+                    <p class="text-gray-700 tracking-wide">{item.description}</p>
+                    <p className="text-yellow-500 text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
+                    </div>
+                    <div class="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
+                      <span class="text-md">₹{item.price}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -160,3 +166,4 @@ const Categories = () => {
 };
 
 export default Categories;
+//

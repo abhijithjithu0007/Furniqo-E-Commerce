@@ -11,7 +11,6 @@ const Cart = () => {
   const myID = currentUserData? currentUserData.id:'' 
   const navigate = useNavigate();
   
-
   const handleRemove = async (key) => {
     const updatedCart = myPro.filter(item => item.id !== key)
     try {
@@ -28,10 +27,6 @@ const Cart = () => {
     }
   };
 
-
-// useEffect(()=>{
-//   setTotal(myPro)
-// },[handleRemove])
 
 
   const increment = (key) => {
@@ -68,6 +63,7 @@ const Cart = () => {
     setMyPro([]);
   };
   
+ 
 
   return (
     <div className="container mx-auto p-4">
@@ -93,7 +89,6 @@ const Cart = () => {
             <div className="flex-1">
               <div className="border-b border-gray-300 pb-4 mb-4">
                 {myPro.map((item, index) => (
-                  
                   <div key={index} className="flex justify-between items-center mb-4">
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">
