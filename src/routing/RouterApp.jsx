@@ -24,7 +24,7 @@ const RouterApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [myCart, setMyCart] = useState([]);
   const { products, loading, error } = useFetchProducts();
-  const [adminData, setAdminData] = useState({ adminName: 'admin', adminEmail: 'nest@admin' });
+  const [adminData, setAdminData] = useState({ adminName: 'admin', adminEmail: 'giggles@admin' });
 
   const location = useLocation();
 

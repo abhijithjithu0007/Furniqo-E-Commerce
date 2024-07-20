@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
-import img from '../assets/logo.png';
+import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../component/CartContext';
 
@@ -73,7 +73,7 @@ const Navbar = ({ isLoggedIn }) => {
           </Link>   
         </ul>
         <div className="flex items-center space-x-4 relative">
-          <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search here' className="w-full text-black md:w-auto px-3 py-2 rounded-lg bg-white border focus:outline-none focus:ring-2 focus:ring-black" />
+          <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search by name' className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none" />
           {isOpen && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-35 flex justify-center items-start pt-20 z-50">
               <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl relative overflow-auto max-h-screen">

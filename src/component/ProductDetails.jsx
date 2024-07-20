@@ -3,6 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Mycontext } from './SignUp';
 import Footer from './Footer';
 import useFetchProducts from './CoustumeHook';
+import { BiCartDownload } from "react-icons/bi";
+
 
 const ProductDetails = () => {
   const params = useParams();
@@ -36,7 +38,7 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [params.id]);
-  
+
 
   const addToCart = async () => {
     try {
@@ -47,15 +49,15 @@ const ProductDetails = () => {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
-  
+
       const userData = await response.json();
       const userCart = userData.cart || [];
       const productId = +carts.id;
-  
+
       const isProductInCart = userCart.find((item) => item.id === productId);
       if (isProductInCart) {
         alert('Product already added');
@@ -63,8 +65,8 @@ const ProductDetails = () => {
         alert('You don’t have an account. Please login.');
         navigate('/signup');
       } else {
-        userCart.push({ ...carts, id: productId , quantity:1 });
-  
+        userCart.push({ ...carts, id: productId, quantity: 1 });
+
         const updateResponse = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
           method: 'PATCH',
           headers: {
@@ -75,15 +77,15 @@ const ProductDetails = () => {
             cart: userCart,
           }),
         });
-  
+
         if (!updateResponse.ok) {
           throw new Error('Failed to update cart on server');
         }
-  
+
         const updatedUser = await updateResponse.json();
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
         setMyCart(userCart);
-  
+
         alert('Product added to cart successfully');
       }
     } catch (error) {
@@ -91,7 +93,7 @@ const ProductDetails = () => {
       alert('Failed to add product to cart');
     }
   };
-  
+
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
@@ -99,25 +101,35 @@ const ProductDetails = () => {
     <div>
       <div className="container mx-auto p-4">
         {carts && (
-          <div className="flex flex-col md:flex-row md:space-x-8">
-            <img
-              src={carts.image}
-              className="w-full md:w-[350px] rounded h-[350px] object-cover"
-              alt={carts.name}
-            />
-            <div className="md:w-1/2 mt-4 md:mt-0">
-              <h2 className="text-3xl font-bold mb-2">{carts.name}</h2>
-              <p className="text-yellow-500 text-3xl">{'★'.repeat(carts.stars)}{'☆'.repeat(5 - carts.stars)}</p>
-              <p className="text-3xl font-semibold mt-2 mb-4">Price: ₹<span className='text-red-600'>{carts.price}</span></p>
-              <p className="mb-4">
-                {carts.description}
-              </p>
-              <div className="flex items-center space-x-4 mb-4">
-                <button onClick={addToCart} className="bg-btnColor text-white px-4 py-2 rounded hover:bg-black">
-                  Add to cart
-                </button>
+          <div className="min-w-screen min-h-screen bg-btnColor flex items-center p-5 lg:p-10 overflow-hidden relative">
+            <div className="w-full max-w-6xl rounded bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left">
+              <div className="md:flex items-center -mx-10">
+                <div className="w-full md:w-1/2 px-10 mb-10 md:mb-0">
+                  <div className="relative">
+                    <img src={carts.image} className="w-full relative z-10" alt=""></img>
+                    <div className="border-4 border-yellow-200 absolute top-10 bottom-10 left-10 right-10 z-0"></div>
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2 px-10">
+                  <div className="mb-10">
+                    <h1 className="font-bold uppercase text-2xl mb-5">{carts.name}</h1>
+                    <p className="text-sm">{carts.description}<a href="#" class="opacity-50 text-gray-900 hover:opacity-100 inline-block text-xs leading-none border-b border-gray-900">MORE <i class="mdi mdi-arrow-right"></i></a></p>
+                  </div>
+                  <div>
+                    <div className="inline-block align-bottom mr-5">
+                      <span className="text-2xl leading-none align-baseline">₹</span>
+                      <span className="font-bold text-5xl leading-none align-baseline">{carts.price}</span>
+                    </div>
+                    <div className="inline-block align-bottom">
+                      <button onClick={addToCart} className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
+                        <BiCartDownload className="text-2xl" />
+                        <span>ADD TO CART</span>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
               </div>
-              <p className="text-gray-500">Categories: {carts.category}</p>
             </div>
           </div>
         )}
@@ -146,21 +158,27 @@ const ProductDetails = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((item, id) => (
               <Link to={`/category/${item.id}`} key={id}>
-                <div className="rounded p-4 w-full text-center">
-                  <img
-                    src={item.image}
-                    className="w-full rounded mb-4 h-[200px] object-cover"
-                    alt={item.name}
-                  />
-                  <h4 className="text-lg font-semibold mb-2">{item.name}</h4>
-                  <p className="text-yellow-500 text-xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
-                  <p className="text-xl font-semibold mb-2">₹{item.price}</p>
+                <div class="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
+                  <div style={{
+                    backgroundImage: `url(${item.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                    class="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center"></div>
+                  <div class="w-56 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
+                    <div class="py-2 text-center font-bold uppercase tracking-wide text-gray-800">{item.name}</div>
+                    <div class="flex items-center justify-between py-2 px-3 bg-gray-200">
+                      <h1 class="text-gray-800 font-bold ">₹{item.price}</h1>
+                      <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
+                    </div>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
         </div>
       </div>
+
     </div>
   );
 };

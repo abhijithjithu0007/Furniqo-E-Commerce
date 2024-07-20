@@ -34,11 +34,11 @@ const ContactUs = () => {
             <h2 className="text-2xl font-semibold mb-6">Contact Info</h2>
             <div className="flex items-center mb-4">
               <MdLocationOn className="text-xl mr-3" />
-              <p>LittleNest<br />Manjeri Thurakkal<br />90017</p>
+              <p>Giggles<br />Manjeri Thurakkal<br />90017</p>
             </div>
             <div className="flex items-center mb-4">
               <MdEmail className="text-xl mr-3" />
-              <p>littlenest@gmail.com</p>
+              <p>giggles@gmail.com</p>
             </div>
             <div className="flex items-center mb-8">
               <MdPhone className="text-xl mr-3" />

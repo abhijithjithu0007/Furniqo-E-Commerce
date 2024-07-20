@@ -7,10 +7,11 @@ const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  const {setTotal,myPro,setMyPro} = useContext(cartContext)
-  const myID = currentUserData? currentUserData.id:'' 
+  const { myPro, setMyPro } = useContext(cartContext)
+  const myID = currentUserData ? currentUserData.id : ''
   const navigate = useNavigate();
-  
+
+
   const handleRemove = async (key) => {
     const updatedCart = myPro.filter(item => item.id !== key)
     try {
@@ -26,8 +27,6 @@ const Cart = () => {
       console.error(error);
     }
   };
-
-
 
   const increment = (key) => {
     const updatedCart = myPro.map((item) => {
@@ -62,8 +61,7 @@ const Cart = () => {
     navigate('/category');
     setMyPro([]);
   };
-  
- 
+
 
   return (
     <div className="container mx-auto p-4">
@@ -89,6 +87,7 @@ const Cart = () => {
             <div className="flex-1">
               <div className="border-b border-gray-300 pb-4 mb-4">
                 {myPro.map((item, index) => (
+
                   <div key={index} className="flex justify-between items-center mb-4">
                     <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">

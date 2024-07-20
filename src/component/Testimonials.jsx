@@ -19,7 +19,7 @@ function Testimonials() {
         <h2 className="text-2xl font-bold mb-4">Wide Range of Products</h2>
         <div className="bg-white rounded-lg shadow-lg p-6 my-6 test">
           <p className="text-lg italic mb-4">
-            "Littlenest offers an extensive selection of baby products, from clothing and toys to nursery furniture and feeding supplies."
+            "Giggles offers an extensive selection of baby products, from clothing and toys to nursery furniture and feeding supplies."
           </p>
           <div className="flex justify-center items-center mb-2">
             <span className="text-yellow-500">★★★★☆</span>
