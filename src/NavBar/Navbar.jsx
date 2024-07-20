@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
@@ -11,17 +11,17 @@ const Navbar = ({ isLoggedIn }) => {
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { myPro } = useContext(cartContext)
+  const [showSearch, setShowSearch] = useState(false); // State to toggle search input visibility on small screens
+  const { myPro } = useContext(cartContext);
   const navigate = useNavigate();
   const { products } = useFetchProducts();
-
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const user = localStorage.getItem('currentUser')
-  const isLog = JSON.parse(localStorage.getItem('isLogin'))
+  const user = localStorage.getItem('currentUser');
+  const isLog = JSON.parse(localStorage.getItem('isLogin'));
 
   const { name = '' } = user ? JSON.parse(user) : {};
   const handleProfile = () => {
@@ -36,8 +36,10 @@ const Navbar = ({ isLoggedIn }) => {
       );
       setFilteredProducts(filteredPro);
       setIsOpen(true);
+      setShowSearch(false)
     } else {
       setIsOpen(false);
+      
     }
   }, [search, products]);
 
@@ -52,33 +54,56 @@ const Navbar = ({ isLoggedIn }) => {
           <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
         <ul className="hidden md:flex space-x-6 font-bold">
-          <Link to='/'>
-            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Home</a></li>
-          </Link>
-          <li class="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-7 current-fill" viewBox="0 0 20 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
+          <li>
+            <Link to='/' className="text-sm text-gray-700 hover:text-btnColor">Home</Link>
+          </li>
+          <li className="text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-7" viewBox="0 0 20 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14" />
             </svg>
           </li>
-          <Link to='/category'>
-            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Category</a></li>
-          </Link>
-          <li class="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-7 current-fill" viewBox="0 0 20 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14" />
+          <li>
+            <Link to='/category' className="text-sm text-gray-700 hover:text-btnColor">Category</Link>
+          </li>
+          <li className="text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-7" viewBox="0 0 20 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14" />
             </svg>
           </li>
-          <Link to='/contactus'>
-            <li><a class="text-sm text-gray-700 hover:text-btnColor" href="#">Contact Us</a></li>
-          </Link>   
+          <li>
+            <Link to='/contactus' className="text-sm text-gray-700 hover:text-btnColor">Contact Us</Link>
+          </li>
         </ul>
         <div className="flex items-center space-x-4 relative">
-          <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search by name' className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none" />
+          <input
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            type="text"
+            placeholder='Search by name'
+            className="hidden md:block text-black px-3 py-2 rounded-3xl bg-white border focus:outline-none focus:ring-2 focus:ring-black"
+          />
+          <div className="block md:hidden relative">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer"
+              onClick={() => setShowSearch(!showSearch)}
+            />
+            {showSearch && (
+              <input
+                onChange={(e) => setSearch(e.target.value)}
+                value={search}
+                type="text"
+                placeholder='Search by'
+                className="absolute  top-8 left-0 w-[75px] text-black px-3 py-2 rounded-3xl bg-white border focus:outline-none focus:ring-2 focus:ring-black"
+              />
+            )}
+          </div>
+
           {isOpen && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-35 flex justify-center items-start pt-20 z-50">
               <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl relative overflow-auto max-h-screen">
                 <h2 className="text-2xl font-bold mb-4 text-btnColor">Search Results</h2>
-                <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-600  hover:text-gray-900">X</button>
+                <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-gray-600 hover:text-gray-900">X</button>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
@@ -98,15 +123,13 @@ const Navbar = ({ isLoggedIn }) => {
               </div>
             </div>
           )}
-          <Link to={'/cart'} className="flex items-center text-center">
+          <Link to={'/cart'} className="flex items-center text-center relative">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="ml-1 bg-btnColor w-[20px] h-[22px] rounded-xl relative bottom-5 right-3">{myPro.length}</span>
+            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
-          <div className='mt-2'>
-            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 sticky" onClick={handleProfile} />
-            <div>
-              {isLog ? (<p className=''>{name}</p>) : ""}
-            </div>
+          <div className='relative'>
+            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
+            {isLog && <p className='absolute text-sm text-gray-700 top-8'>{name}</p>}
           </div>
         </div>
         <button onClick={toggleMenu} className="md:hidden focus:outline-none">
@@ -147,7 +170,6 @@ const Navbar = ({ isLoggedIn }) => {
             </li>
           </ul>
         </div>
-
       )}
     </div>
   );

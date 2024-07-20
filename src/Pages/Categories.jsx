@@ -72,53 +72,18 @@ const Categories = () => {
               All
             </button>
             <button
-              onClick={() => handleCategory("Boy fashion")}
+              onClick={() => handleCategory("Baby boy")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
               Boys Fashion
             </button>
             <button
-              onClick={() => handleCategory("Girl fashion")}
+              onClick={() => handleCategory("Baby girl")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
               Girls Fashion
             </button>
-            <button
-              onClick={() => handleCategory("Feeding")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Feeding
-            </button>
-            <button
-              onClick={() => handleCategory("Accessories")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Accessories
-            </button>
-            <button
-              onClick={() => handleCategory("Toys")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Toys
-            </button>
-            <button
-              onClick={() => handleCategory("Books")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Books
-            </button>
-            <button
-              onClick={() => handleCategory("Footwear")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Footwear
-            </button>
-            <button
-              onClick={() => handleCategory("Bed")}
-              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
-            >
-              Beds
-            </button>
+            
           </div>
         </div>
       </div>
