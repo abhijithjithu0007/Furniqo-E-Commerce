@@ -4,7 +4,38 @@
       "id": "1",
       "name": "abhijith",
       "email": "dasf@d.dsfs",
-      "password": "111222"
+      "password": "111222",
+      "cart": [
+        {
+          "id": 2,
+          "name": "Baby Frock",
+          "description": "Soft and breathable fabric for all-day comfort. ",
+          "price": 159,
+          "image": "https://i.pinimg.com/564x/e0/4f/82/e04f82c62044cebc9125ad7c8eda5881.jpg",
+          "category": "Baby girl",
+          "stars": 4.2,
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "name": "Baby Frock",
+          "description": "Soft and breathable fabric for all-day comfort.",
+          "price": 149,
+          "image": "https://i.pinimg.com/564x/83/61/05/8361057ce9f2e216c255a04e5c76044d.jpg",
+          "category": "Baby girl",
+          "stars": 4,
+          "quantity": 1
+        },
+        {
+          "name": "Baby T-Shirt",
+          "description": "Wrap your little one in comfort and style with our Baby Boy Striped Romper",
+          "price": "249",
+          "image": "https://i.pinimg.com/564x/d7/aa/46/d7aa46f500a1e09ca42823c714f94cd2.jpg",
+          "category": "Baby boy",
+          "id": 1,
+          "quantity": 1
+        }
+      ]
     },
     {
       "id": "2",
@@ -161,13 +192,12 @@
       "stars": 4.7
     },
     {
-      "id": "16",
-      "name": "Adidas Model",
+      "name": "Adidas Model Dress",
       "description": "Soft and breathable fabric for all-day comfort. ",
       "price": 199,
       "image": "https://i.pinimg.com/564x/08/97/91/0897916e460e5ff1cc01ddba3a645076.jpg",
       "category": "Baby girl",
-      "stars": 4.6
+      "id": "16"
     },
     {
       "id": "17",
