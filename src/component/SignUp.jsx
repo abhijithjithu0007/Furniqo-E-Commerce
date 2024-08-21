@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useContext, useEffect, createContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,30 +25,13 @@ const SignUp = () => {
     if (Object.keys(formError).length === 0) {
       try {
         
-        const usersResponse = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user');
-        const users = await usersResponse.json();
-        const nextId = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
-      const mainId = nextId.toString()
-        
-        const response = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: mainId,
+        const response = await axios.post('http://localhost:5000/api/user/signup', {
             name: validate.name,
             email: validate.email,
             password: validate.password
-          }),
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to register user');
-        }
-
-        const newUser = await response.json();
-        setUserData(prevData => [...prevData, newUser]);
+        setUserData(prevData => [...prevData, response.data.data]);
 
         alert("Registration Completed");
         navigate('/login');
