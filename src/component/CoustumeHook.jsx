@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const useFetchProducts = () => {
@@ -8,13 +9,10 @@ const useFetchProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://6b6lwvt1-3000.inc1.devtunnels.ms/products');
-        const data = await response.json();
-        setProducts(data);
-        setLoading(false);
+        const resp = await axios.get('http://localhost:5000/api/user/allproducts')
+        setProducts(resp.data)
       } catch (error) {
-        setError(error);
-        setLoading(false);
+        console.log(error);
       }
     };
 

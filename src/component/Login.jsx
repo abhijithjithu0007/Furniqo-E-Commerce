@@ -23,7 +23,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:5000/api/user/login', {
         email: userName,
         password: userPass,
-      });
+      },{ withCredentials: true });
   
       if (response.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify(response.data.user))

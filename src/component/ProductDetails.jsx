@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Mycontext } from './SignUp';
-import Footer from './Footer';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi";
 import axios from 'axios';
@@ -9,12 +7,8 @@ import axios from 'axios';
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
-  const { myCart, setMyCart } = useContext(Mycontext);
   const navigate = useNavigate();
-  const value = localStorage.getItem('isLogin');
-  const isLogin = JSON.parse(value);
-
-  const {id} = useParams();
+  const { id } = useParams();
   const [carts, setCarts] = useState(null);
 
   useEffect(() => {
@@ -24,13 +18,27 @@ const ProductDetails = () => {
         setCarts(resp.data)
       } catch (error) {
         console.log(error);
-
       }
     }
     fetchdata()
   }, [id])
-  console.log(carts);
-  
+
+
+
+
+
+  const addToCart = async (id, price) => {
+    try {
+      const resp = await axios.post('http://localhost:5000/api/user/addtocart', {
+        productId: id,
+        quantity: 1,
+        price: price
+      },{ withCredentials: true })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
 
 
@@ -61,7 +69,7 @@ const ProductDetails = () => {
                       <span className="font-bold text-5xl leading-none align-baseline">{carts.price}</span>
                     </div>
                     <div className="inline-block align-bottom">
-                      <button  className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
+                      <button onClick={() => addToCart(carts._id, carts.price)} className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
                         <BiCartDownload className="text-2xl" />
                         <span>ADD TO CART</span>
                       </button>
