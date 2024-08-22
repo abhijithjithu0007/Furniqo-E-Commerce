@@ -1,53 +1,34 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from "react-icons/fa";
-import { cartContext } from './CartContext';
+import axios from 'axios';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  const { myPro, setMyPro } = useContext(cartContext)
-  const myID = currentUserData ? currentUserData.id : ''
   const navigate = useNavigate();
+  const [myPro, setMyPro] = useState([])
+  const userdetails = localStorage.getItem('currentUser')
+  const currentUser = JSON.parse(userdetails);
 
 
-  const handleRemove = async (key) => {
-    const updatedCart = myPro.filter(item => item.id !== key)
-    try {
-      const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${myID}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cart: updatedCart }),
-      });
-      setMyPro(updatedCart);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    const fetData = async () => {
+      const resp = await axios.get(`http://localhost:5000/api/user/viewcartproducts/${currentUser.id}`,
+        { withCredentials: true }
+      )
+      const data = resp.data.products
+      setMyPro(data)
+      console.log(resp.data.products[0].product);
     }
-  };
 
-  const increment = (key) => {
-    const updatedCart = myPro.map((item) => {
-      if (item.id === key) {
-        return { ...item, quantity: item.quantity + 1 }
-      }
-      return item;
-    });
-    setMyPro(updatedCart);
-  };
+    fetData()
+  }, [])
 
-  const decrement = (key) => {
-    const updatedCart = myPro.map((item) => {
-      if (item.id === key && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-    setMyPro(updatedCart);
-  };
 
+  
+ 
+  
   const openCheckoutPopup = () => {
     setShowPopup(true);
   };
@@ -61,6 +42,8 @@ const Cart = () => {
     navigate('/category');
     setMyPro([]);
   };
+  console.log(myPro);
+  
 
 
   return (
@@ -87,12 +70,11 @@ const Cart = () => {
             <div className="flex-1">
               <div className="border-b border-gray-300 pb-4 mb-4">
                 {myPro.map((item, index) => (
-
                   <div key={index} className="flex justify-between items-center mb-4">
-                    <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                    <img src={item.product.image} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
                     <div className="flex-1 ml-4">
-                      <h2 className="font-bold">{item.name}</h2>
-                      <p className="text-gray-500">₹{item.price}</p>
+                      <h2 className="font-bold">{item.product.name}</h2>
+                      <p className="text-gray-500">₹{item.product.price}</p>
                       <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                     <div className="flex-row items-center space-x-2 sm:space-x-0 sm:space-y-2 mr-7 sm:mr-0 sm:flex-col">
@@ -100,7 +82,7 @@ const Cart = () => {
                       <span className="px-1">{item.quantity}</span>
                       <button onClick={() => increment(item.id)} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col">+</button>
                     </div>
-                    <p className="font-bold mr-7">₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-bold mr-7">₹{(item.product.price * item.quantity).toFixed(2)}</p>
                     <button onClick={() => handleRemove(item.id)} className="text-gray-500">
                       <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
                     </button>

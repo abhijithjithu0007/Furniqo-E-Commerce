@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi";
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 
 const ProductDetails = () => {
@@ -23,10 +24,6 @@ const ProductDetails = () => {
     fetchdata()
   }, [id])
 
-
-
-
-
   const addToCart = async (id, price) => {
     try {
       const resp = await axios.post('http://localhost:5000/api/user/addtocart', {
@@ -34,12 +31,11 @@ const ProductDetails = () => {
         quantity: 1,
         price: price
       },{ withCredentials: true })
+      toast.success("Product Added Successfully",{position:'top-right'})
     } catch (error) {
       console.log(error);
     }
   }
-
-
 
 
 

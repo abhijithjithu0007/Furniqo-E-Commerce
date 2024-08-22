@@ -33,7 +33,7 @@ const SignUp = () => {
         });
         setUserData(prevData => [...prevData, response.data.data]);
 
-        toast.success("Registration Completed")
+        toast.success("Registration Completed",{position:'top-right'})
         navigate('/login');
       } catch (error) {
         console.error('Error registering user:', error);
