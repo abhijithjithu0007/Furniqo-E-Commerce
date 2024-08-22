@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Mycontext } from '../component/SignUp';
 import { Link } from 'react-router-dom';
-import useFetchProducts from '../component/CoustumeHook';
 import ScrollReveal from 'scrollreveal';
+import axios from 'axios';
 
 const Categories = () => {
 
@@ -22,10 +22,10 @@ const Categories = () => {
     };
   }, []);
 
-  const { products, loading, error } = useFetchProducts();
   const [cate, setCate] = useState([]);
   const [fullFilter, setFullFilter] = useState(false);
   const [sort, setSort] = useState('');
+  const [products, setProducts] = useState([])
 
   const handleCategory = (category) => {
     const filtering = products.filter((item) => item.category === category);
@@ -59,6 +59,22 @@ const Categories = () => {
     return sorted;
   };
 
+  ///////////////////////////////////
+
+  useEffect(() => {
+    const fetData = async () => {
+      try {
+        const resp = await axios.get('http://localhost:5000/api/user/allproducts')
+        setProducts(resp.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetData()
+  }, [])
+
+
+
   return (
     <div className="container mx-auto p-4 flex flex-col md:flex-row ">
       <div className="w-full md:w-1/4 pr-4 mb-8 md:mb-0">
@@ -83,7 +99,7 @@ const Categories = () => {
             >
               Girls Fashion
             </button>
-            
+
           </div>
         </div>
       </div>
@@ -106,15 +122,15 @@ const Categories = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedProducts().map((item, id) => (
-            <Link to={`/category/${item.id}`} key={id} className="w-full">
+            <Link to={`/category/${item._id}`} key={id} className="w-full">
               <div class="container flex justify-center">
                 <div class="max-w-sm ">
                   <div class="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-                  <img class="rounded-t-lg md:h-[250px] w-72" src={item.image} alt="" />
+                    <img class="rounded-t-lg md:h-[250px] w-72" src={item.image} alt="" />
                     <div class="py-6 px-8 rounded-lg bg-white">
                       <h1 class="text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">{item.name}</h1>
-                    <p class="text-gray-700 tracking-wide">{item.description}</p>
-                    <p className="text-yellow-500 text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
+                      <p class="text-gray-700 tracking-wide">{item.description}</p>
+                      <p className="text-yellow-500 text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                     <div class="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
                       <span class="text-md">₹{item.price}</span>

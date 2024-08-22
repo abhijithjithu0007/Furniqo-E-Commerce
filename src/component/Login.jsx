@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast'
@@ -28,7 +28,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify(response.data.user))
         localStorage.setItem('isLogin', JSON.stringify(true));
-        toast.success("Login Succesfully Completed", { position: 'top-right' });
+        toast.success("Login Completed", { position: 'top-right' });
         navigate('/profile');
       } else {
         alert('Error occurred');
@@ -47,7 +47,7 @@ const Login = () => {
         <div>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
+              Email
             </label>
             <input
               onChange={handleName}
@@ -56,7 +56,6 @@ const Login = () => {
               className="mt-1 block w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Enter your email"
             />
-            {/* {loginError.nameErr && <p className="text-red-700">{loginError.nameErr}</p>} */}
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -69,7 +68,6 @@ const Login = () => {
               className="mt-1 block w-full md:w-96 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder="Enter your password"
             />
-            {/* {loginError.passErr && <p className="text-red-700">{loginError.passErr}</p>} */}
           </div>
         </div>
         <button onClick={handleClick} class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2">

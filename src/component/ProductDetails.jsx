@@ -4,95 +4,35 @@ import { Mycontext } from './SignUp';
 import Footer from './Footer';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi";
+import axios from 'axios';
 
 
 const ProductDetails = () => {
-  const params = useParams();
   const { products } = useFetchProducts();
   const { myCart, setMyCart } = useContext(Mycontext);
-  const [carts, setCarts] = useState(null);
   const navigate = useNavigate();
   const value = localStorage.getItem('isLogin');
   const isLogin = JSON.parse(value);
 
+  const {id} = useParams();
+  const [carts, setCarts] = useState(null);
+
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchdata = async () => {
       try {
-        const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/products/${params.id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch product details');
-        }
-
-        const productData = await response.json();
-        setCarts(productData);
+        const resp = await axios.get(`http://localhost:5000/api/user/${id}`)
+        setCarts(resp.data)
       } catch (error) {
-        console.error('Error fetching product details:', error);
+        console.log(error);
+
       }
-    };
-
-    fetchProduct();
-  }, [params.id]);
-
-
-  const addToCart = async () => {
-    try {
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data');
-      }
-
-      const userData = await response.json();
-      const userCart = userData.cart || [];
-      const productId = +carts.id;
-
-      const isProductInCart = userCart.find((item) => item.id === productId);
-      if (isProductInCart) {
-        alert('Product already added');
-      } else if (!isLogin) {
-        alert('You don’t have an account. Please login.');
-        navigate('/signup');
-      } else {
-        userCart.push({ ...carts, id: productId, quantity: 1 });
-
-        const updateResponse = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/user/${currentUser.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...userData,
-            cart: userCart,
-          }),
-        });
-
-        if (!updateResponse.ok) {
-          throw new Error('Failed to update cart on server');
-        }
-
-        const updatedUser = await updateResponse.json();
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-        setMyCart(userCart);
-
-        alert('Product added to cart successfully');
-      }
-    } catch (error) {
-      console.error('Error adding product to cart:', error);
-      alert('Failed to add product to cart');
     }
-  };
+    fetchdata()
+  }, [id])
+  console.log(carts);
+  
+
+
 
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
@@ -121,7 +61,7 @@ const ProductDetails = () => {
                       <span className="font-bold text-5xl leading-none align-baseline">{carts.price}</span>
                     </div>
                     <div className="inline-block align-bottom">
-                      <button onClick={addToCart} className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
+                      <button  className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
                         <BiCartDownload className="text-2xl" />
                         <span>ADD TO CART</span>
                       </button>
@@ -157,7 +97,7 @@ const ProductDetails = () => {
           <h3 className="text-2xl font-semibold mb-4 border-b-2 border-btnColor">You may also like...</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((item, id) => (
-              <Link to={`/category/${item.id}`} key={id}>
+              <Link to={`/category/${item._id}`} key={id}>
                 <div class="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
                   <div style={{
                     backgroundImage: `url(${item.image})`,

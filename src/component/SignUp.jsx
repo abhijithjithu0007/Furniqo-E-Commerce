@@ -1,39 +1,39 @@
 import axios from 'axios';
-import React, { useState, useContext, useEffect, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast'
 
 export const Mycontext = createContext();
 
 const SignUp = () => {
   const [validate, setValidate] = useState({ name: "", email: "", password: "", confirm: "" });
   const [formError, setFormError] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
-  const { userData, setUserData } = useContext(Mycontext);
   const navigate = useNavigate();
 
-    const handleChange = (e) => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { userData, setUserData } = useContext(Mycontext);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValidate({ ...validate, [name]: value });
   };
 
- 
   const handleClick = async (e) => {
     e.preventDefault();
-    setFormError(validating(validate));
+    const errors = validating(validate);
+    setFormError(errors);
     setIsSubmit(true);
 
-    if (Object.keys(formError).length === 0) {
+    if (Object.keys(errors).length === 0) {
       try {
-        
         const response = await axios.post('http://localhost:5000/api/user/signup', {
-            name: validate.name,
-            email: validate.email,
-            password: validate.password
+          name: validate.name,
+          email: validate.email,
+          password: validate.password
         });
-
         setUserData(prevData => [...prevData, response.data.data]);
 
-        alert("Registration Completed");
+        toast.success("Registration Completed")
         navigate('/login');
       } catch (error) {
         console.error('Error registering user:', error);
@@ -41,7 +41,6 @@ const SignUp = () => {
     }
   };
 
-  
   const validating = (values) => {
     const errors = {};
     const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
