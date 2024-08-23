@@ -15,6 +15,7 @@ import ProtectedRoute from '../component/ProtectedRoute';
 import Admin from '../Admin/Admin';
 import useFetchProducts from '../component/CoustumeHook';
 import CartContextProvider from '../component/CartContext';
+import Wishlist from '../component/Wishlist';
 
 
 
@@ -36,6 +37,7 @@ const RouterApp = () => {
     <div>
       <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData, currentUser, setCurrentUser }}>
         <CartContextProvider>
+        <Wishlist/>
           {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
           <Routes>
             <Route path="/" element={<Home />} />
@@ -49,7 +51,9 @@ const RouterApp = () => {
             <Route path="/category" element={<Categories />} />
             <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           </Routes>
+         
           {shouldDisplayFooter && <Footer />}
+
         </CartContextProvider>
         <ScrollToTop />
       </Mycontext.Provider>
