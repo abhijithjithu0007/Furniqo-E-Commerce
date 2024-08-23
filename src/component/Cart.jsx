@@ -129,6 +129,7 @@ const Cart = () => {
                     <button onClick={() => handleRemove(item.product._id)} className="text-gray-500">
                       <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
                     </button>
+                    
                   </div>
                 ))}
               </div>

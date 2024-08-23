@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Wishlist = () => {
+  
+
+    const [wish,setWish] = useState([])
+
   const products = [
     {
       id: 1,

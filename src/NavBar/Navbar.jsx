@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser,faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
@@ -123,6 +123,9 @@ const Navbar = ({ isLoggedIn }) => {
               </div>
             </div>
           )}
+          <Link to={'/wishlist'} className="flex items-center text-center relative">
+           <FontAwesomeIcon icon={faHeart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
+          </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
             <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>

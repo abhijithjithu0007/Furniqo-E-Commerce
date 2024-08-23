@@ -1,43 +1,63 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-
 const ProductDetails = () => {
   const { products } = useFetchProducts();
   const navigate = useNavigate();
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
+  const [isFilled, setIsFilled] = useState(false);
 
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchData = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5000/api/user/${id}`)
-        setCarts(resp.data)
+        const resp = await axios.get(`http://localhost:5000/api/user/${id}`);
+        setCarts(resp.data);
+        
+        const wishlistResp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true });
+        setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
         console.log(error);
       }
-    }
-    fetchdata()
-  }, [id])
+    };
+    fetchData();
+  }, [id]);
 
   const addToCart = async (id, price) => {
     try {
-      const resp = await axios.post('http://localhost:5000/api/user/addtocart', {
+      await axios.post('http://localhost:5000/api/user/addtocart', {
         productId: id,
         quantity: 1,
         price: price
-      },{ withCredentials: true })
-      toast.success("Product Added Successfully",{position:'top-right'})
+      }, { withCredentials: true });
+      toast.success("Product Added Successfully", { position: 'top-right' });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-
+  const addToWish = async (productId) => {
+    try {
+      if (isFilled) {
+        await axios.delete('http://localhost:5000/api/user/removefromwish', {
+          data: { productId: productId },
+          withCredentials: true
+        });
+        setIsFilled(false);
+      } else {
+        await axios.post('http://localhost:5000/api/user/wishlist', {
+          productId: productId
+        }, { withCredentials: true });
+        setIsFilled(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
@@ -50,27 +70,47 @@ const ProductDetails = () => {
               <div className="md:flex items-center -mx-10">
                 <div className="w-full md:w-1/2 px-10 mb-10 md:mb-0">
                   <div className="relative">
-                    <img src={carts.image} className="w-full relative z-10" alt=""></img>
+                    <img src={carts.image} className="w-full relative z-10" alt="" />
                     <div className="border-4 border-yellow-200 absolute top-10 bottom-10 left-10 right-10 z-0"></div>
                   </div>
                 </div>
                 <div className="w-full md:w-1/2 px-10">
                   <div className="mb-10">
                     <h1 className="font-bold uppercase text-2xl mb-5">{carts.name}</h1>
-                    <p className="text-sm">{carts.description}<a href="#" class="opacity-50 text-gray-900 hover:opacity-100 inline-block text-xs leading-none border-b border-gray-900">MORE <i class="mdi mdi-arrow-right"></i></a></p>
+                    <p className="text-sm">{carts.description}
+                      <a href="#" className="opacity-50 text-gray-900 hover:opacity-100 inline-block text-xs leading-none border-b border-gray-900">MORE <i className="mdi mdi-arrow-right"></i></a>
+                    </p>
                   </div>
                   <div>
                     <div className="inline-block align-bottom mr-5">
                       <span className="text-2xl leading-none align-baseline">₹</span>
                       <span className="font-bold text-5xl leading-none align-baseline">{carts.price}</span>
                     </div>
-                    <div className="inline-block align-bottom">
-                      <button onClick={() => addToCart(carts._id, carts.price)} className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300">
+                    <div className="flex items-center space-x-4 mt-4">
+                      <button
+                        onClick={() => addToCart(carts._id, carts.price)}
+                        className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300"
+                      >
                         <BiCartDownload className="text-2xl" />
                         <span>ADD TO CART</span>
                       </button>
+                      <button onClick={() => addToWish(carts._id)} className="p-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6"
+                          fill={isFilled ? 'red' : 'none'}
+                          viewBox="0 0 24 24"
+                          stroke={isFilled ? 'red' : 'currentColor'}
+                          strokeWidth={2}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </button>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -102,17 +142,17 @@ const ProductDetails = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((item, id) => (
               <Link to={`/category/${item._id}`} key={id}>
-                <div class="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
+                <div className="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
                   <div style={{
                     backgroundImage: `url(${item.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}
-                    class="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center"></div>
-                  <div class="w-56 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
-                    <div class="py-2 text-center font-bold uppercase tracking-wide text-gray-800">{item.name}</div>
-                    <div class="flex items-center justify-between py-2 px-3 bg-gray-200">
-                      <h1 class="text-gray-800 font-bold ">₹{item.price}</h1>
+                    className="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center"></div>
+                  <div className="w-56 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
+                    <div className="py-2 text-center font-bold uppercase tracking-wide text-gray-800">{item.name}</div>
+                    <div className="flex items-center justify-between py-2 px-3 bg-gray-200">
+                      <h1 className="text-gray-800 font-bold">₹{item.price}</h1>
                       <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                   </div>
@@ -122,7 +162,6 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
