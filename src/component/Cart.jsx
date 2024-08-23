@@ -26,36 +26,54 @@ const Cart = () => {
   }, [])
 
 
-  const increment=async(productId,action)=>{
+  const increment = async (productId, action) => {
     console.log(productId);
-    
-      try {
-        const resp = await axios.put('http://localhost:5000/api/user/updateproquantity',{
-          productId:productId,
-          action:action
-        },{ withCredentials: true})
-        const data = resp.data.products
 
-        setMyPro(data)
-      } catch (error) {
-        console.log(error);
-      }
-  }
-  const decrement=async(productId,action)=>{
-    
-      try {
-        const resp = await axios.put('http://localhost:5000/api/user/updateproquantity',{
-          productId:productId,
-          action:action
-        },{ withCredentials: true})
-        const data = resp.data.products
+    try {
+      const resp = await axios.put('http://localhost:5000/api/user/updateproquantity', {
+        productId: productId,
+        action: action
+      }, { withCredentials: true })
+      const data = resp.data.products
 
-        setMyPro(data)
-      } catch (error) {
-        console.log(error);
-      }
+      setMyPro(data)
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+  const decrement = async (productId, action) => {
+
+    try {
+      const resp = await axios.put('http://localhost:5000/api/user/updateproquantity', {
+        productId: productId,
+        action: action
+      }, { withCredentials: true })
+      const data = resp.data.products
+
+      setMyPro(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+  const handleRemove = async (productId) => {
+    try {
+      const resp = await axios.delete('http://localhost:5000/api/user/removefromcart', {
+        data: { productId: productId },
+        withCredentials: true
+
+      });
+      const data = resp.data.products
+
+      setMyPro(data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const openCheckoutPopup = () => {
     setShowPopup(true);
   };
@@ -68,7 +86,7 @@ const Cart = () => {
     alert("Payment Successful");
     navigate('/category');
     setMyPro([]);
-  };  
+  };
 
 
   return (
@@ -103,14 +121,14 @@ const Cart = () => {
                       <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                     <div className="flex-row items-center space-x-2 sm:space-x-0 sm:space-y-2 mr-7 sm:mr-0 sm:flex-col">
-                      <button onClick={() => decrement(item.product._id,"decrement")} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col ">-</button>
+                      <button onClick={() => decrement(item.product._id, "decrement")} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col ">-</button>
                       <span className="px-1">{item.quantity}</span>
-                      <button onClick={() => increment(item.product._id,"increment")} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col">+</button>
+                      <button onClick={() => increment(item.product._id, "increment")} className="text-black w-[30px] h-[30px] rounded-3xl bg-btnColor text-xl text-center sm:flex-col">+</button>
                     </div>
                     <p className="font-bold mr-7">₹{(item.product.price * item.quantity).toFixed(2)}</p>
-                    {/* <button onClick={() => handleRemove(item.id)} className="text-gray-500">
+                    <button onClick={() => handleRemove(item.product._id)} className="text-gray-500">
                       <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
-                    </button> */}
+                    </button>
                   </div>
                 ))}
               </div>
