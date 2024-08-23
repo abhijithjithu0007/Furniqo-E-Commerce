@@ -17,7 +17,7 @@ const ProductDetails = () => {
       try {
         const resp = await axios.get(`http://localhost:5000/api/user/${id}`);
         setCarts(resp.data);
-        
+
         const wishlistResp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true });
         setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
@@ -27,18 +27,12 @@ const ProductDetails = () => {
     fetchData();
   }, [id]);
 
-  const addToCart = async (id, price) => {
-    try {
-      await axios.post('http://localhost:5000/api/user/addtocart', {
-        productId: id,
-        quantity: 1,
-        price: price
-      }, { withCredentials: true });
-      toast.success("Product Added Successfully", { position: 'top-right' });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { addToCart } = useFetchProducts()
+
+  const handle = async () => {
+    addToCart(carts._id, carts.price)
+  }
+
 
   const addToWish = async (productId) => {
     try {
@@ -88,7 +82,7 @@ const ProductDetails = () => {
                     </div>
                     <div className="flex items-center space-x-4 mt-4">
                       <button
-                        onClick={() => addToCart(carts._id, carts.price)}
+                        onClick={handle}
                         className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300"
                       >
                         <BiCartDownload className="text-2xl" />

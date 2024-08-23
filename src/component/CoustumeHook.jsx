@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+
 
 const useFetchProducts = () => {
   const [products, setProducts] = useState([]);
@@ -19,7 +21,21 @@ const useFetchProducts = () => {
     fetchData();
   }, []);
 
-  return { products, setProducts };
+
+  const addToCart = async (id, price) => {
+    try {
+      await axios.post('http://localhost:5000/api/user/addtocart', {
+        productId: id,
+        quantity: 1,
+        price: price
+      }, { withCredentials: true });
+      toast.success("Product Added Successfully", { position: 'top-right' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { products, setProducts,addToCart };
 };
 
 export default useFetchProducts;
