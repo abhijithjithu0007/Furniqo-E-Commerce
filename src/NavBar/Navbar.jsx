@@ -11,7 +11,7 @@ const Navbar = ({ isLoggedIn }) => {
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [showSearch, setShowSearch] = useState(false); // State to toggle search input visibility on small screens
+  const [showSearch, setShowSearch] = useState(false)
   const { myPro } = useContext(cartContext);
   const navigate = useNavigate();
   const { products } = useFetchProducts();

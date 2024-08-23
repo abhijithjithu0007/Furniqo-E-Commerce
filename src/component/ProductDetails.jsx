@@ -29,7 +29,7 @@ const ProductDetails = () => {
 
   const { addToCart } = useFetchProducts()
 
-  const handle = async () => {
+  const handleAddcart = async () => {
     addToCart(carts._id, carts.price)
   }
 
@@ -82,7 +82,7 @@ const ProductDetails = () => {
                     </div>
                     <div className="flex items-center space-x-4 mt-4">
                       <button
-                        onClick={handle}
+                        onClick={handleAddcart}
                         className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-8 py-3 flex items-center space-x-2 transition-all duration-300"
                       >
                         <BiCartDownload className="text-2xl" />

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import useFetchProducts from "./CoustumeHook";
 
 const Wishlist = () => {
     const userdetails = localStorage.getItem('currentUser')
@@ -15,34 +16,28 @@ const Wishlist = () => {
         }
         fetchData()
     }, [])
-    console.log(wish);
+    const {addToCart} = useFetchProducts()
 
-    // const products = [
-    //     {
-    //         id: 1,
-    //         name: "Stylish table lamp",
-    //         price: "$155",
-    //         originalPrice: "$259",
-    //         status: "In Stock",
-    //         image: "path-to-your-lamp-image",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "White energy bulb",
-    //         price: "$59",
-    //         originalPrice: "$85",
-    //         status: "Stock Out",
-    //         image: "path-to-your-bulb-image",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Stylish LED bulb",
-    //         price: "$99",
-    //         originalPrice: "",
-    //         status: "In Stock",
-    //         image: "path-to-your-led-image",
-    //     },
-    // ];
+    const handleAddPro=async(id,price)=>{
+      addToCart(id,price)
+    }
+
+    const handleRemove=async(productId)=>{
+        console.log(productId);
+        
+      try {
+        const resp = await axios.delete('http://localhost:5000/api/user/removefromwish',{
+            data:{productId},
+            withCredentials:true
+        })
+        const data = resp.data.products
+        setWish(data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+console.log(wish);
 
     return (
         <div className="max-w-4xl mx-auto p-4">
@@ -61,7 +56,7 @@ const Wishlist = () => {
                 </thead>
                 <tbody>
                     {wish.map((product) => (
-                        <tr key={product.id} className="border-t">
+                        <tr key={product._id} className="border-t">
                             <td className="flex items-center py-2 px-4">
                                 <img
                                     src={product.image}
@@ -75,12 +70,12 @@ const Wishlist = () => {
                             </td>
                             <td className="py-2 px-4">In Stock</td>
                             <td className="py-2 px-4">
-                                <button
+                                <button onClick={()=>handleAddPro(product._id,product.price)}
                                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
                                 >
                                     Add to Cart
                                 </button>
-                                <button className="ml-2 text-gray-500 hover:text-red-600">
+                                <button onClick={()=>handleRemove(product._id)} className="ml-2 text-gray-500 hover:text-red-600">
                                     🗑️
                                 </button>
                             </td>

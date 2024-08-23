@@ -1,125 +1,152 @@
+import React, { useState ,createContext} from 'react';
 import axios from 'axios';
-import React, { useState, createContext, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast'
-
+import toast from 'react-hot-toast';
 export const Mycontext = createContext();
 
 const SignUp = () => {
-  const [validate, setValidate] = useState({ name: "", email: "", password: "", confirm: "" });
-  const [formError, setFormError] = useState({});
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
-  const [isSubmit, setIsSubmit] = useState(false);
-  const { userData, setUserData } = useContext(Mycontext);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValidate({ ...validate, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleClick = async (e) => {
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!formData.name) tempErrors.name = "Name is required.";
+    if (!formData.email) tempErrors.email = "Email is required.";
+    if (!formData.password) tempErrors.password = "Password is required.";
+    if (formData.password !== formData.confirmPassword) tempErrors.confirmPassword = "Passwords do not match.";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = validating(validate);
-    setFormError(errors);
-    setIsSubmit(true);
-
-    if (Object.keys(errors).length === 0) {
+    if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:5000/api/user/signup', {
-          name: validate.name,
-          email: validate.email,
-          password: validate.password
-        });
-        setUserData(prevData => [...prevData, response.data.data]);
-
-        toast.success("Registration Completed",{position:'top-right'})
+        await axios.post('/api/register', formData);
+        toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {
-        console.error('Error registering user:', error);
+        toast.error('Registration failed. Please try again.');
       }
     }
   };
 
-  const validating = (values) => {
-    const errors = {};
-    const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!values.name) {
-      errors.name = "* Username is required!";
-    }
-    if (!values.email) {
-      errors.email = "* Email is required!";
-    } else if (!regEx.test(values.email)) {
-      errors.email = "* This is not a valid email";
-    }
-    if (!values.password) {
-      errors.password = "* Password is required!";
-    } else if (values.password.length < 4) {
-      errors.password = "* Password must contain more than 4 characters";
-    } else if (values.password.length > 8) {
-      errors.password = "* Password must contain less than 8 characters";
-    } else if (values.password !== values.confirm) {
-      errors.confirm = "* The passwords do not match";
-    }
-    return errors;
-  };
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">
-          Register an Account
-        </h2>
-        <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <div className="mt-1">
-                <input onChange={handleChange} id="name" name="name" type="text" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter Name" />
-              </div>
-              <p className='text-red-700'>{formError.name}</p>
+    <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+      <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: '1000px' }}>
+        <div className="md:flex w-full">
+          <div className="hidden md:block w-1/2 py-10 px-10">
+            <img src="https://i.pinimg.com/564x/ee/e2/79/eee279c7d9b4c4e5fc060a9f9bb61c5f.jpg" alt="" />
+          </div>
+          <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
+            <div className="text-center mb-10">
+              <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
+              <p>Enter your information to register</p>
             </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1">
-                <input onChange={handleChange} id="email" name="email" type="email" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter Email" />
+            <form onSubmit={handleSubmit}>
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-5">
+                  <label htmlFor="name" className="text-xs font-semibold px-1">Name</label>
+                  <div className="flex">
+                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                      <i className="mdi mdi-account-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                </div>
               </div>
-              <p className='text-red-700'>{formError.email}</p>
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input onChange={handleChange} id="password" name="password" type="password" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter your password" />
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-5">
+                  <label htmlFor="email" className="text-xs font-semibold px-1">Email</label>
+                  <div className="flex">
+                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                      <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="johnsmith@example.com"
+                    />
+                  </div>
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                </div>
               </div>
-              <p className='text-red-700'>{formError.password}</p>
-            </div>
-            <div>
-              <label htmlFor="confirm" className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="mt-1">
-                <input onChange={handleChange} id="confirm" name="confirm" type="password" required className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Confirm your password" />
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-5">
+                  <label htmlFor="password" className="text-xs font-semibold px-1">Password</label>
+                  <div className="flex">
+                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                      <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <input
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="************"
+                    />
+                  </div>
+                  {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                </div>
               </div>
-              <p className='text-red-700'>{formError.confirm}</p>
-            </div>
-            <div>
-              <button onClick={handleClick} type="submit" className="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-indigo-600">
-                Register
-              </button>
-              <div className='text-center mt-3'>
-                <p>Already have an account?<Link to='/login' className='text-indigo-600 hover:text-indigo-700'>Login</Link></p>
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-12">
+                  <label htmlFor="confirmPassword" className="text-xs font-semibold px-1">Confirm Password</label>
+                  <div className="flex">
+                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                      <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      placeholder="************"
+                    />
+                  </div>
+                  {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+                </div>
               </div>
-            </div>
-          </form>
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-5">
+                  <button type="submit" className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                    REGISTER NOW
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+    
     </div>
   );
 };
