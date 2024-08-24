@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faBabyCarriage, faMagnifyingGlass, faShoppingCart, faUser,faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MdFavoriteBorder, MdOutlineShoppingCart } from "react-icons/md";
+import { FaCircleArrowRight } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
@@ -11,7 +14,8 @@ const Navbar = ({ isLoggedIn }) => {
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [showSearch, setShowSearch] = useState(false)
+  const [showSearch, setShowSearch] = useState(false);
+  const [category, setCategory] = useState('all categories');
   const { myPro } = useContext(cartContext);
   const navigate = useNavigate();
   const { products } = useFetchProducts();
@@ -32,56 +36,51 @@ const Navbar = ({ isLoggedIn }) => {
   useEffect(() => {
     if (search) {
       const filteredPro = products.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
+        (product.name.toLowerCase().includes(search.toLowerCase())) &&
+        (category === 'all categories' || product.category === category)
       );
       setFilteredProducts(filteredPro);
       setIsOpen(true);
-      setShowSearch(false)
+      setShowSearch(false);
     } else {
       setIsOpen(false);
-      
     }
-  }, [search, products]);
+  }, [search, products, category]);
 
   const linkClick = () => {
     setIsOpen(false);
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[87px]">
+    <header className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[87px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to='/home'>
           <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
-        <ul className="hidden md:flex space-x-6 font-bold">
-          <li>
-            <Link to='/' className="text-sm text-gray-700 hover:text-btnColor">Home</Link>
-          </li>
-          <li className="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-7" viewBox="0 0 20 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14" />
-            </svg>
-          </li>
-          <li>
-            <Link to='/category' className="text-sm text-gray-700 hover:text-btnColor">Category</Link>
-          </li>
-          <li className="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-7" viewBox="0 0 20 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v14" />
-            </svg>
-          </li>
-          <li>
-            <Link to='/contactus' className="text-sm text-gray-700 hover:text-btnColor">Contact Us</Link>
-          </li>
-        </ul>
-        <div className="flex items-center space-x-4 relative">
+        <div className="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden xl:flex items-center">
+          <div>
+            <Link to={'/category'}>
+              <p className="bg-transparent uppercase font-bold text-sm p-4 mr-4 flex items-center">
+                <FaCircleArrowRight className="mr-2" />
+                all category
+              </p>
+            </Link>
+          </div>
           <input
             onChange={(e) => setSearch(e.target.value)}
             value={search}
             type="text"
-            placeholder='Search by name'
-            className="hidden md:block text-black px-3 py-2 rounded-3xl bg-white border focus:outline-none focus:ring-2 focus:ring-black"
+            placeholder="I'm searching for ..."
+            className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4"
           />
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            className="ml-auto h-5 px-4 text-gray-500 cursor-pointer"
+            onClick={() => setShowSearch(!showSearch)}
+          />
+        </div>
+
+        <div className="flex items-center space-x-4 relative">
           <div className="block md:hidden relative">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
@@ -93,8 +92,8 @@ const Navbar = ({ isLoggedIn }) => {
                 onChange={(e) => setSearch(e.target.value)}
                 value={search}
                 type="text"
-                placeholder='Search by'
-                className="absolute  top-8 left-0 w-[75px] text-black px-3 py-2 rounded-3xl bg-white border focus:outline-none focus:ring-2 focus:ring-black"
+                placeholder="Search by"
+                className="absolute top-8 left-0 w-[75px] text-black px-3 py-2 rounded-3xl bg-white border focus:outline-none focus:ring-2 focus:ring-black"
               />
             )}
           </div>
@@ -124,14 +123,14 @@ const Navbar = ({ isLoggedIn }) => {
             </div>
           )}
           <Link to={'/wishlist'} className="flex items-center text-center relative">
-           <FontAwesomeIcon icon={faHeart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
+            <MdFavoriteBorder className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
-            <FontAwesomeIcon icon={faShoppingCart} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
+            <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
           <div className='relative'>
-            <FontAwesomeIcon icon={faUser} className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
+            <CgProfile className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
             {isLog && <p className='absolute text-sm text-gray-700 top-8'>{name}</p>}
           </div>
         </div>
@@ -174,7 +173,7 @@ const Navbar = ({ isLoggedIn }) => {
           </ul>
         </div>
       )}
-    </div>
+    </header>
   );
 };
 
