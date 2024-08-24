@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useFetchProducts from "./CoustumeHook";
+import { BiCartDownload } from "react-icons/bi";
 
 const Wishlist = () => {
     const userdetails = localStorage.getItem('currentUser')
@@ -42,9 +43,10 @@ console.log(wish);
     return (
         <div className="max-w-4xl mx-auto p-4">
             <h2 className="text-2xl font-semibold text-center">Your Favorite Items</h2>
-            <p className="text-center text-gray-500 mb-4">
+            {wish.length<0?<p className="text-center text-gray-500 mb-4">
                 There are {wish.length} products in this list
-            </p>
+            </p>:''}
+            
             <table className="w-full border-collapse">
                 <thead>
                     <tr>
@@ -71,9 +73,9 @@ console.log(wish);
                             <td className="py-2 px-4">In Stock</td>
                             <td className="py-2 px-4">
                                 <button onClick={()=>handleAddPro(product._id,product.price)}
-                                    className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+                                    className=" text-black text-xl px-5 "
                                 >
-                                    Add to Cart
+                                    <BiCartDownload />
                                 </button>
                                 <button onClick={()=>handleRemove(product._id)} className="ml-2 text-gray-500 hover:text-red-600">
                                     🗑️

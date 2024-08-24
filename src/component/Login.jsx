@@ -27,7 +27,7 @@ const Login = () => {
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
         localStorage.setItem('isLogin', JSON.stringify(true));
         toast.success("Login Completed", { position: 'top-right' });
-        navigate('/profile');
+        navigate('/');
       } else {
         alert('Error occurred');
       }

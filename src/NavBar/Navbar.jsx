@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MdFavoriteBorder, MdOutlineShoppingCart } from "react-icons/md";
+import { MdFavoriteBorder, MdOutlineShoppingCart, MdContactMail } from "react-icons/md";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { Link, useNavigate } from 'react-router-dom';
@@ -106,7 +106,7 @@ const Navbar = ({ isLoggedIn }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   {filteredProducts.length > 0 ? (
                     filteredProducts.map((product, index) => (
-                      <Link key={index} to={`/category/${product.id}`} onClick={linkClick}>
+                      <Link key={index} to={`/category/${product._id}`} onClick={linkClick}>
                         <div className="border rounded-lg p-4 shadow-lg transform hover:scale-105 transition duration-150 bg-white hover:bg-gray-100">
                           <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md" />
                           <h2 className="text-lg font-semibold mt-4 text-black">{product.name}</h2>
@@ -128,6 +128,10 @@ const Navbar = ({ isLoggedIn }) => {
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
+          </Link>
+          <Link to={'/contactus'}>
+            <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer"/>
+
           </Link>
           <div className='relative'>
             <CgProfile className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
