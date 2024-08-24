@@ -1,4 +1,4 @@
-import React, { useState ,createContext} from 'react';
+import React, { useState, createContext } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -37,7 +37,7 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post('/api/register', formData);
+        await axios.post('http://localhost:5000/api/user/signup', formData);
         toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {
@@ -47,15 +47,15 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+    <div className="min-w-screen min-h-screen bg-gray-200 flex items-center justify-center px-5 py-5">
       <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style={{ maxWidth: '1000px' }}>
         <div className="md:flex w-full">
-          <div className="hidden md:block w-1/2 py-10 px-10">
+          <div className="hidden md:block w-1/2 py-10 px-10 mt-14">
             <img src="https://i.pinimg.com/564x/ee/e2/79/eee279c7d9b4c4e5fc060a9f9bb61c5f.jpg" alt="" />
           </div>
           <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-            <div className="text-center mb-10">
-              <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
+            <div className="text-center mb-3">
+              <h1 className="font-bold text-2xl text-gray-900">REGISTER</h1>
               <p>Enter your information to register</p>
             </div>
             <form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ const SignUp = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="John Doe"
+                      placeholder="Name"
                     />
                   </div>
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -91,7 +91,7 @@ const SignUp = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="johnsmith@example.com"
+                      placeholder="Email"
                     />
                   </div>
                   {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -135,18 +135,25 @@ const SignUp = () => {
                   {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
                 </div>
               </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-5">
-                  <button type="submit" className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-                    REGISTER NOW
-                  </button>
+              <div className='flex-col justify-center text-center'>
+                <div className="flex-mx-3">
+                  <div className="w-full px-3 mb-1">
+                    <button type="submit" className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                      REGISTER NOW
+                    </button>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <Link to={'/login'}>
+                    <p>Already have an account ?</p>
+                  </Link>
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-    
+
     </div>
   );
 };

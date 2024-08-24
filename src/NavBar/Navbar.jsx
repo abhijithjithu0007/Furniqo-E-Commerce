@@ -48,7 +48,7 @@ const Navbar = ({ isLoggedIn }) => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[95px]">
+    <div className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[87px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to='/home'>
           <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
