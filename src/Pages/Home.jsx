@@ -43,7 +43,7 @@ const Home = () => {
         <img src={homelogo} alt="" className="w-[500px] imgclass" />
         </div>
         <div className="scrollsample md:w-1/2 md:pr-8 mb-40 p-8 rounded-lg">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-8 font-serif text-black md:mt-20">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-8  text-black md:mt-20">
             Because every baby deserves the <span className="text-btnColor">Best.</span>
           </h1>
           <div className="mb-8">

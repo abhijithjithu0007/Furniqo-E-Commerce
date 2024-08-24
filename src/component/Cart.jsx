@@ -151,8 +151,8 @@ const Cart = () => {
                   ))}
                 </div>
                 <div className="back-to-shop mt-20">
-                  <Link to={'/category'} className="text-black">&larr;</Link>
-                  <span className="text-gray-500">Back to shop</span>
+                  <Link to={'/category'} className="text-black">&larr;
+                  <span className="text-gray-500">Back to shop</span></Link>
                 </div>
               </div>
               <div className="summary bg-gray-200 p-10 rounded-r-lg md:rounded-l-none md:rounded-r-lg md:w-1/4">
