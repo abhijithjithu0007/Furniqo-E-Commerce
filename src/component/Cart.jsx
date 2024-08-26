@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -26,6 +29,14 @@ const Cart = () => {
 
     fetchData();
   }, [currentUser.id]);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out', 
+      once: true
+    });
+  }, []);
 
   const increment = async (productId, action) => {
     try {
@@ -61,6 +72,9 @@ const Cart = () => {
       });
       const data = resp.data.products;
       setMyPro(data);
+      if (resp.status === 200) {
+        toast.success('Product Removed', { position: 'top-right' });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +102,6 @@ const Cart = () => {
 
     if (result.isConfirmed) {
       try {
-        // Assuming payment logic here
         await Swal.fire(
           'Payment Successful!',
           'Your payment was successful.',
@@ -108,7 +121,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center">
-      <div className="card mx-auto max-w-6xl w-11/12 shadow-lg rounded-lg border-transparent">
+      <div className="card mx-auto max-w-6xl w-11/12 shadow-lg rounded-lg border-transparent" data-aos="fade-up">
         {myPro.length === 0 ? (
           <div>
             <p className="text-center text-2xl text-gray-500">Your cart is empty!</p>
@@ -128,7 +141,7 @@ const Cart = () => {
                 </div>
                 <div className="border-t border-b">
                   {myPro.map((item, index) => (
-                    <div key={index} className="main flex items-center py-5">
+                    <div key={index} className="main flex items-center py-5" data-aos="fade-up" data-aos-delay={index * 100}>
                       <div className="w-16">
                         <img className="w-full" src={item.product.image} alt="product" />
                       </div>
@@ -152,10 +165,10 @@ const Cart = () => {
                 </div>
                 <div className="back-to-shop mt-20">
                   <Link to={'/category'} className="text-black">&larr;
-                  <span className="text-gray-500">Back to shop</span></Link>
+                    <span className="text-gray-500">Back to shop</span></Link>
                 </div>
               </div>
-              <div className="summary bg-gray-200 p-10 rounded-r-lg md:rounded-l-none md:rounded-r-lg md:w-1/4">
+              <div className="summary bg-gray-200 p-10 rounded-r-lg md:rounded-l-none md:rounded-r-lg md:w-1/4" data-aos="fade-left">
                 <div>
                   <h5 className="font-bold">Summary</h5>
                 </div>
@@ -174,55 +187,23 @@ const Cart = () => {
 
             {showPopup && (
               <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg relative">
+                <div className="bg-white p-8 rounded-lg shadow-lg relative" data-aos="fade-in">
                   <button className="absolute top-4 right-4 text-gray-500 hover:text-gray-600" onClick={closeCheckoutPopup}>
                     <img className='h-6 w-6' src="https://cdn-icons-png.flaticon.com/512/106/106830.png" alt="close" />
                   </button>
                   <div className='h-[200px] overflow-y-scroll'>
                     {myPro.map((item, id) => (
-                      <div key={id} className="flex items-center gap-4 border-b pb-4 mb-4">
-                        <img className="w-16 h-16 object-cover rounded" src={item.product.image} alt={item.product.name} />
-                        <div>
-                          <h2 className="text-xl font-semibold">{item.product.name}</h2>
-                          <div className="flex items-center mt-2">
-                            <h2 className="text-xl font-semibold mr-2">₹{(item.product.price * item.quantity).toFixed(2)}</h2>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                      <div key={id} className="flex items-center gap-4 border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay={id * 100}>
+                        <img className="w-16" src={item.product.image} alt="Product" /> <div> <div className="font-semibold">{item.product.name}</div> <div className="text-gray-500">Quantity: {item.quantity}</div> <div className="text-gray-700">₹{(item.product.price * item.quantity).toFixed(2)}</div> </div> </div> ))}
                   </div>
-                  <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-                    <div className="flex justify-around">
-                      <label className="flex flex-col items-center">
-                        <img
-                          src="https://www.yesbank.in/content/published/api/v1.1/assets/CONT5B67344201F14EB887CF99754FB0F6F8/native/BYOC-CARD.png?channelToken=580bc0ffbe3a47d690505e5f6d06e1c8"
-                          alt="Card"
-                          className={`cursor-pointer w-16 h-16 border-4 rounded-xl ${paymentMethod === 'card' ? 'border-blue-500' : 'border-transparent'}`}
-                          onClick={() => setPaymentMethod('card')}
-                        />
-                        <span className="mt-2 text-sm font-semibold">Card</span>
-                      </label>
-                      <label className="flex flex-col items-center">
-                        <img
-                          src="https://www.axisbank.com/images/default-source/progress-with-us/pay-directly-from-your-bank.png"
-                          alt="Net Banking"
-                          className={`cursor-pointer w-16 h-16 border-4 rounded-xl ${paymentMethod === 'netBanking' ? 'border-blue-500' : 'border-transparent'}`}
-                          onClick={() => setPaymentMethod('netBanking')}
-                        />
-                        <span className="mt-2 text-sm font-semibold">Net Banking</span>
-                      </label>
-                      <label className="flex flex-col items-center">
-                        <img
-                          src="https://www.godrejcapital.com/content/dam/godrej-capital/web/images/homepage/upi-logo.png"
-                          alt="UPI"
-                          className={`cursor-pointer w-16 h-16 border-4 rounded-xl ${paymentMethod === 'upi' ? 'border-blue-500' : 'border-transparent'}`}
-                          onClick={() => setPaymentMethod('upi')}
-                        />
-                        <span className="mt-2 text-sm font-semibold">UPI</span>
-                      </label>
-                    </div>
-                    <button onClick={handlePay} className="bg-blue-500 text-white px-4 py-2 rounded-lg w-full">Pay Now</button>
+                  <div className="mt-4">
+                    <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="w-full p-2 border border-gray-300 rounded-md">
+                      <option value="card">Credit/Debit Card</option>
+                      <option value="paypal">PayPal</option>
+                      <option value="netbanking">Net Banking</option>
+                    </select>
                   </div>
+                  <button onClick={handlePay} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 w-full">Proceed to Payment</button>
                 </div>
               </div>
             )}

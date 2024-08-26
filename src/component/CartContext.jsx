@@ -1,10 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 
-
-
 export const cartContext = createContext()
-
-
 const CartContextProvider = ({ children }) => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));

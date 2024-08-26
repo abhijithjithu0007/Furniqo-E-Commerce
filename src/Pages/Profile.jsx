@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mycontext } from '../component/SignUp';
 import { cartContext } from '../component/CartContext';
+import axios from 'axios';
 
 const Profile = () => {
   const { userData, setIsLoggedIn } = useContext(Mycontext);
@@ -14,6 +15,17 @@ const Profile = () => {
     navigate('/login');
     setTotal([])
   };
+
+  const Logout=async()=>{
+    try {
+      const resp =await axios.post('http://localhost:5000/api/user/logout',{},{withCredentials:true})
+      navigate('/login')
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   const adress = localStorage.getItem('currentUser');
   const { name = '', email = '' } = adress ? JSON.parse(adress) : {};
