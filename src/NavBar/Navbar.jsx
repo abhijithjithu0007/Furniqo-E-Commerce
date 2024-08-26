@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MdFavoriteBorder, MdOutlineShoppingCart, MdContactMail } from "react-icons/md";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
-import { json, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../component/CartContext';
@@ -22,8 +22,6 @@ const Navbar = ({ isLoggedIn }) => {
 
   const islogin = localStorage.getItem('isLogin');
   console.log(islogin);
-
-
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -132,7 +130,7 @@ const Navbar = ({ isLoggedIn }) => {
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
+            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">""</span>
           </Link>
           <Link to={'/contactus'}>
             <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />

@@ -44,16 +44,14 @@ const RouterApp = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/profile" element={isLoggedIn===true ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/category/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/category" element={<Categories />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           </Routes>
-         
           {shouldDisplayFooter && <Footer />}
-
         </CartContextProvider>
         <ScrollToTop />
       </Mycontext.Provider>

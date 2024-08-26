@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { createContext, useState ,useEffect} from 'react'
 
 
@@ -9,15 +10,16 @@ const ContextAdmin = ({children}) => {
     useEffect(() => {
       const userFetch = async () => {
         try {
-          const datas = await fetch("https://6b6lwvt1-3000.inc1.devtunnels.ms/user")
-          const jsonUser = await datas.json()
-          setUsersData(jsonUser)
+          const resp = await axios.get('http://localhost:5000/api/admin/alluser',{withCredentials:true})
+          setUsersData(resp.data)
         } catch (error) {
-          console.log("Err", error);
+          
         }
       }
       userFetch()
     }, [])
+    console.log(usersData);
+    
   
 
     return (

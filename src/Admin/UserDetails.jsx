@@ -4,10 +4,9 @@ import { Admincontext } from './ContextAdmin';
 
 const UserDetails = () => {
   const params = useParams();
-  const { usersData } = useContext(Admincontext);
-
-  const eachUser = usersData.filter((val) => val.id === params.id);
-  console.log(eachUser);
+  const { usersData } = useContext(Admincontext) 
+  const eachUser = usersData.filter((val) => val._id === params.id);
+  
 
   return (
     <div className="max-w-lg mx-auto mt-8">

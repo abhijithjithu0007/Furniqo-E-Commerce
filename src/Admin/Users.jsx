@@ -12,7 +12,7 @@ const Users = () => {
       {usersData.length >0 ? (
         <div className="grid gap-4">
           {usersData.map((item, id) =>(
-            <Link key={id} to={`/admin/users/${item.id}`} className="block">
+            <Link key={id} to={`/admin/users/${item._id}`} className="block">
               <div className="bg-white shadow-md p-4 rounded-lg flex items-center h-20">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/8847/8847419.png"

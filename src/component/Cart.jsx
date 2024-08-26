@@ -1,34 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { cartContext } from './CartContext';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [myPro, setMyPro] = useState([]);
   const navigate = useNavigate();
   const userdetails = localStorage.getItem('currentUser');
-  const currentUser = JSON.parse(userdetails);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resp = await axios.get(`http://localhost:5000/api/user/viewcartproducts/${currentUser.id}`, {
-          withCredentials: true
-        });
-        const data = resp.data.products;
-        setMyPro(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchData();
-  }, [currentUser.id]);
+  const {myPro} = useContext(cartContext)
 
   useEffect(() => {
     AOS.init({
