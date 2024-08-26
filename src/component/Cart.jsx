@@ -11,10 +11,8 @@ const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const navigate = useNavigate();
-  const userdetails = localStorage.getItem('currentUser');
 
-
-  const {myPro} = useContext(cartContext)
+  const {myPro,setMyPro} = useContext(cartContext)
 
   useEffect(() => {
     AOS.init({

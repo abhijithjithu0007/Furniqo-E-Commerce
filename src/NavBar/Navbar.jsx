@@ -130,7 +130,7 @@ const Navbar = ({ isLoggedIn }) => {
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">""</span>
+            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
           <Link to={'/contactus'}>
             <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
