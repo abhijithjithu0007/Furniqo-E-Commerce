@@ -6,20 +6,15 @@ import axios from 'axios';
 
 const Profile = () => {
   const { userData, setIsLoggedIn } = useContext(Mycontext);
-  const { setTotal } = useContext(cartContext)
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.setItem('isLogin', JSON.stringify(false));
-    setIsLoggedIn(false);
-    navigate('/login');
-    setTotal([])
-  };
-
-  const Logout=async()=>{
+ 
+  const handleLogout=async()=>{
     try {
       const resp =await axios.post('http://localhost:5000/api/user/logout',{},{withCredentials:true})
       navigate('/login')
+      localStorage.setItem('isLogin', JSON.stringify(false));
+    navigate('/login');
       setIsLoggedIn(false);
     } catch (error) {
       console.log(error);

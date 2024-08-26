@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MdFavoriteBorder, MdOutlineShoppingCart, MdContactMail } from "react-icons/md";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
-import { Link, useNavigate } from 'react-router-dom';
+import { json, Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../component/CartContext';
@@ -20,12 +20,17 @@ const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const { products } = useFetchProducts();
 
+  const islogin = localStorage.getItem('isLogin');
+  console.log(islogin);
+
+
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const user = localStorage.getItem('currentUser');
-  const isLog = JSON.parse(localStorage.getItem('isLogin'));
+  const isLog = localStorage.getItem('isLogin') === 'true';
 
   const { name = '' } = user ? JSON.parse(user) : {};
   const handleProfile = () => {
@@ -130,13 +135,14 @@ const Navbar = ({ isLoggedIn }) => {
             <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
           <Link to={'/contactus'}>
-            <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer"/>
+            <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
 
           </Link>
-          <div className='relative'>
+          <Link to={isLog ? '/profile' : '/login'}><div className='relative'>
             <CgProfile className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />
             {isLog && <p className='absolute text-sm text-gray-700 top-8'>{name}</p>}
           </div>
+          </Link>
         </div>
         <button onClick={toggleMenu} className="md:hidden focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600 hover:text-gray-900" viewBox="0 0 20 20" fill="currentColor">
