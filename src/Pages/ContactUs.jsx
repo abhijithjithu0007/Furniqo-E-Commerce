@@ -1,75 +1,124 @@
-import React ,{useEffect} from 'react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaPinterestP, FaLinkedinIn } from 'react-icons/fa';
-import { MdLocationOn, MdEmail, MdPhone } from 'react-icons/md';
-import Footer from '../component/Footer';
-import ScrollReveal from 'scrollreveal';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const ContactUs = () => {
-    useEffect(() => {
-      const sr = ScrollReveal();
-  
-      sr.reveal('.contact-info', {
-        delay: 300,
-        distance: '50px',
-        origin: 'bottom',
-        interval: 200,
-      });
-  
-      sr.reveal('.send-message', {
-        delay: 300,
-        distance: '50px',
-        origin: 'right',
-        interval: 200,
-      });
-  
-      return () => {
-        sr.destroy();
-      };
-    }, []);
-  
-    return (
-      <div className="flex justify-center items-center min-h-screen p-8 bg-homeBg">
-        <div className="bg-white shadow-lg flex flex-col md:flex-row rounded-lg overflow-hidden">
-          <div className="bg-btnColor text-white p-8 md:w-1/3 contact-info">
-            <h2 className="text-2xl font-semibold mb-6">Contact Info</h2>
-            <div className="flex items-center mb-4">
-              <MdLocationOn className="text-xl mr-3" />
-              <p>Giggles<br />Manjeri Thurakkal<br />90017</p>
-            </div>
-            <div className="flex items-center mb-4">
-              <MdEmail className="text-xl mr-3" />
-              <p>giggles@gmail.com</p>
-            </div>
-            <div className="flex items-center mb-8">
-              <MdPhone className="text-xl mr-3" />
-              <p>+91 1234567890</p>
-            </div>
-            <div className="flex space-x-4">
-              <FaFacebookF />
-              <FaTwitter />
-              <FaInstagram />
-              <FaPinterestP />
-              <FaLinkedinIn />
-            </div>
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, 
+      once: true
+    });
+  }, []);
+
+  return (
+    <div className="flex justify-center items-center w-full h-3/4 bg-white">
+      <div className="container mx-auto my-4 px-4 lg:px-20">
+        <div
+          className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl"
+          data-aos="fade-up"
+        >
+          <div className="flex" data-aos="fade-right">
+            <h1 className="font-bold uppercase text-3xl">
+              Send us a <br /> message
+            </h1>
           </div>
-          <div className="p-8 md:w-2/3 send-message">
-            <h2 className="text-2xl font-semibold mb-6">Send a Message</h2>
-            <form>
-              <div className="flex flex-col sm:flex-row mb-4">
-                <input type="text" placeholder="First Name" className="w-full sm:w-1/2 mr-0 sm:mr-2 mb-2 sm:mb-0 p-2 border-b" />
-                <input type="text" placeholder="Last Name" className="w-full sm:w-1/2 ml-0 sm:ml-2 p-2 border-b" />
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+            <input
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="First Name*"
+              data-aos="fade-up"
+            />
+            <input
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Last Name*"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            />
+            <input
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="email"
+              placeholder="Email*"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            />
+            <input
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="number"
+              placeholder="Phone*"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            />
+          </div>
+          <div className="my-4" data-aos="fade-up">
+            <textarea
+              placeholder="Message*"
+              className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+            ></textarea>
+          </div>
+          <div className="my-2 w-1/2 lg:w-1/4" data-aos="fade-up">
+            <button className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
+              Send Message
+            </button>
+          </div>
+        </div>
+
+        <div
+          className="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-blue-900 rounded-2xl"
+          data-aos="fade-left"
+        >
+          <div className="flex flex-col text-white">
+            <h1 className="font-bold uppercase text-4xl my-4">Drop in our office</h1>
+            <p className="text-gray-400">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt arcu diam,
+              eu feugiat felis fermentum id. Curabitur vitae nibh viverra, auctor turpis sed, scelerisque ex.
+            </p>
+
+            <div className="flex my-4 w-2/3 lg:w-1/2">
+              <div className="flex flex-col">
+                <i className="fas fa-map-marker-alt pt-2 pr-2"></i>
               </div>
-              <div className="flex flex-col sm:flex-row mb-4">
-                <input type="email" placeholder="Email Address" className="w-full sm:w-1/2 mr-0 sm:mr-2 mb-2 sm:mb-0 p-2 border-b" />
-                <input type="tel" placeholder="Mobile Number" className="w-full sm:w-1/2 ml-0 sm:ml-2 p-2 border-b" />
+              <div className="flex flex-col">
+                <h2 className="text-2xl">Main Office</h2>
+                <p className="text-gray-400">5555 Tailwind RD, Pleasant Grove, UT 73533</p>
               </div>
-              <textarea placeholder="Write your message here..." className="w-full p-2 mb-4 border-b h-32"></textarea>
-              <button type="submit" className="bg-black text-white py-2 px-6 rounded">Send</button>
-            </form>
+            </div>
+
+            <div className="flex my-4 w-2/3 lg:w-1/2">
+              <div className="flex flex-col">
+                <i className="fas fa-phone-alt pt-2 pr-2"></i>
+              </div>
+              <div className="flex flex-col">
+                <h2 className="text-2xl">Call Us</h2>
+                <p className="text-gray-400">Tel: xxx-xxx-xxx</p>
+                <p className="text-gray-400">Fax: xxx-xxx-xxx</p>
+              </div>
+            </div>
+
+            <div className="flex my-4 w-2/3 lg:w-1/2">
+              <a
+                href="https://www.facebook.com/ENLIGHTENEERING/"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1"
+              >
+                <i className="fab fa-facebook-f text-blue-900"></i>
+              </a>
+              <a
+                href="https://www.linkedin.com/company/enlighteneering-inc-"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-white h-8 w-8 inline-block mx-1 text-center pt-1"
+              >
+                <i className="fab fa-linkedin-in text-blue-900"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    )
+    </div>
+  );
 };
 
 export default ContactUs;

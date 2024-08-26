@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import ScrollReveal from 'scrollreveal';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Testimonials() {
   useEffect(() => {
-    ScrollReveal().reveal('.test', {
-      origin: 'left',
-      distance: '800px',
-      duration: 700,
-      delay: 100,
-      reset: true,
+    AOS.init({
+      duration: 700, 
+      delay: 100, 
+      once: false
     });
   }, []);
 
@@ -29,7 +28,7 @@ function Testimonials() {
           </div>
           <div className="-mx-3 md:flex items-start">
             <div className="px-3 md:w-1/3">
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=1" alt="" />
@@ -44,7 +43,7 @@ function Testimonials() {
                   </p>
                 </div>
               </div>
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=2" alt="" />
@@ -61,7 +60,7 @@ function Testimonials() {
               </div>
             </div>
             <div className="px-3 md:w-1/3">
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=3" alt="" />
@@ -76,7 +75,7 @@ function Testimonials() {
                   </p>
                 </div>
               </div>
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=4" alt="" />
@@ -93,7 +92,7 @@ function Testimonials() {
               </div>
             </div>
             <div className="px-3 md:w-1/3">
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=5" alt="" />
@@ -108,7 +107,7 @@ function Testimonials() {
                   </p>
                 </div>
               </div>
-              <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6 test">
+              <div data-aos="fade-up" className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
                 <div className="w-full flex mb-4 items-center">
                   <div className="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
                     <img src="https://i.pravatar.cc/100?img=6" alt="" />
