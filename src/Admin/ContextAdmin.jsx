@@ -17,10 +17,7 @@ const ContextAdmin = ({children}) => {
         }
       }
       userFetch()
-    }, [])
-    console.log(usersData);
-    
-  
+    }, [])  
 
     return (
         <Admincontext.Provider value={{usersData,setUsersData}}>

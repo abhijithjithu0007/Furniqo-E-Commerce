@@ -4,9 +4,10 @@ import { MdDeleteForever } from 'react-icons/md';
 import { LuPlusCircle } from "react-icons/lu";
 
 import useFetchProducts from '../component/CoustumeHook';
+import axios from 'axios';
 
 const Products = () => {
-  const { products, setProducts, loading, error, fetchProducts } = useFetchProducts();
+  const { products, setProducts } = useFetchProducts();
   const [productData, setProductData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -18,12 +19,15 @@ const Products = () => {
     setProductData(products || []);
   }, [products]);
 
-  const handleCategory = (category) => {
-    const filtering = products.filter((item) => item.category === category);
-    setProductData(filtering);
-    setActiveCategory(category);
-  };
 
+  ///////////////////////////////////////////////////////////////
+  const handleCategory = async(cate)=>{    
+     const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`,{withCredentials:true})   
+     setProductData(resp.data);
+     setActiveCategory(cate);
+  }
+
+///////////////////////////////////////////////////////////////////
   const handleAll = () => {
     setProductData(products || []);
     setActiveCategory('All');
@@ -142,53 +146,18 @@ const Products = () => {
                 All
               </button>
               <button
-                onClick={() => handleCategory('Boy fashion')}
+                onClick={() => handleCategory('Baby boy')}
                 className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Boy fashion' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
               >
                 Boys Fashion
               </button>
               <button
-                onClick={() => handleCategory('Girl fashion')}
+                onClick={() => handleCategory('Baby girl')}
                 className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Girl fashion' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
               >
                 Girls Fashion
               </button>
-              <button
-                onClick={() => handleCategory('Feeding')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Feeding' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Feeding
-              </button>
-              <button
-                onClick={() => handleCategory('Accessories')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Accessories' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Accessories
-              </button>
-              <button
-                onClick={() => handleCategory('Toys')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Toys' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Toys
-              </button>
-              <button
-                onClick={() => handleCategory('Books')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Books' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Books
-              </button>
-              <button
-                onClick={() => handleCategory('Footwear')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Footwear' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Footwear
-              </button>
-              <button
-                onClick={() => handleCategory('Bed')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Bed' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Beds
-              </button>
+             
             </div>
           </div>
         </div>
