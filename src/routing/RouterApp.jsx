@@ -16,6 +16,7 @@ import Admin from '../Admin/Admin';
 import useFetchProducts from '../component/CoustumeHook';
 import CartContextProvider from '../component/CartContext';
 import Wishlist from '../component/Wishlist';
+import WishContextProvider from '../component/WishlistContext';
 
 
 
@@ -37,21 +38,23 @@ const RouterApp = () => {
     <div>
       <Mycontext.Provider value={{ userData, setUserData, isLoggedIn, setIsLoggedIn, myCart, setMyCart, products, adminData, setAdminData, currentUser, setCurrentUser }}>
         <CartContextProvider>
-          {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/profile" element={isLoggedIn===true ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/category/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/category" element={<Categories />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-          </Routes>
-          {shouldDisplayFooter && <Footer />}
+          <WishContextProvider>
+            {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+              <Route path="/profile" element={isLoggedIn === true ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+              <Route path="/category/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/category" element={<Categories />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+            </Routes>
+            {shouldDisplayFooter && <Footer />}
+          </WishContextProvider>
         </CartContextProvider>
         <ScrollToTop />
       </Mycontext.Provider>

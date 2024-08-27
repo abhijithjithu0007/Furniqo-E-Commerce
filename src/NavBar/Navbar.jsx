@@ -21,11 +21,11 @@ const Navbar = ({ isLoggedIn }) => {
   const { products } = useFetchProducts();
 
   const islogin = localStorage.getItem('isLogin');
-  console.log(islogin);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
 
   const user = localStorage.getItem('currentUser');
   const isLog = localStorage.getItem('isLogin') === 'true';
@@ -127,14 +127,14 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/wishlist'} className="flex items-center text-center relative">
             <MdFavoriteBorder className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
+            <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="absolute -top-2 -right-2 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
+            <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
           </Link>
           <Link to={'/contactus'}>
             <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-
           </Link>
           <Link to={isLog ? '/profile' : '/login'}><div className='relative'>
             <CgProfile className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" onClick={handleProfile} />

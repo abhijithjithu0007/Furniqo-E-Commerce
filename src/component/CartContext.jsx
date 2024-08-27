@@ -5,9 +5,7 @@ export const cartContext = createContext()
 const CartContextProvider = ({ children }) => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  // const myID = currentUserData ? currentUserData.id : ''
   const {id} = currentUserData
-console.log(id);
 
   const [total, setTotal] = useState([])
   const [myPro, setMyPro] = useState([])
@@ -25,7 +23,7 @@ console.log(id);
     };
 
     fetchData();
-  }, [id]);
+  }, [id,myPro]);
   return (
     <cartContext.Provider value={{ total, setTotal, myPro, setMyPro }}>
       {children}
