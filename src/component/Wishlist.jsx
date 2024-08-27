@@ -5,7 +5,6 @@ import { BiCartDownload } from "react-icons/bi";
 import { wishContext } from "./WishlistContext";
 
 const Wishlist = () => {
-    const userdetails = localStorage.getItem('currentUser')
     const {myWish,setMyWish} = useContext(wishContext)
     const {addToCart} = useFetchProducts()
 

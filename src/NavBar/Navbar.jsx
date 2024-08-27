@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../component/CartContext';
+import { wishContext } from '../component/WishlistContext';
 
 const Navbar = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ const Navbar = ({ isLoggedIn }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [category, setCategory] = useState('all categories');
   const { myPro } = useContext(cartContext);
+  const {myWish} = useContext(wishContext)
   const navigate = useNavigate();
   const { products } = useFetchProducts();
 
@@ -127,7 +129,7 @@ const Navbar = ({ isLoggedIn }) => {
           )}
           <Link to={'/wishlist'} className="flex items-center text-center relative">
             <MdFavoriteBorder className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-            <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myPro.length}</span>
+            <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">{myWish.length}</span>
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />

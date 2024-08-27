@@ -20,7 +20,7 @@ const WishContextProvider = ({ children }) => {
         };
 
         fetchData();
-    }, []);
+    }, [id, myWish]);
     return (
         <wishContext.Provider value={{ myWish, setMyWish }}>
             {children}
