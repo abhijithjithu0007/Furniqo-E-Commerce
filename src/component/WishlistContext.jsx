@@ -12,8 +12,9 @@ const WishContextProvider = ({ children }) => {
         const fetchData = async () => {
             try {
                 const resp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true })
-                const data = resp.data.products;
-                setMyWish(data);
+                const data = resp.data.products||[]
+                const validPro = data.filter(item => item.product != null && !item.product.deleted);
+                setMyWish(validPro);
             } catch (error) {
                 console.log(error);
             }
