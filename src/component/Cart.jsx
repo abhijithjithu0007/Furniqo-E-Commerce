@@ -11,13 +11,13 @@ const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const navigate = useNavigate();
+  const { myPro, setMyPro } = useContext(cartContext);
 
-  const {myPro,setMyPro} = useContext(cartContext)
 
   useEffect(() => {
     AOS.init({
       duration: 800,
-      easing: 'ease-in-out', 
+      easing: 'ease-in-out',
       once: true
     });
   }, []);
@@ -73,33 +73,35 @@ const Cart = () => {
   };
 
   const handlePay = async () => {
-    const result = await Swal.fire({
-      title: 'Confirm Payment',
-      text: "Are you sure you want to proceed with the payment?",
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Pay Now!',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33'
-    });
+    try {
+      const { data } = await axios.post('http://localhost:5000/api/user/create-order', {}, { withCredentials: true });
 
-    if (result.isConfirmed) {
-      try {
-        await Swal.fire(
-          'Payment Successful!',
-          'Your payment was successful.',
-          'success'
-        );
-        navigate('/category');
-        setMyPro([]);
-      } catch (error) {
-        Swal.fire(
-          'Payment Failed!',
-          'There was an error processing your payment.',
-          'error'
-        );
-      }
+      const options = {
+        key: data.razorpayKeyId, // Your Razorpay Key ID
+        amount: data.order.amount, // Amount in paise
+        currency: 'INR',
+        name: 'Sample Project',
+        description: 'Test Transaction',
+        order_id: data.order.id,
+        handler: function (response) {
+          console.log('Payment Successful', response);
+          Swal.fire('Payment Successful!', 'Your payment was successful.', 'success');
+        },
+        prefill: {
+          name: '',
+          email: '',
+          contact: ''
+        },
+        theme: {
+          color: '#3399cc'
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error('Payment Error:', error);
+      Swal.fire('Payment Failed!', 'There was an error processing your payment.', 'error');
     }
   };
 
@@ -178,16 +180,16 @@ const Cart = () => {
                   <div className='h-[200px] overflow-y-scroll'>
                     {myPro.map((item, id) => (
                       <div key={id} className="flex items-center gap-4 border-b pb-4 mb-4" data-aos="fade-up" data-aos-delay={id * 100}>
-                        <img className="w-16" src={item.product.image} alt="Product" /> <div> <div className="font-semibold">{item.product.name}</div> <div className="text-gray-500">Quantity: {item.quantity}</div> <div className="text-gray-700">₹{(item.product.price * item.quantity).toFixed(2)}</div> </div> </div> ))}
+                        <img className="w-16" src={item.product.image} alt="Product" /> <div> <div className="font-semibold">{item.product.name}</div> <div className="text-gray-500">Quantity: {item.quantity}</div> <div className="text-gray-700">₹{(item.product.price * item.quantity).toFixed(2)}</div> </div> </div>))}
                   </div>
                   <div className="mt-4">
-                    <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="w-full p-2 border border-gray-300 rounded-md">
+                    <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="p-2 border rounded">
                       <option value="card">Credit/Debit Card</option>
-                      <option value="paypal">PayPal</option>
                       <option value="netbanking">Net Banking</option>
+                      <option value="upi">UPI</option>
                     </select>
+                    <button onClick={handlePay} className="mt-4 btn bg-black border-black text-white w-full text-sm py-2">Proceed with Payment</button>
                   </div>
-                  <button onClick={handlePay} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 w-full">Proceed to Payment</button>
                 </div>
               </div>
             )}

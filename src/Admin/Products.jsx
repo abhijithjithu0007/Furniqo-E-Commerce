@@ -38,7 +38,7 @@ const Products = () => {
         withCredentials:true
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setProductData((prevState) => [...prevState, response.data]);
         setProducts((prevState) => [...prevState, response.data]);
         alert('Product added successfully!');

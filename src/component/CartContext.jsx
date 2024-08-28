@@ -16,8 +16,9 @@ const CartContextProvider = ({ children }) => {
         const resp = await axios.get(`http://localhost:5000/api/user/viewcartproducts/${id}`, {
           withCredentials: true
         });
-        const data = resp.data.products;
-        setMyPro(data);
+        const data = resp.data.products || [];
+        const validPro = data.filter(item => item.product != null && !item.product.deleted);
+        setMyPro(validPro);
       } catch (error) {
         console.log(error);
       }
@@ -25,6 +26,8 @@ const CartContextProvider = ({ children }) => {
 
     fetchData();
   }, [id,myPro]);
+  
+  
 
  
   return (
