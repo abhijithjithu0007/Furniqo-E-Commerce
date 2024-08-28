@@ -21,35 +21,42 @@ const Products = () => {
 
 
   ///////////////////////////////////////////////////////////////
-  const handleCategory = async(cate)=>{    
-     const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`,{withCredentials:true})   
-     setProductData(resp.data);
-     setActiveCategory(cate);
+  const handleCategory = async (cate) => {
+    try {
+      const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`, { withCredentials: true })
+      setProductData(resp.data);
+      setActiveCategory(cate);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-///////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////
   const handleAll = () => {
     setProductData(products || []);
     setActiveCategory('All');
   };
+///////////////////////////////////////////////////////////////////////
 
-  const handleDelete = async (myId) => {
+  const handleDelete = async (proID) => {
     try {
-      const response = await fetch(`https://6b6lwvt1-3000.inc1.devtunnels.ms/products/${myId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
+
+      const resp = await axios.delete(`http://localhost:5000/api/admin/deleteproduct/${proID}`, {
+        withCredentials: true
+      })
+      if (resp.status===200) {
         const updatedProducts = productData.map((product) =>
-          product.id === myId ? { ...product, deleted: true } : product
+          product._id === proID ? { ...product, deleted: true } : product
         );
         setProductData(updatedProducts);
         setProducts(updatedProducts.filter(product => !product.deleted))
         alert("Product temporarily deleted");
-      } 
+      }
     } catch (error) {
-      console.error('Error:', error);
+      console.log(error);
     }
-  };
+  }
+////////////////////////////////////////////////////////////////////////////
 
   const handleAddNew = () => {
     setShowPopup(true);
@@ -157,7 +164,7 @@ const Products = () => {
               >
                 Girls Fashion
               </button>
-             
+
             </div>
           </div>
         </div>
@@ -174,7 +181,7 @@ const Products = () => {
                       <button onClick={() => handleEdit(item.id)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
                         <FaEdit />
                       </button>
-                      <button onClick={() => handleDelete(item.id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                      <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
                         <MdDeleteForever />
                       </button>
                     </div>
