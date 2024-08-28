@@ -17,6 +17,7 @@ import useFetchProducts from '../component/CoustumeHook';
 import CartContextProvider from '../component/CartContext';
 import Wishlist from '../component/Wishlist';
 import WishContextProvider from '../component/WishlistContext';
+import Orders from '../component/Orders';
 
 
 
@@ -51,6 +52,7 @@ const RouterApp = () => {
               <Route path="/cart" element={<Cart />} />
               <Route path="/category" element={<Categories />} />
               <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/orders" element={<Orders />} />
               <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             </Routes>
             {shouldDisplayFooter && <Footer />}

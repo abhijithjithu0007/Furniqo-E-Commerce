@@ -141,15 +141,12 @@ const Navbar = ({ isLoggedIn }) => {
               {myWish.length}
             </span>
           </Link>
-
           <Link to={'/cart'} className="flex items-center text-center relative">
             <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">
               {myPro.length}
             </span>
           </Link>
-
-          {/* Contact Icon */}
           <Link to={'/contactus'}>
             <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
           </Link>
@@ -159,7 +156,7 @@ const Navbar = ({ isLoggedIn }) => {
               <RiArrowDropDownLine className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             </div>
             {isLog && <p className="absolute text-sm text-gray-700 top-8 left-0">{name}</p>}
-            <ul className="absolute right-0 hidden group-hover:block mt-2 bg-white shadow-lg p-4 min-w-[150px]">
+            <ul className="absolute rounded-xl right-0 hidden group-hover:block mt-2 bg-white shadow-lg p-4 min-w-[150px]">
               <li
                 className="py-2 hover:pl-2 transition-all duration-300 border-l-2 border-transparent hover:border-blue-500 cursor-pointer"
                 onClick={() => handleOptionClick('/orders')}

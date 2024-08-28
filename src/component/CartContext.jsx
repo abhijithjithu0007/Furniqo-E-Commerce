@@ -27,8 +27,6 @@ const CartContextProvider = ({ children }) => {
     fetchData();
   }, [id,myPro]);
   
-  
-
  
   return (
     <cartContext.Provider value={{ total, setTotal, myPro, setMyPro }}>
