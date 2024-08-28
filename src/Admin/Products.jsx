@@ -1,132 +1,119 @@
+// Products.js
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Make sure to configure axios base URL if needed
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { LuPlusCircle } from "react-icons/lu";
 
-import useFetchProducts from '../component/CoustumeHook';
-import axios from 'axios';
-
 const Products = () => {
-  const { products, setProducts } = useFetchProducts();
+  const [products, setProducts] = useState([]);
   const [productData, setProductData] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
-  const [validate, setValidate] = useState({ name: "", description: "", price: "", image: "", category: "" });
+  const [productDetails, setProductDetails] = useState({name: '',description: '',price: '',image: '',category: ''});
 
   useEffect(() => {
-    setProductData(products || []);
-  }, [products]);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/admin/allproducts',{withCredentials:true}); // Adjust endpoint as needed
+        setProducts(response.data);
+        setProductData(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
-
-  ///////////////////////////////////////////////////////////////
-  const handleCategory = async (cate) => {
-    try {
-      const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`, { withCredentials: true })
-      setProductData(resp.data);
-      setActiveCategory(cate);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  ///////////////////////////////////////////////////////////////////
-  const handleAll = () => {
-    setProductData(products || []);
-    setActiveCategory('All');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProductDetails({ ...productDetails, [name]: value });
   };
-///////////////////////////////////////////////////////////////////////
 
-  const handleDelete = async (proID) => {
+  const addProduct = async () => {
     try {
+      const response = await axios.post('http://localhost:5000/api/admin/addproduct', productDetails, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials:true
+      });
 
-      const resp = await axios.delete(`http://localhost:5000/api/admin/deleteproduct/${proID}`, {
-        withCredentials: true
-      })
-      if (resp.status===200) {
-        const updatedProducts = productData.map((product) =>
-          product._id === proID ? { ...product, deleted: true } : product
-        );
-        setProductData(updatedProducts);
-        setProducts(updatedProducts.filter(product => !product.deleted))
-        alert("Product temporarily deleted");
+      if (response.status === 201) {
+        setProductData((prevState) => [...prevState, response.data]);
+        setProducts((prevState) => [...prevState, response.data]);
+        alert('Product added successfully!');
+        resetForm();
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error adding product:', error);
     }
-  }
-////////////////////////////////////////////////////////////////////////////
+  };
 
-  const handleAddNew = () => {
-    setShowPopup(true);
+  const editProduct = async () => {
+    try {
+      const response = await axios.put(`http://localhost:5000/api/admin/updateproduct/${editProductId}`, productDetails, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials:true
+      });
+
+      if (response.status === 200) {
+        const updatedProducts = productData.map((product) =>
+          product._id === editProductId ? response.data : product
+        );
+        setProductData(updatedProducts);
+        setProducts(updatedProducts);
+        alert('Product updated successfully!');
+        resetForm();
+      }
+    } catch (error) {
+      console.error('Error editing product:', error);
+    }
+  };
+
+  const handleSave = () => {
+    if (editMode) {
+      editProduct();
+    } else {
+      addProduct();
+    }
+  };
+
+  const resetForm = () => {
+    setShowPopup(false);
+    setEditMode(false);
+    setEditProductId(null);
+    setProductDetails({name: '',description: '',price: '',image: '',category: ''});
   };
 
   const handleEdit = (productId) => {
     setEditMode(true);
     setEditProductId(productId);
-
-    const productToEdit = productData.find(product => product.id === productId);
-    setValidate({
+    const productToEdit = productData.find((product) => product._id === productId);
+    setProductDetails({
       name: productToEdit.name,
       description: productToEdit.description,
       price: productToEdit.price,
       image: productToEdit.image,
-      category: productToEdit.category,
-    });
-
+      category: productToEdit.category
+    })
     setShowPopup(true);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValidate({ ...validate, [name]: value });
-  };
-
-  const handleSave = async () => {
+  const handleDelete = async (proID) => {
     try {
-      let url = 'https://6b6lwvt1-3000.inc1.devtunnels.ms/products';
-      let method = 'POST';
-
-      if (editMode && editProductId) {
-        url = `https://6b6lwvt1-3000.inc1.devtunnels.ms/products/${editProductId}`;
-        method = 'PUT';
-      }
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...validate,
-        }),
+      const resp = await axios.delete(`http://localhost:5000/api/admin/deleteproduct/${proID}`, {
+        withCredentials: true,
       });
-
-      if (response.ok) {
-        const updatedProduct = await response.json();
-
-        if (editMode && editProductId) {
-          const updatedProducts = productData.map(product =>
-            product.id === editProductId ? updatedProduct : product
-          );
-          setProductData(updatedProducts);
-          setProducts(updatedProducts);
-          alert("Product updated successfully");
-        } else {
-          setProductData(prevState => [...prevState, updatedProduct]);
-          setProducts(prevState => [...prevState, updatedProduct]);
-          alert("Product added successfully");
-        }
-
-        setShowPopup(false);
-        setEditMode(false);
-        setEditProductId(null);
-      } else {
-        console.error('Failed to save product');
+      if (resp.status === 200) {
+        const updatedProducts = productData.map((product) =>
+          product._id === proID ? { ...product, deleted: true } : product
+        );
+        setProductData(updatedProducts);
+        setProducts(updatedProducts.filter((product) => !product.deleted));
+        alert('Product temporarily deleted');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.log(error);
     }
   };
 
@@ -138,47 +125,25 @@ const Products = () => {
             <div className='flex items-center mb-4'>
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Categories</h2>
-                <button onClick={handleAddNew} className="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center transition duration-300 ease-in-out">
+                <button onClick={() => setShowPopup(true)} className="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center transition duration-300 ease-in-out">
                   <span className="mr-2">Add</span>
                   <LuPlusCircle />
                 </button>
-
               </div>
-            </div>
-            <div className="flex flex-col space-y-2 p-4 bg-white rounded-xl shadow-md">
-              <button
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'All' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-                onClick={handleAll}
-              >
-                All
-              </button>
-              <button
-                onClick={() => handleCategory('Baby boy')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Boy fashion' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Boys Fashion
-              </button>
-              <button
-                onClick={() => handleCategory('Baby girl')}
-                className={`flex items-center gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md duration-300 ${activeCategory === 'Girl fashion' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-green-500 hover:text-white'}`}
-              >
-                Girls Fashion
-              </button>
-
             </div>
           </div>
         </div>
         <div className="w-full md:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {productData.map((item, id) => (
-              <div key={id}>
+            {productData.map((item) => (
+              <div key={item._id}>
                 {!item.deleted && (
                   <div className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
                     <img src={item.image} alt={item.name} className="w-full h-40 object-cover mb-4 rounded" />
                     <h2 className="text-lg font-semibold mb-2 text-center">{item.name}</h2>
-                    <p className="text-green-600 font-semibold mb-2 text-center">{item.price}</p>
+                    <p className="text-green-600 font-semibold mb-2 text-center">Rs : {item.price}</p>
                     <div className="flex justify-center mt-2 space-x-4">
-                      <button onClick={() => handleEdit(item.id)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                      <button onClick={() => handleEdit(item._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
                         <FaEdit />
                       </button>
                       <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
@@ -189,7 +154,6 @@ const Products = () => {
                 )}
               </div>
             ))}
-
           </div>
           {showPopup && (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
@@ -199,7 +163,7 @@ const Products = () => {
                   name="name"
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter product name"
-                  value={validate.name}
+                  value={productDetails.name}
                   onChange={handleChange}
                 />
                 <input
@@ -207,7 +171,7 @@ const Products = () => {
                   name="price"
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Price"
-                  value={validate.price}
+                  value={productDetails.price}
                   onChange={handleChange}
                 />
                 <input
@@ -215,7 +179,7 @@ const Products = () => {
                   name="image"
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Image URL"
-                  value={validate.image}
+                  value={productDetails.image}
                   onChange={handleChange}
                 />
                 <input
@@ -223,14 +187,14 @@ const Products = () => {
                   name="category"
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Category"
-                  value={validate.category}
+                  value={productDetails.category}
                   onChange={handleChange}
                 />
                 <textarea
                   name="description"
                   className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Description"
-                  value={validate.description}
+                  value={productDetails.description}
                   onChange={handleChange}
                 />
                 <div className="flex justify-end mt-4">
@@ -238,14 +202,10 @@ const Products = () => {
                     onClick={handleSave}
                     className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 mr-2"
                   >
-                    Save
+                    {editMode ? 'Update Product' : 'Add Product'}
                   </button>
                   <button
-                    onClick={() => {
-                      setShowPopup(false);
-                      setEditMode(false);
-                      setEditProductId(null);
-                    }}
+                    onClick={resetForm}
                     className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-600"
                   >
                     Cancel
@@ -257,7 +217,6 @@ const Products = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )}
 
-export default Products;
+  export default Products
