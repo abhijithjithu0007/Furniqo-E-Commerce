@@ -6,7 +6,6 @@ import { MdDeleteForever } from 'react-icons/md';
 import { LuPlusCircle } from "react-icons/lu";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
   const [productData, setProductData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -17,7 +16,6 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/admin/allproducts',{withCredentials:true}); // Adjust endpoint as needed
-        setProducts(response.data);
         setProductData(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -40,7 +38,6 @@ const Products = () => {
 
       if (response.status === 200) {
         setProductData((prevState) => [...prevState, response.data]);
-        setProducts((prevState) => [...prevState, response.data]);
         alert('Product added successfully!');
         resetForm();
       }
@@ -61,7 +58,6 @@ const Products = () => {
           product._id === editProductId ? response.data : product
         );
         setProductData(updatedProducts);
-        setProducts(updatedProducts);
         alert('Product updated successfully!');
         resetForm();
       }
@@ -109,7 +105,6 @@ const Products = () => {
           product._id === proID ? { ...product, deleted: true } : product
         );
         setProductData(updatedProducts);
-        setProducts(updatedProducts.filter((product) => !product.deleted));
         alert('Product temporarily deleted');
       }
     } catch (error) {
