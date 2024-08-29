@@ -17,8 +17,7 @@ const CartContextProvider = ({ children }) => {
           withCredentials: true
         });
         const data = resp.data.products || [];
-        const validPro = data.filter(item => item.product != null && !item.product.deleted);
-        setMyPro(validPro);
+        setMyPro(data);
       } catch (error) {
         console.log(error);
       }
