@@ -10,9 +10,7 @@ import { cartContext } from './CartContext';
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const navigate = useNavigate();
   const { myPro, setMyPro } = useContext(cartContext);
-
 
   useEffect(() => {
     AOS.init({
@@ -77,8 +75,8 @@ const Cart = () => {
       const { data } = await axios.post('http://localhost:5000/api/user/create-order', {}, { withCredentials: true });
 
       const options = {
-        key: data.razorpayKeyId, // Your Razorpay Key ID
-        amount: data.order.amount, // Amount in paise
+        key: data.razorpayKeyId, 
+        amount: data.order.amount,
         currency: 'INR',
         name: 'Sample Project',
         description: 'Test Transaction',
@@ -115,7 +113,7 @@ const Cart = () => {
               <p className='text-center text-red-400 mt-10 underline'>Add some products! Click here</p>
             </Link>
           </div>
-        ) : (
+        ):(
           <>
             <div className="flex flex-col md:flex-row">
               <div className="cart bg-white p-10 rounded-l-lg md:rounded-r-none md:rounded-l-lg flex-grow md:w-3/4">

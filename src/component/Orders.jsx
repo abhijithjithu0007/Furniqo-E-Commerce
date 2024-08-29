@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import axios from 'axios';
 
 const Orders = () => {
     useEffect(() => {
@@ -9,6 +10,28 @@ const Orders = () => {
 
     const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
     const { name } = currentUserData;
+
+
+    const [orders,setOrders] =useState([])
+    const [sum,setSum]= useState()
+    
+
+    useEffect(()=>{
+        const fetchdata =async()=>{
+         try {
+            const resp = await axios.get('http://localhost:5000/api/user/order/getorderdetails',{withCredentials:true})
+            const datas = resp.data.products
+            setOrders(datas)   
+            setSum(resp.data) 
+         } catch (error) {
+            console.log(error);
+         }
+        }
+        fetchdata()
+    },[])
+    
+    console.log(sum);
+    
 
     return (
         <div className="container mx-auto my-10 px-4">
@@ -20,25 +43,22 @@ const Orders = () => {
                     </div>
                 </div>
                 <div className="p-4 bg-gray-50">
-                    <div className="flex justify-between mb-3" data-aos="fade-up">
-                        <h6 className="text-purple-700 font-medium">Receipt</h6>
-                    </div>
-                    <div className="space-y-4">
+                    {orders.map((item,key)=>(
+                        <div key={key} className="space-y-4">
                         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
                              data-aos="fade-right">
                             <div className="flex items-center">
                                 <img
                                     className="w-32 h-32 object-cover rounded-lg"
-                                    src="https://i.imgur.com/RJOW4BL.jpg"
+                                    src={item.product.image}
                                     alt="Jack Jacs"
                                 />
                                 <div className="ml-4 flex-1">
                                     <div className="flex flex-col sm:flex-row justify-between text-gray-800">
-                                        <h6 className="text-lg font-medium">Jack Jacs</h6>
-                                        <small>Golden Rim</small>
-                                        <small>Size: M</small>
-                                        <small>Qty: 1</small>
-                                        <h6 className="text-lg font-medium text-green-600">&#8377;3,600.00</h6>
+                                        <h6 className="text-lg font-medium">{item.product.name}</h6>
+                                        <small>{item.product.description}</small>
+                                        <small>{item.quantity}</small>
+                                        <h6 className="text-lg font-medium text-green-600">&#8377;{item.product.price}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -60,44 +80,9 @@ const Orders = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
-                             data-aos="fade-left">
-                            <div className="flex items-center">
-                                <img
-                                    className="w-32 h-32 object-cover rounded-lg"
-                                    src="https://i.imgur.com/fUWWpRS.jpg"
-                                    alt="Michel Mark"
-                                />
-                                <div className="ml-4 flex-1">
-                                    <div className="flex flex-col sm:flex-row justify-between text-gray-800">
-                                        <h6 className="text-lg font-medium">Michel Mark</h6>
-                                        <small>Black Rim</small>
-                                        <small>Size: L</small>
-                                        <small>Qty: 1</small>
-                                        <h6 className="text-lg font-medium text-green-600">&#8377;1,235.00</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div>
-                                <div className="flex justify-between items-center text-gray-600">
-                                    <small>Track Order <i className="ml-2 fa fa-refresh" aria-hidden="true"></i></small>
-                                    <div className="flex-1 ml-4">
-                                        <div className="relative pt-1">
-                                            <div className="flex items-center justify-between">
-                                                <small>Out for delivery</small>
-                                                <small>Delivered</small>
-                                            </div>
-                                            <div className="w-full bg-gray-200 h-2 rounded">
-                                                <div className="bg-teal-500 h-2 rounded" style={{ width: '18%' }}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    ))}
+                    
                     <div className="my-4" data-aos="fade-up">
                         <div className="flex justify-between text-gray-800">
                             <p className="font-bold">Order Details</p>
