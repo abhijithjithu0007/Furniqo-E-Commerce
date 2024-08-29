@@ -73,12 +73,11 @@ const Cart = () => {
   const handlePay = async () => {
     try {
       const { data } = await axios.post('http://localhost:5000/api/user/create-order', {}, { withCredentials: true });
-
       const options = {
         key: data.razorpayKeyId, 
-        amount: data.order.amount,
+        amount: data.order.totalprice,
         currency: 'INR',
-        name: 'Sample Project',
+        name: 'Giggles',
         description: 'Test Transaction',
         order_id: data.order.id,
         handler: function (response) {
