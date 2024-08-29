@@ -4,119 +4,107 @@ import 'aos/dist/aos.css';
 import axios from 'axios';
 
 const Orders = () => {
-    useEffect(() => {
-        AOS.init({ duration: 1000 })
-    }, []);
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
 
-    const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-    const { name } = currentUserData;
+  const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+  const { name } = currentUserData;
 
+  const [pendOrders, setPendOrders] = useState([]);
+  const [compOrders, setCompOrders] = useState([]);
+  const [sum, setSum] = useState(0);
+  const [viewPending, setViewPending] = useState(true)
 
-    const [orders,setOrders] =useState([])
-    const [sum,setSum]= useState()
-    
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resp = await axios.get('http://localhost:5000/api/user/order/getorderdetails', { withCredentials: true });
+        const { pendingorder, completedorder } = resp.data;
+        setPendOrders(pendingorder);
+        setCompOrders(completedorder);
 
-    useEffect(()=>{
-        const fetchdata =async()=>{
-         try {
-            const resp = await axios.get('http://localhost:5000/api/user/order/getorderdetails',{withCredentials:true})
-            const datas = resp.data.products
-            setOrders(datas)   
-            setSum(resp.data) 
-         } catch (error) {
-            console.log(error);
-         }
-        }
-        fetchdata()
-    },[])
-    
-    console.log(sum);
-    
+        const total = pendingorder.reduce((acc, order) => {
+          return acc + order.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+        }, 0);
+        setSum(total);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
-    return (
-        <div className="container mx-auto my-10 px-4">
-            <div className="bg-white shadow-lg rounded-lg">
-                <div className="flex flex-col sm:flex-row justify-between p-4 border-b bg-blue-50"
-                     data-aos="fade-down">
-                    <div className="flex items-center">
-                        <h4 className="text-xl font-semibold text-teal-700">Thanks for your Order, <span className="text-indigo-600">{name}</span>!</h4>
-                    </div>
-                </div>
-                <div className="p-4 bg-gray-50">
-                    {orders.map((item,key)=>(
-                        <div key={key} className="space-y-4">
-                        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
-                             data-aos="fade-right">
-                            <div className="flex items-center">
-                                <img
-                                    className="w-32 h-32 object-cover rounded-lg"
-                                    src={item.product.image}
-                                    alt="Jack Jacs"
-                                />
-                                <div className="ml-4 flex-1">
-                                    <div className="flex flex-col sm:flex-row justify-between text-gray-800">
-                                        <h6 className="text-lg font-medium">{item.product.name}</h6>
-                                        <small>{item.product.description}</small>
-                                        <small>{item.quantity}</small>
-                                        <h6 className="text-lg font-medium text-green-600">&#8377;{item.product.price}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr className="my-4 border-gray-300" />
-                            <div>
-                                <div className="flex justify-between items-center text-gray-600">
-                                    <small>Track Order <i className="ml-2 fa fa-refresh" aria-hidden="true"></i></small>
-                                    <div className="flex-1 ml-4">
-                                        <div className="relative pt-1">
-                                            <div className="flex items-center justify-between">
-                                                <small>Out for delivery</small>
-                                                <small>Delivered</small>
-                                            </div>
-                                            <div className="w-full bg-gray-200 h-2 rounded">
-                                                <div className="bg-teal-500 h-2 rounded" style={{ width: '62%' }}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ))}
-                    
-                    <div className="my-4" data-aos="fade-up">
-                        <div className="flex justify-between text-gray-800">
-                            <p className="font-bold">Order Details</p>
-                            <p className="font-bold">Total</p>
-                            <p className="font-bold text-green-600">&#8377;4,835</p>
-                        </div>
-                        <div className="flex justify-between text-gray-800">
-                            <p className="font-bold">Discount</p>
-                            <p>&#8377;150</p>
-                        </div>
-                        <div className="flex justify-between text-gray-800">
-                            <p className="font-bold">GST 18%</p>
-                            <p>&#8377;843</p>
-                        </div>
-                        <div className="flex justify-between text-gray-800">
-                            <p className="font-bold">Delivery Charges</p>
-                            <p>Free</p>
-                        </div>
-                    </div>
-                    <div className="my-4" data-aos="fade-up">
-                        <p>Invoice Number: 788152</p>
-                        <p>Invoice Date: 22 Dec, 2019</p>
-                        <p>Receipts Voucher: 18KU-62IIK</p>
-                    </div>
-                </div>
-                <div className="bg-red-100 p-8 border-t" data-aos="fade-up">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-2xl font-bold text-btnColor">TOTAL PAID</h2>
-                        <h1 className="text-4xl font-bold text-btnColor">&#8377; 5,528</h1>
-                    </div>
-                </div>
+  return (
+    <div className="min-h-screen bg-gray-200 flex items-center">
+      <div className="card mx-auto max-w-6xl w-11/12 shadow-lg rounded-lg border-transparent" data-aos="fade-up">
+        <div className="flex flex-col md:flex-row">
+          <div className="orders-section bg-white p-8 rounded-l-lg md:rounded-r-none md:rounded-l-lg flex-grow md:w-2/3">
+            <div className="title mb-10 flex justify-between items-center">
+              <h4 className="font-bold text-xl">{viewPending ? 'Pending Orders' : 'Completed Orders'}</h4>
+              <button
+                onClick={() => setViewPending(!viewPending)}
+                className="btn bg-black text-white py-1 px-4 rounded"
+              >
+                {viewPending ? 'View Completed Orders' : 'View Pending Orders'}
+              </button>
             </div>
+            <div className="border-t border-b">
+              {(viewPending ? pendOrders : compOrders).map((order) => (
+                <div key={order._id} className="space-y-4 my-4">
+                  {order.products.map((item, index) => (
+                    <div
+                      key={index}
+                      className="order-item flex items-center py-5 bg-white p-4 rounded-lg shadow-sm border border-gray-200"
+                      data-aos="fade-up"
+                      data-aos-delay={index * 100}
+                    >
+                      <div className="w-16">
+                        <img className="w-full rounded-lg" src={item.product.image} alt="product" />
+                      </div>
+                      <div className="flex-1 px-2">
+                        <div className="text-gray-500">{item.product.category}</div>
+                        <div className="text-lg font-medium">{item.product.name}</div>
+                        <div className="text-gray-700">Quantity: {item.quantity}</div>
+                      </div>
+                      <div className="ml-auto">
+                        <div className="text-lg font-medium text-green-600">
+                          ₹{(item.product.price * item.quantity).toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="my-4 flex flex-col md:flex-row justify-between items-center">
+                    <div className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200 w-full md:w-1/2">
+                      <div className="flex justify-between text-gray-800">
+                        <p className="font-bold">Order Details</p>
+                        <p className="font-bold text-green-600">₹{order.totalprice}</p>
+                      </div>
+                      <div className="flex justify-between text-gray-800">
+                        <p className="font-bold">Delivery Charges</p>
+                        <p>Free</p>
+                      </div>
+                    </div>
+                    <div className="bg-red-100 p-4 rounded-lg shadow border border-red-200 w-full md:w-1/3 mt-4 md:mt-0">
+                      <h2 className="text-2xl font-bold text-red-600">TOTAL PAID</h2>
+                      <h1 className="text-4xl font-bold text-red-600">₹{order.totalprice}</h1>
+                    </div>
+                  </div>
+
+                  <div className="my-4 text-gray-600">
+                    <p>Invoice Date: {order.purchaseDate}</p>
+                    <p>Receipt Voucher: 18KU-62IIK</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+         
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default Orders;
