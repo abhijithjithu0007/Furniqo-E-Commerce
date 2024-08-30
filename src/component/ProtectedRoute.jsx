@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useContext } from 'react';
 import { Mycontext } from '../routing/RouterApp';
 
-const ProtectedRoute = ({ children }) => {
-  const { isLoggedIn } = useContext(Mycontext);
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (!isLoggedIn || !currentUser || currentUser.role !== 'admin') {
+const ProtectedRoute = ({ children, adminOnly = false }) => {
+  const { isLoggedIn, currentUser } = useContext(Mycontext);
+
+  if (isLoggedIn===false) {
+    return <Navigate to="/login" />;
+  }
+
+  if (adminOnly && (!currentUser || currentUser.role !== 'admin')) {
     return <Navigate to="/home" />;
   }
 

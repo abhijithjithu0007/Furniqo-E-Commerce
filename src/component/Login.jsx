@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Mycontext } from '../routing/RouterApp';
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
+  const {setIsLoggedIn} = useContext(Mycontext)
 
   const handleEmail = (e) => {
     setUserEmail(e.target.value);
@@ -27,6 +29,7 @@ const Login = () => {
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
         localStorage.setItem('isLogin', JSON.stringify(true));
         toast.success("Login Completed", { position: 'top-right' });
+        setIsLoggedIn(true)
         navigate('/');
       } else {
         alert('Error occurred');
