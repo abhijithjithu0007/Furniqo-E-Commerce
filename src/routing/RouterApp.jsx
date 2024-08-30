@@ -22,9 +22,7 @@ import axios from 'axios';
 export const Mycontext = createContext(); 
 
 const RouterApp = () => { 
-  const [userData, setUserData] = useState([]); 
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin'))); 
-  const [myCart, setMyCart] = useState([]); 
   const [products, setProducts] = useState([]); 
 
   useEffect(() => { 
@@ -40,12 +38,12 @@ const RouterApp = () => {
   }, []); 
 
   const location = useLocation(); 
-  const [currentUser, setCurrentUser] = useState(); 
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const shouldDisplayFooter = !location.pathname.startsWith('/admin'); 
 
   return ( 
     <div> 
-      <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser, setCurrentUser }}> 
+      <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}> 
         <CartContextProvider> 
           <WishContextProvider> 
             {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />} 
