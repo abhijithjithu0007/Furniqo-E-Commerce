@@ -73,16 +73,37 @@ const Cart = () => {
   const handlePay = async () => {
     try {
       const { data } = await axios.post('http://localhost:5000/api/user/create-order', {}, { withCredentials: true });
+  
+      const { razorpayOrderId } = data
+  
       const options = {
-        key: data.razorpayKeyId, 
-        amount: data.order.totalprice,
+        key: data.razorpayKeyId,
+        amount: data.order.totalprice * 100,
         currency: 'INR',
         name: 'Giggles',
         description: 'Test Transaction',
-        order_id: data.order.id,
-        handler: function (response) {
-          console.log('Payment Successful', response);
-          Swal.fire('Payment Successful!', 'Your payment was successful.', 'success');
+        order_id: razorpayOrderId,
+        handler: async function (response) {  
+          try {
+            const verifyResponse = await axios.post(
+              'http://localhost:5000/api/user/verify-payment',
+              {
+                razorpayOrderId: razorpayOrderId,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              },
+              { withCredentials: true }
+            );
+  
+            if (verifyResponse.status === 200) {
+              Swal.fire('Payment Successful!', 'Your payment was successful.', 'success');
+            } else {
+              Swal.fire('Verification Failed!', 'Unable to verify the payment.', 'error');
+            }
+          } catch (verifyError) {
+            console.error('Verification Error:', verifyError);
+            Swal.fire('Verification Failed!', 'There was an error verifying your payment.', 'error');
+          }
         },
         prefill: {
           name: '',
@@ -93,7 +114,7 @@ const Cart = () => {
           color: '#3399cc'
         }
       };
-
+  
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
@@ -101,6 +122,8 @@ const Cart = () => {
       Swal.fire('Payment Failed!', 'There was an error processing your payment.', 'error');
     }
   };
+  
+  
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center">
