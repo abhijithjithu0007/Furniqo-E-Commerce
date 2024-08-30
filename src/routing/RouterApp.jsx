@@ -13,7 +13,6 @@ import ScrollToTop from '../component/Scroll';
 import Footer from '../component/Footer';
 import ProtectedRoute from '../component/ProtectedRoute';
 import Admin from '../Admin/Admin';
-import useFetchProducts from '../component/CoustumeHook';
 import CartContextProvider from '../component/CartContext';
 import Wishlist from '../component/Wishlist';
 import WishContextProvider from '../component/WishlistContext';

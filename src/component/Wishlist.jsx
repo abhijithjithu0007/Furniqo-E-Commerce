@@ -13,7 +13,6 @@ const Wishlist = () => {
     }
 
     const handleRemove=async(productId)=>{
-        
       try {
         const resp = await axios.delete('http://localhost:5000/api/user/removefromwish',{
             data:{productId},

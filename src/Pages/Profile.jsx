@@ -2,19 +2,25 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Mycontext } from '../routing/RouterApp';
+import { wishContext } from '../component/WishlistContext';
+import { cartContext } from '../component/CartContext';
 
 const Profile = () => {
-  const { userData, setIsLoggedIn } = useContext(Mycontext);
+  const { setIsLoggedIn } = useContext(Mycontext);
   const navigate = useNavigate();
+  const {setMyWish}=useContext(wishContext)
+  const {setMyPro} =useContext(cartContext)
 
- 
-  const handleLogout=async()=>{
+
+  const handleLogout = async () => {
     try {
-      const resp =await axios.post('http://localhost:5000/api/user/logout',{},{withCredentials:true})
+      await axios.post('http://localhost:5000/api/user/logout', {}, { withCredentials: true })
       navigate('/login')
       localStorage.setItem('isLogin', JSON.stringify(false));
-    navigate('/login');
+      navigate('/login');
       setIsLoggedIn(false);
+      setMyWish([])
+      setMyPro([])
     } catch (error) {
       console.log(error);
     }

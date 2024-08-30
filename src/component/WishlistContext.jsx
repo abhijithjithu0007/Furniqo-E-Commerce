@@ -5,6 +5,9 @@ export const wishContext = createContext()
 const WishContextProvider = ({ children }) => {
 
     const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+    const islogin = JSON.parse(localStorage.getItem('isLogin'));
+    
+
     const { id } = currentUserData
 
     const [myWish, setMyWish] = useState([])
@@ -20,7 +23,7 @@ const WishContextProvider = ({ children }) => {
         };
 
         fetchData();
-    }, [id]);
+    }, [id,islogin]);
     return (
         <wishContext.Provider value={{ myWish, setMyWish }}>
             {children}

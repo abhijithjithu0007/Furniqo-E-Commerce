@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MdFavoriteBorder, MdOutlineShoppingCart, MdContactMail } from 'react-icons/md';
+import { MdFavoriteBorder, MdContactMail } from 'react-icons/md';
+import { RiShoppingBag4Line } from "react-icons/ri";
 import { FaCircleArrowRight } from 'react-icons/fa6';
 import { CgProfile } from 'react-icons/cg';
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -142,7 +143,7 @@ const Navbar = ({ isLoggedIn }) => {
             </span>
           </Link>
           <Link to={'/cart'} className="flex items-center text-center relative">
-            <MdOutlineShoppingCart className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
+            <RiShoppingBag4Line className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
             <span className="absolute -top-2 -right-3 bg-btnColor w-[20px] h-[22px] rounded-xl text-white text-xs flex items-center justify-center">
               {myPro.length}
             </span>
