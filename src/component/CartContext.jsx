@@ -24,7 +24,7 @@ const CartContextProvider = ({ children }) => {
     };
 
     fetchData();
-  }, [id,myPro]);
+  }, [id]);
   
  
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { Mycontext } from './SignUp';
+import { Mycontext } from '../routing/RouterApp';
 
 const ProtectedRoute = ({ children }) => {
   const { isLoggedIn } = useContext(Mycontext);

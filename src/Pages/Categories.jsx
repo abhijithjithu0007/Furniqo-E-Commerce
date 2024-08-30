@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Mycontext } from '../component/SignUp';
 import { Link } from 'react-router-dom';
 import ScrollReveal from 'scrollreveal';
 import axios from 'axios';

@@ -2,7 +2,6 @@ import React, { useState, createContext } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-export const Mycontext = createContext();
 
 const SignUp = () => {
   const [formData, setFormData] = useState({

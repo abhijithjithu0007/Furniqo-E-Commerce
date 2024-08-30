@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import useFetchProducts from "./CoustumeHook";
 import { BiCartDownload } from "react-icons/bi";
 import { wishContext } from "./WishlistContext";
@@ -13,14 +13,13 @@ const Wishlist = () => {
     }
 
     const handleRemove=async(productId)=>{
-        console.log(productId);
         
       try {
         const resp = await axios.delete('http://localhost:5000/api/user/removefromwish',{
             data:{productId},
             withCredentials:true
         })
-        const data = resp.data.products
+        const data = resp.data.products      
         setMyWish(data)
       } catch (error) {
         console.log(error);

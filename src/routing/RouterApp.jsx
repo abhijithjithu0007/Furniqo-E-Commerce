@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { createContext, useState,useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import SignUp, { Mycontext } from '../component/SignUp';
+import SignUp from '../component/SignUp';
 import Home from '../Pages/Home';
 import Navbar from '../NavBar/Navbar';
 import ContactUs from '../Pages/ContactUs';
@@ -18,15 +18,29 @@ import CartContextProvider from '../component/CartContext';
 import Wishlist from '../component/Wishlist';
 import WishContextProvider from '../component/WishlistContext';
 import Orders from '../component/Orders';
+import axios from 'axios';
 
-
-
+export const Mycontext = createContext();
 
 const RouterApp = () => {
   const [userData, setUserData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [myCart, setMyCart] = useState([]);
-  const { products, loading, error } = useFetchProducts();
+  const [products,setProducts] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resp = await axios.get('http://localhost:5000/api/user/allproducts')
+        setProducts(resp.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [adminData, setAdminData] = useState({ adminName: 'admin', adminEmail: 'giggles@admin' });
 
   const location = useLocation();

@@ -11,17 +11,16 @@ const WishContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const resp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true })
+                const resp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true })                
                 const data = resp.data.products||[]
-                const validPro = data.filter(item => item.product != null && !item.product.deleted);
-                setMyWish(validPro);
+                setMyWish(data);
             } catch (error) {
                 console.log(error);
             }
         };
 
         fetchData();
-    }, [id, myWish]);
+    }, [id]);
     return (
         <wishContext.Provider value={{ myWish, setMyWish }}>
             {children}

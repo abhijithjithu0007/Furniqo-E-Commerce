@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi"
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { wishContext } from './WishlistContext';
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
-  const navigate = useNavigate();
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
+  const {setMyWish} =useContext(wishContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,10 +43,13 @@ const ProductDetails = () => {
         });
         setIsFilled(false);
       } else {
-        await axios.post('http://localhost:5000/api/user/wishlist', {
+       const {data} = await axios.post('http://localhost:5000/api/user/wishlist', {
           productId: productId
         }, { withCredentials: true });
+        setMyWish(data.products)
         setIsFilled(true);
+        console.log(data);
+        
       }
     } catch (error) {
       console.log(error);
