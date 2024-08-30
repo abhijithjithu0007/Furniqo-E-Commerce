@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import axios from 'axios';
 
 const Orders = () => {
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
   const { name } = currentUserData;
@@ -20,11 +15,13 @@ const Orders = () => {
     const fetchData = async () => {
       try {
         const resp = await axios.get('http://localhost:5000/api/user/order/getorderdetails', { withCredentials: true });
-        const { pendingorder, completedorder } = resp.data;
-        setPendOrders(pendingorder);
-        setCompOrders(completedorder);
+        console.log(resp.data);
+        
+        const { pendingOrders,completedOrders } = resp.data;
+        setPendOrders(pendingOrders);
+        setCompOrders(completedOrders);
 
-        const total = pendingorder.reduce((acc, order) => {
+        const total = pendingOrders.reduce((acc, order) => {
           return acc + order.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
         }, 0);
         setSum(total);
@@ -34,10 +31,12 @@ const Orders = () => {
     };
     fetchData();
   }, []);
+  console.log(pendOrders);
+  
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center">
-      <div className="card mx-auto max-w-6xl w-11/12 shadow-lg rounded-lg border-transparent" data-aos="fade-up">
+      <div className="card mx-auto max-w-6xl w-11/12 shadow-lg rounded-lg border-transparent">
         <div className="flex flex-col md:flex-row">
           <div className="orders-section bg-white p-8 rounded-l-lg md:rounded-r-none md:rounded-l-lg flex-grow md:w-2/3">
             <div className="title mb-10 flex justify-between items-center">
@@ -55,10 +54,7 @@ const Orders = () => {
                   {order.products.map((item, index) => (
                     <div
                       key={index}
-                      className="order-item flex items-center py-5 bg-white p-4 rounded-lg shadow-sm border border-gray-200"
-                      data-aos="fade-up"
-                      data-aos-delay={index * 100}
-                    >
+                      className="order-item flex items-center py-5 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                       <div className="w-16">
                         <img className="w-full rounded-lg" src={item.product.image} alt="product" />
                       </div>
