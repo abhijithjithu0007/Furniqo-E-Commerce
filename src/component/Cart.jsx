@@ -121,9 +121,7 @@ const Cart = () => {
       console.error('Payment Error:', error);
       Swal.fire('Payment Failed!', 'There was an error processing your payment.', 'error');
     }
-  };
-  
-  
+  };  
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center">

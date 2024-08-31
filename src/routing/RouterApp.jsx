@@ -10,14 +10,15 @@ import ProductDetails from '../component/ProductDetails';
 import Cart from '../component/Cart'; 
 import Categories from '../Pages/Categories'; 
 import ScrollToTop from '../component/Scroll'; 
-import Footer from '../component/Footer'; 
-import ProtectedRoute from '../component/ProtectedRoute'; 
+import Footer from '../component/Footer';
+import AdminProtectedRoute from '../component/ProtectedRouteAdmin'; 
 import Admin from '../Admin/Admin'; 
 import CartContextProvider from '../component/CartContext'; 
 import Wishlist from '../component/Wishlist'; 
 import WishContextProvider from '../component/WishlistContext'; 
 import Orders from '../component/Orders'; 
 import axios from 'axios'; 
+import UserProtectedRoute from '../component/ProtectedRouteUser';
 
 export const Mycontext = createContext(); 
 
@@ -56,10 +57,10 @@ const RouterApp = () => {
               <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} /> 
               <Route path="/category/:id" element={<ProductDetails />} /> 
               <Route path="/category" element={<Categories />} /> 
-              <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} /> 
-              <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} /> 
-              <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} /> 
-              <Route path="/admin/*" element={<ProtectedRoute adminOnly={true}><Admin /></ProtectedRoute>} /> 
+              <Route path="/cart" element={<UserProtectedRoute><Cart /></UserProtectedRoute>} /> 
+              <Route path="/wishlist" element={<UserProtectedRoute><Wishlist /></UserProtectedRoute>} /> 
+              <Route path="/orders" element={<UserProtectedRoute><Orders /></UserProtectedRoute>} /> 
+              <Route path="/admin/*" element={<AdminProtectedRoute adminOnly={true}><Admin /></AdminProtectedRoute>} /> 
             </Routes> 
             {shouldDisplayFooter && <Footer />} 
           </WishContextProvider> 
