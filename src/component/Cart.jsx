@@ -55,7 +55,7 @@ const Cart = () => {
       const data = resp.data.products;
       setMyPro(data);
       if (resp.status === 200) {
-        toast.success('Product Removed', { position: 'top-right' });
+        toast.success('Removed From Cart', { position: 'top-right' });
       }
     } catch (error) {
       console.log(error);
@@ -97,6 +97,7 @@ const Cart = () => {
   
             if (verifyResponse.status === 200) {
               Swal.fire('Payment Successful!', 'Your payment was successful.', 'success');
+              setMyPro([])
             } else {
               Swal.fire('Verification Failed!', 'Unable to verify the payment.', 'error');
             }

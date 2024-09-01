@@ -82,7 +82,7 @@ const Orders = () => {
                       </div>
                     </div>
                     <div className="bg-red-100 p-4 rounded-lg shadow border border-red-200 w-full md:w-1/3 mt-4 md:mt-0">
-                    <h2 className="text-2xl font-bold text-red-600">PAID TO BE - </h2>
+                    <h2 className="text-2xl font-bold text-red-600">AMOUNT</h2>
                       <h1 className="text-4xl font-bold text-red-600">₹{order.totalprice}</h1>
                       <h2 className="text-lg font-bold text-red-600">Payment status : <span className='text-lg text-black'>{order.paymentStatus}</span></h2>
                     </div>

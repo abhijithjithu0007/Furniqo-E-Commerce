@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import useFetchProducts from "./CoustumeHook";
 import { BiCartDownload } from "react-icons/bi";
 import { wishContext } from "./WishlistContext";
+import toast from "react-hot-toast";
 
 const Wishlist = () => {
     const {myWish,setMyWish} = useContext(wishContext)
@@ -18,6 +19,10 @@ const Wishlist = () => {
             data:{productId},
             withCredentials:true
         })
+        if(resp.status===200){
+            toast.success('Removed From Wishlist', { position: 'top-right' });
+
+        }
         const data = resp.data.products      
         setMyWish(data)
       } catch (error) {

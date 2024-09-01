@@ -33,7 +33,7 @@ const useFetchProducts = () => {
       }, { withCredentials: true });
       setMyPro(data.products)
 
-      toast.success("Product Added Successfully", { position: 'top-right' });
+      toast.success("Added To Cart 🛒", { position: 'top-right' });
     } catch (error) {
       console.log(error);
     }

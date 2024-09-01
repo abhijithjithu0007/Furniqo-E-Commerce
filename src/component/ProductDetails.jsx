@@ -42,14 +42,14 @@ const ProductDetails = () => {
           withCredentials: true
         });
         setIsFilled(false);
+        
       } else {
        const {data} = await axios.post('http://localhost:5000/api/user/wishlist', {
           productId: productId
         }, { withCredentials: true });
         setMyWish(data.products)
         setIsFilled(true);
-        console.log(data);
-        
+        toast.success('Added To Wishlist 😊', { position: 'top-right' });        
       }
     } catch (error) {
       console.log(error);
