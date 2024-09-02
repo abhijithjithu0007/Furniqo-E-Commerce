@@ -49,7 +49,7 @@ const ProductDetails = () => {
         }, { withCredentials: true });
         setMyWish(data.products)
         setIsFilled(true);
-        toast.success('Added To Wishlist 😊', { position: 'top-right' });        
+        toast.success('Added To Wishlist', { position: 'top-right' });        
       }
     } catch (error) {
       console.log(error);

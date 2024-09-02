@@ -1,18 +1,7 @@
 import React, { useContext ,useEffect, useState} from 'react';
 import { FaUsers, FaClipboardList, FaBoxOpen } from 'react-icons/fa';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+import { PieChart, Pie, Cell,Tooltip,LineChart,Line,XAxis,YAxis,CartesianGrid,Legend,ResponsiveContainer } from 'recharts';
 import { Admincontext } from './ContextAdmin';
 import axios from 'axios';
 
@@ -24,7 +13,7 @@ const pieData = [
   { name: 'Books', value: 20 },
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
 const lineData = [
   { name: 'Jan', value: 400 },
@@ -33,16 +22,17 @@ const lineData = [
   { name: 'Apr', value: 400 },
   { name: 'May', value: 600 },
   { name: 'Jun', value: 700 },
-];
+]
 
 const DashBoard = () => {
   const [pro,setPro] = useState([])
+  const [revenue,setRevenue] = useState('')
 
   const {usersData} = useContext(Admincontext)
   useEffect(() => {
     const fetData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/allproducts')
+        const resp = await axios.get('http://localhost:5000/api/user/allproducts')        
         setPro(resp.data)
       } catch (error) {
         console.log(error);
@@ -50,6 +40,22 @@ const DashBoard = () => {
     }
     fetData()
   }, [])
+
+
+  useEffect(() => {
+    const revenueData = async () => {
+      try {
+        const resp = await axios.get('http://localhost:5000/api/admin/total-revenue',{withCredentials:true})
+        setRevenue(resp.data[0])        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    revenueData()
+    
+  }, [])
+  console.log(revenue);
+  
   
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
@@ -69,6 +75,11 @@ const DashBoard = () => {
           <FaBoxOpen className="text-4xl text-yellow-500 mb-4" />
           <h2 className="text-2xl font-bold mb-2">Products</h2>
           <p className="text-gray-700">Total: {pro.length}</p>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <RiMoneyRupeeCircleFill className="text-4xl text-red-500 mb-4" />
+          <h2 className="text-2xl font-bold mb-2">Revenue</h2>
+          <p className="text-gray-700">Revenue: {revenue.totalRevenue}</p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
