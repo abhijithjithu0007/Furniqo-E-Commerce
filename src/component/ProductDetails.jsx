@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi"
+import { IoMdShareAlt } from "react-icons/io";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from './WishlistContext';
@@ -11,7 +12,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
-  const {setMyWish,fetchData} =useContext(wishContext)
+  const { setMyWish, fetchData } = useContext(wishContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,18 +45,29 @@ const ProductDetails = () => {
         setIsFilled(false);
         await fetchData()
       } else {
-       const {data} = await axios.post('http://localhost:5000/api/user/wishlist', {
+        const { data } = await axios.post('http://localhost:5000/api/user/wishlist', {
           productId: productId
         }, { withCredentials: true });
         setMyWish(data.products)
         setIsFilled(true);
-        toast.success('Added To Wishlist', { position: 'top-right' }); 
-        await fetchData()       
+        toast.success('Added To Wishlist', { position: 'top-right' });
+        await fetchData()
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setTimeout(() => setCopied(false), 2000)
+      alert('Copied to clipboard')
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
@@ -82,7 +94,7 @@ const ProductDetails = () => {
                     <span className="text-xl md:text-2xl leading-none align-baseline">₹</span>
                     <span className="font-bold text-3xl md:text-4xl lg:text-5xl leading-none align-baseline">{carts.price}</span>
                   </div>
-                  <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-4">
+                  <div className="flex flex-col md:flex-row space-y-4 justify-center items-center md:space-y-0 md:space-x-4 mt-4">
                     <button
                       onClick={handleAddcart}
                       className="bg-gradient-to-r from-blue-500 to-btnColor text-white hover:from-btnColor hover:to-blue-600 opacity-90 hover:opacity-100 text-lg font-semibold rounded-full px-6 py-2 flex items-center space-x-2 transition-all duration-300"
@@ -106,6 +118,9 @@ const ProductDetails = () => {
                         />
                       </svg>
                     </button>
+                    <div>
+                      <IoMdShareAlt onClick={handleCopyUrl} className='text-3xl' />
+                    </div>
                   </div>
                 </div>
               </div>
