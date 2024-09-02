@@ -46,7 +46,6 @@ const Wishlist = () => {
                             <tr>
                                 <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Product</th>
                                 <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Price</th>
-                                <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Stock</th>
                                 <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Action</th>
                             </tr>
                         </thead>
@@ -68,9 +67,6 @@ const Wishlist = () => {
                                     </td>
                                     <td className="py-4 px-2 md:px-4 font-semibold text-sm md:text-base">
                                         ₹{product.price}
-                                    </td>
-                                    <td className="py-4 px-2 md:px-4 text-xs md:text-sm text-gray-500">
-                                        In Stock
                                     </td>
                                     <td className="py-4 px-2 md:px-4 flex items-center">
                                         <button
