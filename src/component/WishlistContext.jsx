@@ -8,7 +8,7 @@ const WishContextProvider = ({ children }) => {
     const islogin = JSON.parse(localStorage.getItem('isLogin'));
 
 
-    const { id } = currentUserData
+    const  id  = currentUserData?.id
 
     const [myWish, setMyWish] = useState([])
     const fetchData = async () => {

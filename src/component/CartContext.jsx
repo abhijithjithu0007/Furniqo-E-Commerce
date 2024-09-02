@@ -5,7 +5,7 @@ export const cartContext = createContext()
 const CartContextProvider = ({ children }) => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  const id = currentUserData.id
+  const id = currentUserData?.id
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
 
 

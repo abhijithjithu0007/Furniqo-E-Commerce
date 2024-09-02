@@ -188,7 +188,7 @@ const Products = () => {
                         onClick={() => handleDelete(item._id)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 flex items-center"
                       >
-                        <MdDeleteForever className="mr-1" />
+                        <MdDeleteForever className="mr-1 text-lg" />
                         Delete
                       </button>
                     </div>

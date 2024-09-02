@@ -18,7 +18,7 @@ const SideBar = () => {
     <div className="min-h-screen flex flex-row bg-gray-[#1E293B] text-gray-200">
       <div className={`fixed top-0 left-0 h-full bg-[#1E293B] z-10 overflow-y-auto transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 md:w-64`}>
         <div className="flex items-center justify-center h-14 border-b">
-          <div className='text-2xl'>Admin</div>
+         <Link to={'/'}><div className='text-2xl'>Admin</div></Link> 
           <MdAdminPanelSettings className='text-3xl text-btnColor'/>
         </div>
         <div className="flex-grow overflow-y-auto">

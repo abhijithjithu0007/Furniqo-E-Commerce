@@ -7,12 +7,15 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from './WishlistContext';
 
+
 const ProductDetails = () => {
   const { products } = useFetchProducts();
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
   const { setMyWish, fetchData } = useContext(wishContext)
+  const islogin = JSON.parse(localStorage.getItem('isLogin'));
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,13 +48,18 @@ const ProductDetails = () => {
         setIsFilled(false);
         await fetchData()
       } else {
-        const { data } = await axios.post('http://localhost:5000/api/user/wishlist', {
-          productId: productId
-        }, { withCredentials: true });
-        setMyWish(data.products)
-        setIsFilled(true);
-        toast.success('Added To Wishlist', { position: 'top-right' });
-        await fetchData()
+        if (islogin === false) {
+          toast.error("Log in to add items to cart !", { position: 'top-right' });
+        } else {
+          const { data } = await axios.post('http://localhost:5000/api/user/wishlist', {
+            productId: productId
+          }, { withCredentials: true });
+          setMyWish(data.products)
+          setIsFilled(true);
+          toast.success('Added To Wishlist', { position: 'top-right' });
+          await fetchData()
+        }
+
       }
     } catch (error) {
       console.log(error);

@@ -34,7 +34,7 @@ const Wishlist = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg border border-gray-200">
+        <div className="max-w-4xl mx-auto p-6 rounded-lg shadow-lg border border-gray-200 mt-8">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
                 Your Favorite Items
             </h2>

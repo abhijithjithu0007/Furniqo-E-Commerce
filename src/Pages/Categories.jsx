@@ -58,7 +58,6 @@ const Categories = () => {
     return sorted;
   };
 
-  ///////////////////////////////////
 
   useEffect(() => {
     const fetData = async () => {

@@ -53,7 +53,6 @@ const DashBoard = () => {
 
   return (
     <div className="p-8 bg-gray-800 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">Admin Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <FaUsers className="text-4xl text-blue-400 mb-4" />
@@ -63,17 +62,17 @@ const DashBoard = () => {
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <FaClipboardList className="text-4xl text-green-400 mb-4" />
           <h2 className="text-2xl font-bold mb-2 text-white">Orders</h2>
-          <p className="text-gray-300">Total: 320</p>
+          <p className="text-gray-300">Total : 12</p>
         </div>
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <FaBoxOpen className="text-4xl text-yellow-400 mb-4" />
           <h2 className="text-2xl font-bold mb-2 text-white">Products</h2>
-          <p className="text-gray-300">Total: {pro.length}</p>
+          <p className="text-gray-300">Total : {pro.length}</p>
         </div>
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <RiMoneyRupeeCircleFill className="text-4xl text-red-400 mb-4" />
           <h2 className="text-2xl font-bold mb-2 text-white">Revenue</h2>
-          <p className="text-gray-300">Revenue: {revenue.totalRevenue}</p>
+          <p className="text-gray-300">Revenue : {revenue.totalRevenue}</p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
