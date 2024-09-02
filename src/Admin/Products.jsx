@@ -1,24 +1,31 @@
-// Products.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Make sure to configure axios base URL if needed
+import axios from 'axios'; 
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { LuPlusCircle } from "react-icons/lu";
 
 const Products = () => {
   const [productData, setProductData] = useState([]);
+  const [all, setAll] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
-  const [productDetails, setProductDetails] = useState({name: '',description: '',price: '',image: '',category: ''});
+  const [productDetails, setProductDetails] = useState({
+    name: '',
+    description: '',
+    price: '',
+    image: '',
+    category: '',
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin/allproducts',{withCredentials:true}); // Adjust endpoint as needed
+        const response = await axios.get('http://localhost:5000/api/admin/allproducts', { withCredentials: true });
         setProductData(response.data);
+        setAll(response.data);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching products', error);
       }
     };
     fetchProducts();
@@ -33,7 +40,7 @@ const Products = () => {
     try {
       const response = await axios.post('http://localhost:5000/api/admin/addproduct', productDetails, {
         headers: { 'Content-Type': 'application/json' },
-        withCredentials:true
+        withCredentials: true,
       });
 
       if (response.status === 200) {
@@ -50,7 +57,7 @@ const Products = () => {
     try {
       const response = await axios.put(`http://localhost:5000/api/admin/updateproduct/${editProductId}`, productDetails, {
         headers: { 'Content-Type': 'application/json' },
-        withCredentials:true
+        withCredentials: true,
       });
 
       if (response.status === 200) {
@@ -78,7 +85,13 @@ const Products = () => {
     setShowPopup(false);
     setEditMode(false);
     setEditProductId(null);
-    setProductDetails({name: '',description: '',price: '',image: '',category: ''});
+    setProductDetails({
+      name: '',
+      description: '',
+      price: '',
+      image: '',
+      category: '',
+    });
   };
 
   const handleEdit = (productId) => {
@@ -90,8 +103,8 @@ const Products = () => {
       description: productToEdit.description,
       price: productToEdit.price,
       image: productToEdit.image,
-      category: productToEdit.category
-    })
+      category: productToEdit.category,
+    });
     setShowPopup(true);
   };
 
@@ -112,37 +125,71 @@ const Products = () => {
     }
   };
 
+  const handleAll = async () => {
+    setProductData(all);
+  };
+
+  const handleCategory = async (cate) => {
+    try {
+      const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`, { withCredentials: true });
+      setProductData(resp.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-1/4 pr-4 mb-8 md:mb-0">
-          <div className="mb-8 space-y-4">
-            <div className='flex items-center mb-4'>
-              <div>
-                <h2 className="text-2xl font-semibold mb-4">Categories</h2>
-                <button onClick={() => setShowPopup(true)} className="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center transition duration-300 ease-in-out">
-                  <span className="mr-2">Add</span>
-                  <LuPlusCircle />
-                </button>
-              </div>
-            </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/4">
+          <h2 className="text-3xl font-bold mb-6">Categories</h2>
+          <div className="space-y-4">
+            <button
+              onClick={() => setShowPopup(true)}
+              className="flex items-center justify-center w-full py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all"
+            >
+              <LuPlusCircle className="mr-2" />
+              Add Product
+            </button>
+            <button onClick={() => handleCategory('Baby boy')} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+              Baby Boys
+            </button>
+            <button onClick={() => handleCategory('Baby girl')} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+              Baby Girls
+            </button>
+            <button onClick={handleAll} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+              All Products
+            </button>
           </div>
         </div>
+
         <div className="w-full md:w-3/4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productData.map((item) => (
-              <div key={item._id}>
+              <div key={item._id} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
                 {!item.deleted && (
-                  <div className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
-                    <img src={item.image} alt={item.name} className="w-full h-40 object-cover mb-4 rounded" />
-                    <h2 className="text-lg font-semibold mb-2 text-center">{item.name}</h2>
-                    <p className="text-green-600 font-semibold mb-2 text-center">Rs : {item.price}</p>
-                    <div className="flex justify-center mt-2 space-x-4">
-                      <button onClick={() => handleEdit(item._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                        <FaEdit />
+                  <div>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-40 object-cover mb-4 rounded-md"
+                    />
+                    <h3 className="text-xl font-semibold text-center">{item.name}</h3>
+                    <p className="text-green-500 text-lg font-bold text-center my-2">Rs: {item.price}</p>
+                    <div className="flex justify-center gap-2 mt-4">
+                      <button
+                        onClick={() => handleEdit(item._id)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 flex items-center"
+                      >
+                        <FaEdit className="mr-1" />
+                        Edit
                       </button>
-                      <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
-                        <MdDeleteForever />
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 flex items-center"
+                      >
+                        <MdDeleteForever className="mr-1" />
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -150,21 +197,23 @@ const Products = () => {
               </div>
             ))}
           </div>
+
           {showPopup && (
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-              <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+            <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+                <h3 className="text-2xl font-semibold mb-4">{editMode ? 'Edit Product' : 'Add Product'}</h3>
                 <input
                   type="text"
                   name="name"
-                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter product name"
+                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Product Name"
                   value={productDetails.name}
                   onChange={handleChange}
                 />
                 <input
                   type="text"
                   name="price"
-                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Price"
                   value={productDetails.price}
                   onChange={handleChange}
@@ -172,7 +221,7 @@ const Products = () => {
                 <input
                   type="text"
                   name="image"
-                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Image URL"
                   value={productDetails.image}
                   onChange={handleChange}
@@ -180,28 +229,28 @@ const Products = () => {
                 <input
                   type="text"
                   name="category"
-                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Category"
                   value={productDetails.category}
                   onChange={handleChange}
                 />
                 <textarea
                   name="description"
-                  className="border border-gray-300 p-2 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Description"
                   value={productDetails.description}
                   onChange={handleChange}
                 />
-                <div className="flex justify-end mt-4">
+                <div className="flex justify-end gap-4">
                   <button
                     onClick={handleSave}
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 mr-2"
+                    className="bg-black text-white px-4 py-2 rounded-md hover:bg-green-600 transition-all"
                   >
-                    {editMode ? 'Update Product' : 'Add Product'}
+                    {editMode ? 'Save Changes' : 'Add Product'}
                   </button>
                   <button
                     onClick={resetForm}
-                    className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all"
                   >
                     Cancel
                   </button>
@@ -212,6 +261,7 @@ const Products = () => {
         </div>
       </div>
     </div>
-  )}
+  );
+};
 
-  export default Products
+export default Products;

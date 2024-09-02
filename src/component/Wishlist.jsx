@@ -48,8 +48,8 @@ const Wishlist = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {myWish.map((product) => (
-                        <tr key={product._id} className="border-t">
+                    {myWish.map((product,key) => (
+                        <tr key={key} className="border-t">
                             <td className="flex items-center py-2 px-4">
                                 <img
                                     src={product.image}

@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
-  const {setMyWish} =useContext(wishContext)
+  const {myWish,setMyWish,fetchData} =useContext(wishContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,14 +42,15 @@ const ProductDetails = () => {
           withCredentials: true
         });
         setIsFilled(false);
-        
+        await fetchData()
       } else {
        const {data} = await axios.post('http://localhost:5000/api/user/wishlist', {
           productId: productId
         }, { withCredentials: true });
         setMyWish(data.products)
         setIsFilled(true);
-        toast.success('Added To Wishlist', { position: 'top-right' });        
+        toast.success('Added To Wishlist', { position: 'top-right' }); 
+        await fetchData()       
       }
     } catch (error) {
       console.log(error);

@@ -6,26 +6,26 @@ const WishContextProvider = ({ children }) => {
 
     const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
     const islogin = JSON.parse(localStorage.getItem('isLogin'));
-    
+
 
     const { id } = currentUserData
 
     const [myWish, setMyWish] = useState([])
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const resp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true })                
-                const data = resp.data.products||[]
-                setMyWish(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const resp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true })
+            const data = resp.data.products || []
+            setMyWish(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-        fetchData();
-    }, [id,islogin]);
+    useEffect(() => {
+      fetchData()
+    }, [id, islogin])
     return (
-        <wishContext.Provider value={{ myWish, setMyWish }}>
+        <wishContext.Provider value={{ myWish, setMyWish,fetchData }}>
             {children}
         </wishContext.Provider>
     )

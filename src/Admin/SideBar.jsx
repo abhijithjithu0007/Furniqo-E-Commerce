@@ -10,6 +10,7 @@ const SideBar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  
 
   return (
     <div className="min-h-screen flex flex-row bg-gray-50 text-gray-800">
@@ -33,7 +34,6 @@ const SideBar = () => {
                   <HiShoppingBag />
                 </span>
                 <span className="ml-2 text-sm truncate">Products</span>
-                <span className="px-2 py-0.5 ml-auto text-xs font-medium text-btnColor bg-indigo-50 rounded-full">New</span>
               </Link>
             </li>
             <li>
