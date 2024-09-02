@@ -9,6 +9,7 @@ const useFetchProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { setMyPro } = useContext(cartContext)
+  const islogin = JSON.parse(localStorage.getItem('isLogin'));
   
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,9 @@ const useFetchProducts = () => {
 
 
   const addToCart = async (id, price) => {
+    if(islogin===false){
+      toast.error("Log in to add items to cart !", { position: 'top-right' });
+    }
     try {
       const { data } = await axios.post('http://localhost:5000/api/user/addtocart', {
         productId: id,

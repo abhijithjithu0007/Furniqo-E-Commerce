@@ -24,35 +24,36 @@ const Users = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">Users List</h1>
+    <div className="w-full max-w-6xl mx-auto mt-12 p-8 bg-[#1E1E1E] rounded-lg shadow-lg">
+      <h1 className="text-3xl font-semibold text-[#FFFFFF] mb-6 border-b border-[#B0B0B0] pb-4">Users List</h1>
       {usersData.length > 0 ? (
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {usersData.map((item) => (
-            <div key={item._id} className="bg-white shadow-md p-4 rounded-lg flex items-center justify-between space-x-4 hover:shadow-lg transition-shadow duration-300">
-              <Link to={`/admin/users/${item._id}`} className="flex items-center space-x-4">
+            <div key={item._id} className="bg-[#2A2A2A] shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg">
+              <Link to={`/admin/users/${item._id}`} className="flex items-center p-4 hover:bg-[#333333] transition-colors duration-150">
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/8847/8847419.png"
                   alt="Profile Icon"
-                  className="h-16 w-16 rounded-full border-2 border-blue-500 object-cover"
+                  className="h-20 w-20 rounded-full border-2 border-[#007BFF] object-cover"
                 />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-1">{item.name}</h2>
-                  <p className="text-gray-600">{item.email}</p>
+                <div className="ml-4">
+                  <h2 className="text-xl font-semibold text-[#FFFFFF] mb-1">{item.name}</h2>
+                  <p className="text-[#B0B0B0]">{item.email}</p>
                 </div>
               </Link>
               <button
                 onClick={() => handleDelete(item._id)}
-                className="text-red-600 hover:text-red-800 transition-colors duration-150 flex-shrink-0"
+                className="bg-[#FF4D4D] text-white hover:bg-red-600 transition-colors duration-150 rounded-b-lg w-full py-2 flex items-center justify-center"
                 aria-label="Delete User"
               >
-                <MdDeleteForever className="text-2xl" />
+                <MdDeleteForever className="text-xl" />
+                <span className="ml-2">Delete</span>
               </button>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-gray-600 text-center">No users found.</p>
+        <p className="text-[#B0B0B0] text-center text-lg">No users found.</p>
       )}
     </div>
   );

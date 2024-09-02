@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
-  const {myWish,setMyWish,fetchData} =useContext(wishContext)
+  const {setMyWish,fetchData} =useContext(wishContext)
 
   useEffect(() => {
     const fetchData = async () => {

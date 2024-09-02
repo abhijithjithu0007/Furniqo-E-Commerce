@@ -11,6 +11,7 @@ export default {
         whiteColor:'#f1facf',
         btnColor:'#e40443',
         homeBg:'#f7f7f7',
+        'custom-dark': '#1E1E1E'
       },
     },
   },

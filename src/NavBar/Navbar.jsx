@@ -106,7 +106,7 @@ const Navbar = () => {
           {isOpen && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-35 flex justify-center items-start pt-20 z-50">
               <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl relative overflow-auto max-h-screen">
-                <h2 className="text-2xl font-bold mb-4 text-btnColor">Search Results</h2>
+                <h2 className="text-2xl font-bold mb-4 text-black">Search Results</h2>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"

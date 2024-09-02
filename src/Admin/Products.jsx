@@ -139,25 +139,25 @@ const Products = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gray-900 min-h-screen">
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-1/4">
-          <h2 className="text-3xl font-bold mb-6">Categories</h2>
+          <h2 className="text-3xl font-bold mb-6 text-white">Categories</h2>
           <div className="space-y-4">
             <button
               onClick={() => setShowPopup(true)}
-              className="flex items-center justify-center w-full py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all"
+              className="flex items-center justify-center w-full py-3 bg-teal-500 text-white rounded-lg shadow-md hover:bg-teal-600 transition-all"
             >
               <LuPlusCircle className="mr-2" />
               Add Product
             </button>
-            <button onClick={() => handleCategory('Baby boy')} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+            <button onClick={() => handleCategory('Baby boy')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
               Baby Boys
             </button>
-            <button onClick={() => handleCategory('Baby girl')} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+            <button onClick={() => handleCategory('Baby girl')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
               Baby Girls
             </button>
-            <button onClick={handleAll} className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
+            <button onClick={handleAll} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
               All Products
             </button>
           </div>
@@ -166,7 +166,7 @@ const Products = () => {
         <div className="w-full md:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productData.map((item) => (
-              <div key={item._id} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
+              <div key={item._id} className="bg-gray-800 rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
                 {!item.deleted && (
                   <div>
                     <img
@@ -174,12 +174,12 @@ const Products = () => {
                       alt={item.name}
                       className="w-full h-40 object-cover mb-4 rounded-md"
                     />
-                    <h3 className="text-xl font-semibold text-center">{item.name}</h3>
-                    <p className="text-green-500 text-lg font-bold text-center my-2">Rs: {item.price}</p>
+                    <h3 className="text-xl font-semibold text-center text-white">{item.name}</h3>
+                    <p className="text-green-400 text-lg font-bold text-center my-2">Rs: {item.price}</p>
                     <div className="flex justify-center gap-2 mt-4">
                       <button
                         onClick={() => handleEdit(item._id)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 flex items-center"
+                        className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 flex items-center"
                       >
                         <FaEdit className="mr-1" />
                         Edit
@@ -200,12 +200,12 @@ const Products = () => {
 
           {showPopup && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-                <h3 className="text-2xl font-semibold mb-4">{editMode ? 'Edit Product' : 'Add Product'}</h3>
+              <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-lg">
+                <h3 className="text-2xl font-semibold mb-4 text-white">{editMode ? 'Edit Product' : 'Add Product'}</h3>
                 <input
                   type="text"
                   name="name"
-                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-600 p-2 mb-4 w-full rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Product Name"
                   value={productDetails.name}
                   onChange={handleChange}
@@ -213,7 +213,7 @@ const Products = () => {
                 <input
                   type="text"
                   name="price"
-                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-600 p-2 mb-4 w-full rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Price"
                   value={productDetails.price}
                   onChange={handleChange}
@@ -221,7 +221,7 @@ const Products = () => {
                 <input
                   type="text"
                   name="image"
-                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-600 p-2 mb-4 w-full rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Image URL"
                   value={productDetails.image}
                   onChange={handleChange}
@@ -229,14 +229,14 @@ const Products = () => {
                 <input
                   type="text"
                   name="category"
-                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-600 p-2 mb-4 w-full rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Category"
                   value={productDetails.category}
                   onChange={handleChange}
                 />
                 <textarea
                   name="description"
-                  className="border border-gray-300 p-2 mb-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-600 p-2 mb-4 w-full rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Description"
                   value={productDetails.description}
                   onChange={handleChange}
@@ -244,13 +244,13 @@ const Products = () => {
                 <div className="flex justify-end gap-4">
                   <button
                     onClick={handleSave}
-                    className="bg-black text-white px-4 py-2 rounded-md hover:bg-green-600 transition-all"
+                    className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-all"
                   >
                     {editMode ? 'Save Changes' : 'Add Product'}
                   </button>
                   <button
                     onClick={resetForm}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all"
+                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-all"
                   >
                     Cancel
                   </button>

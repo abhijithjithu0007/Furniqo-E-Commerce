@@ -1,19 +1,16 @@
-import React, { useContext ,useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaUsers, FaClipboardList, FaBoxOpen } from 'react-icons/fa';
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
-import { PieChart, Pie, Cell,Tooltip,LineChart,Line,XAxis,YAxis,CartesianGrid,Legend,ResponsiveContainer } from 'recharts';
+import { RiMoneyRupeeCircleFill } from 'react-icons/ri';
+import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { Admincontext } from './ContextAdmin';
 import axios from 'axios';
 
-
 const pieData = [
-  { name: 'Fashion', value: 60 },
-  { name: 'Toys', value: 30 },
-  { name: 'Footwear', value: 50 },
-  { name: 'Books', value: 20 },
+  { name: 'Baby Boy Fashion', value: 50 },
+  { name: 'Baby Girl Fashion', value: 50 },
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#F87171'];
 
 const lineData = [
   { name: 'Jan', value: 400 },
@@ -22,69 +19,66 @@ const lineData = [
   { name: 'Apr', value: 400 },
   { name: 'May', value: 600 },
   { name: 'Jun', value: 700 },
-]
+];
 
 const DashBoard = () => {
-  const [pro,setPro] = useState([])
-  const [revenue,setRevenue] = useState('')
+  const [pro, setPro] = useState([]);
+  const [revenue, setRevenue] = useState('');
 
-  const {usersData} = useContext(Admincontext)
+  const { usersData } = useContext(Admincontext);
+
   useEffect(() => {
     const fetData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/allproducts')        
-        setPro(resp.data)
+        const resp = await axios.get('http://localhost:5000/api/user/allproducts');
+        setPro(resp.data);
       } catch (error) {
         console.log(error);
       }
-    }
-    fetData()
-  }, [])
-
+    };
+    fetData();
+  }, []);
 
   useEffect(() => {
     const revenueData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/admin/total-revenue',{withCredentials:true})
-        setRevenue(resp.data[0])        
+        const resp = await axios.get('http://localhost:5000/api/admin/total-revenue', { withCredentials: true });
+        setRevenue(resp.data[0]);
       } catch (error) {
         console.log(error);
       }
-    }
-    revenueData()
-    
-  }, [])
-  console.log(revenue);
-  
-  
+    };
+    revenueData();
+  }, []);
+
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+    <div className="p-8 bg-gray-800 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-white">Admin Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <FaUsers className="text-4xl text-indigo-500 mb-4"/>
-          <h2 className="text-2xl font-bold mb-2">Users</h2>
-          <p className="text-gray-700">Total: {usersData.length}</p>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+          <FaUsers className="text-4xl text-blue-400 mb-4" />
+          <h2 className="text-2xl font-bold mb-2 text-white">Users</h2>
+          <p className="text-gray-300">Total: {usersData.length}</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <FaClipboardList className="text-4xl text-green-500 mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Orders</h2>
-          <p className="text-gray-700">Total: 320</p>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+          <FaClipboardList className="text-4xl text-green-400 mb-4" />
+          <h2 className="text-2xl font-bold mb-2 text-white">Orders</h2>
+          <p className="text-gray-300">Total: 320</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <FaBoxOpen className="text-4xl text-yellow-500 mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Products</h2>
-          <p className="text-gray-700">Total: {pro.length}</p>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+          <FaBoxOpen className="text-4xl text-yellow-400 mb-4" />
+          <h2 className="text-2xl font-bold mb-2 text-white">Products</h2>
+          <p className="text-gray-300">Total: {pro.length}</p>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <RiMoneyRupeeCircleFill className="text-4xl text-red-500 mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Revenue</h2>
-          <p className="text-gray-700">Revenue: {revenue.totalRevenue}</p>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+          <RiMoneyRupeeCircleFill className="text-4xl text-red-400 mb-4" />
+          <h2 className="text-2xl font-bold mb-2 text-white">Revenue</h2>
+          <p className="text-gray-300">Revenue: {revenue.totalRevenue}</p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-bold mb-4">Production</h2>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6">
+          <h2 className="text-2xl font-bold mb-4 text-white">Production</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -105,24 +99,23 @@ const DashBoard = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6 text-center">
-          <h2 className="text-2xl font-bold mb-4">Company Growth</h2>
+        <div className="bg-gray-900 shadow-md rounded-lg p-6 text-center">
+          <h2 className="text-2xl font-bold mb-4 text-white">Company Growth</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart
               data={lineData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
+              <XAxis dataKey="name" stroke="#F3F4F6" />
+              <YAxis stroke="#F3F4F6" />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="value" stroke="#3B82F6" activeDot={{ r: 8 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
-
     </div>
   );
 };

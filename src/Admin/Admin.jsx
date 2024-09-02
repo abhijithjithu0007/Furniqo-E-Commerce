@@ -14,7 +14,7 @@ const Admin = () => {
       <div>
         <div className="flex h-screen">
           <SideBar />
-          <div className="w-full p-8 bg-gray-100">
+          <div className="w-full p-8 bg-[#193351]">
             <Routes>
               <Route path="/dashboard" element={<DashBoard />} />
               <Route path="/users" element={<Users />} />
