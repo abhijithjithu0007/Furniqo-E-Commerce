@@ -151,7 +151,6 @@ const Cart = () => {
                         <img className="w-full" src={item.product.image} alt="product" />
                       </div>
                       <div className="flex-1 px-2">
-                        <div className="text-gray-500">{item.product.category}</div>
                         <div className="">{item.product.name}</div>
                       </div>
                       <div className="flex items-center justify-center md:px-52">
