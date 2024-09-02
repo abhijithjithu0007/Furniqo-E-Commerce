@@ -1,21 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
-import { BiCartDownload } from "react-icons/bi"
+import { BiCartDownload } from "react-icons/bi";
 import { IoMdShareAlt } from "react-icons/io";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from './WishlistContext';
-
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
   const { id } = useParams();
   const [carts, setCarts] = useState(null);
   const [isFilled, setIsFilled] = useState(false);
-  const { setMyWish, fetchData } = useContext(wishContext)
+  const { setMyWish, fetchData } = useContext(wishContext);
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,34 +30,33 @@ const ProductDetails = () => {
     fetchData();
   }, [id]);
 
-  const { addToCart } = useFetchProducts()
+  const { addToCart } = useFetchProducts();
 
   const handleAddcart = async () => {
-    addToCart(carts._id, carts.price)
-  }
+    addToCart(carts._id, carts.price);
+  };
 
   const addToWish = async (productId) => {
     try {
       if (isFilled) {
         await axios.delete('https://ecommerce-backend-r65b.onrender.com/api/user/removefromwish', {
           data: { productId: productId },
-          withCredentials: true
+          withCredentials: true,
         });
         setIsFilled(false);
-        await fetchData()
+        await fetchData();
       } else {
         if (islogin === false) {
-          toast.error("Log in to add items to cart !", { position: 'top-right' });
+          toast.error("Log in to add items to cart!", { position: 'top-right' });
         } else {
           const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/wishlist', {
-            productId: productId
+            productId: productId,
           }, { withCredentials: true });
-          setMyWish(data.products)
+          setMyWish(data.products);
           setIsFilled(true);
           toast.success('Added To Wishlist', { position: 'top-right' });
-          await fetchData()
+          await fetchData();
         }
-
       }
     } catch (error) {
       console.log(error);
@@ -68,14 +65,12 @@ const ProductDetails = () => {
 
   const handleCopyUrl = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href)
-      setTimeout(() => setCopied(false), 2000)
-      alert('Copied to clipboard')
+      await navigator.clipboard.writeText(window.location.href);
+      alert('Copied to clipboard');
     } catch (error) {
       console.log(error);
-
     }
-  }
+  };
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
 
@@ -85,16 +80,17 @@ const ProductDetails = () => {
         <div className="bg-btnColor flex flex-col md:flex-row items-center p-4 md:p-8 lg:p-12 overflow-hidden relative">
           <div className="w-full max-w-6xl rounded bg-white shadow-xl p-4 md:p-8 lg:p-12 mx-auto text-gray-800 relative md:text-left">
             <div className="md:flex items-center">
-              <div className="w-full md:w-1/2 h-1/2 px-4 md:px-6 lg:px-8 mb-6 md:mb-0">
+              <div className="w-full md:w-1/2 h-auto px-4 md:px-6 lg:px-8 mb-6 md:mb-0">
                 <div className="relative">
-                  <img src={carts.image} className="w-3/4 h-auto object-cover rounded" alt={carts.name} />
+                  <img src={carts.image} className="w-full h-auto object-cover rounded" alt={carts.name} />
                 </div>
               </div>
               <div className="w-full md:w-1/2 px-4 md:px-6 lg:px-8">
                 <div className="mb-6">
-                  <h1 className="font-bold text-xl md:text-2xl lg:text-3xl mb-4 md:mb-6">{carts.name}</h1>
-                  <p className="text-sm md:text-base lg:text-lg">{carts.description}
-                    <a href="#" className="opacity-50 text-gray-900 hover:opacity-100 inline-block text-xs leading-none border-b border-gray-900">MORE <i className="mdi mdi-arrow-right"></i></a>
+                  <h1 className="font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl mb-4">{carts.name}</h1>
+                  <p className="text-sm md:text-base lg:text-lg">
+                    {carts.description}
+                    <a href="#" className="opacity-50 text-gray-900 hover:opacity-100 inline-block text-xs leading-none border-b border-gray-900">MORE</a>
                   </p>
                 </div>
                 <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
@@ -162,19 +158,21 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {related.map((item, id) => (
             <Link to={`/category/${item._id}`} key={id}>
-              <div className="flex flex-col justify-center items-center max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto my-4">
-                <div style={{
-                  backgroundImage: `url(${item.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-                  className="bg-gray-300 h-48 sm:h-56 md:h-64 lg:h-72 w-full rounded-lg shadow-md bg-cover bg-center"></div>
-                <div className="w-full bg-white -mt-8 shadow-lg rounded-lg overflow-hidden">
-                  <div className="py-2 text-center font-bold uppercase tracking-wide text-gray-800">{item.name}</div>
-                  <div className="flex items-center justify-between py-2 px-3 bg-gray-200">
-                    <h1 className="text-gray-800 font-bold">₹{item.price}</h1>
-                    <p className="text-yellow-500 text-sm">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
-                  </div>
+              <div className="flex flex-col justify-center items-center max-w-xs sm:max-w-sm md:max-w-md bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden mx-auto">
+                <img
+                  className="h-40 w-full object-cover"
+                  src={item.image}
+                  alt={item.name}
+                />
+                <div className="w-full p-4">
+                  <h1 className="text-gray-900 font-bold text-sm md:text-base lg:text-lg">{item.name}</h1>
+                  <p className="text-gray-600 text-xs md:text-sm">$ {item.price}</p>
+                  <button
+                    onClick={() => addToWish(item._id)}
+                    className="mt-4 bg-btnColor text-white py-1 px-3 rounded-full hover:bg-blue-600 transition-colors duration-300"
+                  >
+                    {isFilled ? "Remove from Wishlist" : "Add to Wishlist"}
+                  </button>
                 </div>
               </div>
             </Link>
