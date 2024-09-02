@@ -12,7 +12,7 @@ const Admin = () => {
   return (
     <ContextAdmin>
       <div>
-        <div className="flex h-screen">
+        <div className="flex h-full">
           <SideBar />
           <div className="w-full p-8 bg-[#193351]">
             <Routes>
