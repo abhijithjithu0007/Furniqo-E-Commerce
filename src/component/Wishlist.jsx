@@ -16,8 +16,7 @@ const Wishlist = () => {
 
     const handleRemove = async (productId) => {
         try {
-            const resp = await axios.delete(
-                "http://localhost:5000/api/user/removefromwish",
+            const resp = await axios.delete("https://ecommerce-backend-r65b.onrender.com/api/user/removefromwish",
                 {
                     data: { productId },
                     withCredentials: true,

@@ -21,7 +21,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin/allproducts', { withCredentials: true });
+        const response = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/admin/allproducts', { withCredentials: true });
         setProductData(response.data);
         setAll(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const Products = () => {
 
   const addProduct = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/addproduct', productDetails, {
+      const response = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/admin/addproduct', productDetails, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
@@ -55,7 +55,7 @@ const Products = () => {
 
   const editProduct = async () => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/admin/updateproduct/${editProductId}`, productDetails, {
+      const response = await axios.put(`https://ecommerce-backend-r65b.onrender.com/api/admin/updateproduct/${editProductId}`, productDetails, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
@@ -110,7 +110,7 @@ const Products = () => {
 
   const handleDelete = async (proID) => {
     try {
-      const resp = await axios.delete(`http://localhost:5000/api/admin/deleteproduct/${proID}`, {
+      const resp = await axios.delete(`https://ecommerce-backend-r65b.onrender.com/api/admin/deleteproduct/${proID}`, {
         withCredentials: true,
       });
       if (resp.status === 200) {
@@ -131,7 +131,7 @@ const Products = () => {
 
   const handleCategory = async (cate) => {
     try {
-      const resp = await axios.get(`http://localhost:5000/api/admin/category/${cate}`, { withCredentials: true });
+      const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/admin/category/${cate}`, { withCredentials: true });
       setProductData(resp.data);
     } catch (error) {
       console.log(error);

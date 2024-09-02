@@ -36,7 +36,7 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post('http://localhost:5000/api/user/signup', formData);
+        await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/signup', formData);
         toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {

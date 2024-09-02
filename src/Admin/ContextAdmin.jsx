@@ -10,7 +10,7 @@ const ContextAdmin = ({children}) => {
     useEffect(() => {
       const userFetch = async () => {
         try {
-          const resp = await axios.get('http://localhost:5000/api/admin/alluser',{withCredentials:true})
+          const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/admin/alluser',{withCredentials:true})
           setUsersData(resp.data)
         } catch (error) {
           

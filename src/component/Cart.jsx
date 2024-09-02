@@ -22,7 +22,7 @@ const Cart = () => {
 
   const increment = async (productId, action) => {
     try {
-      const resp = await axios.put('http://localhost:5000/api/user/updateproquantity', {
+      const resp = await axios.put('https://ecommerce-backend-r65b.onrender.com/api/user/updateproquantity', {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -35,7 +35,7 @@ const Cart = () => {
 
   const decrement = async (productId, action) => {
     try {
-      const resp = await axios.put('http://localhost:5000/api/user/updateproquantity', {
+      const resp = await axios.put('https://ecommerce-backend-r65b.onrender.com/api/user/updateproquantity', {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -48,7 +48,7 @@ const Cart = () => {
 
   const handleRemove = async (productId) => {
     try {
-      const resp = await axios.delete('http://localhost:5000/api/user/removefromcart', {
+      const resp = await axios.delete('https://ecommerce-backend-r65b.onrender.com/api/user/removefromcart', {
         data: { productId: productId },
         withCredentials: true
       });
@@ -72,7 +72,7 @@ const Cart = () => {
 
   const handlePay = async () => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/user/create-order', {}, { withCredentials: true });
+      const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/create-order', {}, { withCredentials: true });
   
       const { razorpayOrderId } = data
   
@@ -86,7 +86,7 @@ const Cart = () => {
         handler: async function (response) {  
           try {
             const verifyResponse = await axios.post(
-              'http://localhost:5000/api/user/verify-payment',
+              'https://ecommerce-backend-r65b.onrender.com/api/user/verify-payment',
               {
                 razorpayOrderId: razorpayOrderId,
                 razorpayPaymentId: response.razorpay_payment_id,

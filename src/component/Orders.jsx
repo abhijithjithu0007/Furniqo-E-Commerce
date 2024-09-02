@@ -14,7 +14,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/order/getorderdetails', { withCredentials: true });
+        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/order/getorderdetails', { withCredentials: true });
         console.log(resp.data);
         
         const { pendingOrders,completedOrders } = resp.data;

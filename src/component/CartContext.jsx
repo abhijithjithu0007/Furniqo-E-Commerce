@@ -14,7 +14,7 @@ const CartContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5000/api/user/viewcartproducts/${id}`, {
+        const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/viewcartproducts/${id}`, {
           withCredentials: true
         });
         const data = resp.data.products || [];

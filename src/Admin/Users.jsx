@@ -9,7 +9,7 @@ const Users = () => {
 
   const handleDelete = async (id) => {
     try {
-      const resp = await axios.delete(`http://localhost:5000/api/admin/deleteuser/${id}`, {
+      const resp = await axios.delete(`https://ecommerce-backend-r65b.onrender.com/api/admin/deleteuser/${id}`, {
         withCredentials: true
       });
 

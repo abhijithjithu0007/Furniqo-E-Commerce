@@ -30,7 +30,7 @@ const DashBoard = () => {
   useEffect(() => {
     const fetData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/allproducts');
+        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts');
         setPro(resp.data);
       } catch (error) {
         console.log(error);
@@ -42,7 +42,7 @@ const DashBoard = () => {
   useEffect(() => {
     const revenueData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/admin/total-revenue', { withCredentials: true });
+        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/admin/total-revenue', { withCredentials: true });
         setRevenue(resp.data[0]);
       } catch (error) {
         console.log(error);

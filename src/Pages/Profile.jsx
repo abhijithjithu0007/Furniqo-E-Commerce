@@ -14,7 +14,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/user/logout', {}, { withCredentials: true })
+      await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/logout', {}, { withCredentials: true })
       navigate('/login')
       localStorage.setItem('isLogin', JSON.stringify(false));
       navigate('/login');

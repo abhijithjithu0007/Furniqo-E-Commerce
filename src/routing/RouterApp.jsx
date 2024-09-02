@@ -31,7 +31,7 @@ const RouterApp = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/allproducts');
+        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts');
         setProducts(resp.data);
       } catch (error) {
         console.log(error);

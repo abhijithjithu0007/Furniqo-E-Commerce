@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', {
+      const response = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/login', {
         email: userEmail,
         password: userPass,
       },{ withCredentials: true });

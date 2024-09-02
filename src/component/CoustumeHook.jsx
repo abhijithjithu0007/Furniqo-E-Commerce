@@ -14,7 +14,7 @@ const useFetchProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('http://localhost:5000/api/user/allproducts')
+        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts')
         setProducts(resp.data)
       } catch (error) {
         console.log(error);
@@ -30,7 +30,7 @@ const useFetchProducts = () => {
       toast.error("Log in to add items to cart !", { position: 'top-right' });
     }
     try {
-      const { data } = await axios.post('http://localhost:5000/api/user/addtocart', {
+      const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/addtocart', {
         productId: id,
         quantity: 1,
         price: price

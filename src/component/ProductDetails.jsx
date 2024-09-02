@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi"
 import { IoMdShareAlt } from "react-icons/io";
@@ -20,10 +20,10 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5000/api/user/${id}`);
+        const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/${id}`);
         setCarts(resp.data);
 
-        const wishlistResp = await axios.get(`http://localhost:5000/api/user/viewwishlist/${id}`, { withCredentials: true });
+        const wishlistResp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/viewwishlist/${id}`, { withCredentials: true });
         setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
         console.log(error);
@@ -41,7 +41,7 @@ const ProductDetails = () => {
   const addToWish = async (productId) => {
     try {
       if (isFilled) {
-        await axios.delete('http://localhost:5000/api/user/removefromwish', {
+        await axios.delete('https://ecommerce-backend-r65b.onrender.com/api/user/removefromwish', {
           data: { productId: productId },
           withCredentials: true
         });
@@ -51,7 +51,7 @@ const ProductDetails = () => {
         if (islogin === false) {
           toast.error("Log in to add items to cart !", { position: 'top-right' });
         } else {
-          const { data } = await axios.post('http://localhost:5000/api/user/wishlist', {
+          const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/wishlist', {
             productId: productId
           }, { withCredentials: true });
           setMyWish(data.products)

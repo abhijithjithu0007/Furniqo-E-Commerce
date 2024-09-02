@@ -13,7 +13,7 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`http://localhost:5000/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
+        const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
         const { pendingOrders, completedOrders } = resp.data;
         console.log(resp);
 
