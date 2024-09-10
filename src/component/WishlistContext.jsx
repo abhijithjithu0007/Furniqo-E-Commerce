@@ -9,10 +9,11 @@ const WishContextProvider = ({ children }) => {
     const apiorigin = import.meta.env.VITE_API_URL
 
 
-    const  id  = currentUserData?.id
+    const  id  = currentUserData?.id    
 
     const [myWish, setMyWish] = useState([])
     const fetchData = async () => {
+    
         try {
             const resp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true })
             const data = resp.data.products || []

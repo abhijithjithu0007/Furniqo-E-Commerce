@@ -10,6 +10,7 @@ const Wishlist = () => {
     const { myWish, setMyWish } = useContext(wishContext);
     const { addToCart } = useFetchProducts();
     const apiorigin = import.meta.env.VITE_API_URL
+console.log(apiorigin);
 
     const handleAddPro = async (id, price) => {
         addToCart(id, price);
