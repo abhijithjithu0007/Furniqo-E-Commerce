@@ -6,10 +6,11 @@ import axios from 'axios';
 
 const Users = () => {
   const { usersData, setUsersData } = useContext(Admincontext);
+  const apiorigin = import.meta.env.VITE_API_URL
 
   const handleDelete = async (id) => {
     try {
-      const resp = await axios.delete(`https://ecommerce-backend-r65b.onrender.com/api/admin/deleteuser/${id}`, {
+      const resp = await axios.delete(`${apiorigin}/api/admin/deleteuser/${id}`, {
         withCredentials: true
       });
 

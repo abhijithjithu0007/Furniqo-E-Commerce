@@ -14,14 +14,15 @@ const ProductDetails = () => {
   const [isFilled, setIsFilled] = useState(false);
   const { setMyWish, fetchData } = useContext(wishContext);
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
+  const apiorigin = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/${id}`);
+        const resp = await axios.get(`${apiorigin}/api/user/${id}`);
         setCarts(resp.data);
 
-        const wishlistResp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/viewwishlist/${id}`, { withCredentials: true });
+        const wishlistResp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true });
         setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
         console.log(error);
@@ -39,7 +40,7 @@ const ProductDetails = () => {
   const addToWish = async (productId) => {
     try {
       if (isFilled) {
-        await axios.delete('https://ecommerce-backend-r65b.onrender.com/api/user/removefromwish', {
+        await axios.delete(`${apiorigin}/api/user/removefromwish`, {
           data: { productId: productId },
           withCredentials: true,
         });
@@ -49,7 +50,7 @@ const ProductDetails = () => {
         if (islogin === false) {
           toast.error("Log in to add items to cart!", { position: 'top-right' });
         } else {
-          const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/wishlist', {
+          const { data } = await axios.post(`${apiorigin}/api/user/wishlist`, {
             productId: productId,
           }, { withCredentials: true });
           setMyWish(data.products);

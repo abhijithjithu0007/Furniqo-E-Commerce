@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const SignUp = () => {
+  const apiorigin = import.meta.env.VITE_API_URL
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,7 +37,7 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/signup', formData);
+        await axios.post(`${apiorigin}/api/user/signup`, formData);
         toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {

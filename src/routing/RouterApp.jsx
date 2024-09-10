@@ -27,11 +27,12 @@ export const Mycontext = createContext();
 const RouterApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [products, setProducts] = useState([]);
+  const apiorigin = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts');
+        const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
         setProducts(resp.data);
       } catch (error) {
         console.log(error);

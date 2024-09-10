@@ -9,6 +9,7 @@ const Login = () => {
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
   const {setIsLoggedIn} = useContext(Mycontext)
+  const apiorigin = import.meta.env.VITE_API_URL
 
   const handleEmail = (e) => {
     setUserEmail(e.target.value);
@@ -20,7 +21,7 @@ const Login = () => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/login', {
+      const response = await axios.post(`${apiorigin}/api/user/login`, {
         email: userEmail,
         password: userPass,
       },{ withCredentials: true });

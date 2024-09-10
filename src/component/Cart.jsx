@@ -11,6 +11,7 @@ const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const { myPro, setMyPro } = useContext(cartContext);
+  const apiorigin = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     AOS.init({
@@ -22,7 +23,7 @@ const Cart = () => {
 
   const increment = async (productId, action) => {
     try {
-      const resp = await axios.put('https://ecommerce-backend-r65b.onrender.com/api/user/updateproquantity', {
+      const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -35,7 +36,7 @@ const Cart = () => {
 
   const decrement = async (productId, action) => {
     try {
-      const resp = await axios.put('https://ecommerce-backend-r65b.onrender.com/api/user/updateproquantity', {
+      const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -48,7 +49,7 @@ const Cart = () => {
 
   const handleRemove = async (productId) => {
     try {
-      const resp = await axios.delete('https://ecommerce-backend-r65b.onrender.com/api/user/removefromcart', {
+      const resp = await axios.delete(`${apiorigin}/api/user/removefromcart`, {
         data: { productId: productId },
         withCredentials: true
       });
@@ -72,7 +73,7 @@ const Cart = () => {
 
   const handlePay = async () => {
     try {
-      const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/create-order', {}, { withCredentials: true });
+      const { data } = await axios.post(`${apiorigin}/api/user/create-order`, {}, { withCredentials: true });
       const { razorpayOrderId } = data;
 
       const options = {
@@ -85,7 +86,7 @@ const Cart = () => {
         handler: async function (response) {
           try {
             const verifyResponse = await axios.post(
-              'https://ecommerce-backend-r65b.onrender.com/api/user/verify-payment',
+              `${apiorigin}/api/user/verify-payment`,
               {
                 razorpayOrderId: razorpayOrderId,
                 razorpayPaymentId: response.razorpay_payment_id,

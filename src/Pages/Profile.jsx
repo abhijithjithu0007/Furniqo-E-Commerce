@@ -10,11 +10,12 @@ const Profile = () => {
   const navigate = useNavigate();
   const {setMyWish}=useContext(wishContext)
   const {setMyPro} =useContext(cartContext)
+  const apiorigin = import.meta.env.VITE_API_URL
 
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/logout', {}, { withCredentials: true })
+      await axios.post(`${apiorigin}/api/user/logout`, {}, { withCredentials: true })
       navigate('/login')
       localStorage.setItem('isLogin', JSON.stringify(false));
       navigate('/login');

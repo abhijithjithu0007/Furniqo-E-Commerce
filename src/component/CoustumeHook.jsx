@@ -10,11 +10,12 @@ const useFetchProducts = () => {
   const [error, setError] = useState(null);
   const { setMyPro } = useContext(cartContext)
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
+  const apiorigin = import.meta.env.VITE_API_URL
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts')
+        const resp = await axios.get(`${apiorigin}/api/user/allproducts`)
         setProducts(resp.data)
       } catch (error) {
         console.log(error);
@@ -30,7 +31,7 @@ const useFetchProducts = () => {
       toast.error("Log in to add items to cart !", { position: 'top-right' });
     }
     try {
-      const { data } = await axios.post('https://ecommerce-backend-r65b.onrender.com/api/user/addtocart', {
+      const { data } = await axios.post(`${apiorigin}/api/user/addtocart`, {
         productId: id,
         quantity: 1,
         price: price

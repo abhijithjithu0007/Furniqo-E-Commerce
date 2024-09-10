@@ -5,7 +5,7 @@ const Orders = () => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
   const { name } = currentUserData;
-
+  const apiorigin = import.meta.env.VITE_API_URL
   const [pendOrders, setPendOrders] = useState([]);
   const [compOrders, setCompOrders] = useState([]);
   const [sum, setSum] = useState(0);
@@ -14,7 +14,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/order/getorderdetails', { withCredentials: true });
+        const resp = await axios.get(`${apiorigin}/api/user/order/getorderdetails`, { withCredentials: true });
         console.log(resp.data);
         
         const { pendingOrders,completedOrders } = resp.data;

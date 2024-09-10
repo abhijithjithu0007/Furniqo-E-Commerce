@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const Wishlist = () => {
     const { myWish, setMyWish } = useContext(wishContext);
     const { addToCart } = useFetchProducts();
+    const apiorigin = import.meta.env.VITE_API_URL
 
     const handleAddPro = async (id, price) => {
         addToCart(id, price);
@@ -16,7 +17,7 @@ const Wishlist = () => {
 
     const handleRemove = async (productId) => {
         try {
-            const resp = await axios.delete("https://ecommerce-backend-r65b.onrender.com/api/user/removefromwish", {
+            const resp = await axios.delete(`${apiorigin}/api/user/removefromwish`, {
                 data: { productId },
                 withCredentials: true,
             });

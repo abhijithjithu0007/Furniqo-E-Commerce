@@ -6,11 +6,12 @@ export const Admincontext = createContext()
 const ContextAdmin = ({children}) => { 
 
     const [usersData, setUsersData] = useState([])
+    const apiorigin = import.meta.env.VITE_API_URL
 
     useEffect(() => {
       const userFetch = async () => {
         try {
-          const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/admin/alluser',{withCredentials:true})
+          const resp = await axios.get(`${apiorigin}/api/admin/alluser`,{withCredentials:true})
           setUsersData(resp.data)
         } catch (error) {
           

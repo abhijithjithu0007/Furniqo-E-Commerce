@@ -24,13 +24,14 @@ const lineData = [
 const DashBoard = () => {
   const [pro, setPro] = useState([]);
   const [revenue, setRevenue] = useState('');
+  const apiorigin = import.meta.env.VITE_API_URL
 
   const { usersData } = useContext(Admincontext);
 
   useEffect(() => {
     const fetData = async () => {
       try {
-        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/user/allproducts');
+        const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
         setPro(resp.data);
       } catch (error) {
         console.log(error);
@@ -42,7 +43,7 @@ const DashBoard = () => {
   useEffect(() => {
     const revenueData = async () => {
       try {
-        const resp = await axios.get('https://ecommerce-backend-r65b.onrender.com/api/admin/total-revenue', { withCredentials: true });
+        const resp = await axios.get(`${apiorigin}/api/admin/total-revenue`, { withCredentials: true });
         setRevenue(resp.data[0]);
       } catch (error) {
         console.log(error);

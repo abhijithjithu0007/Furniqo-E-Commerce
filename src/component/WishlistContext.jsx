@@ -6,6 +6,7 @@ const WishContextProvider = ({ children }) => {
 
     const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
     const islogin = JSON.parse(localStorage.getItem('isLogin'));
+    const apiorigin = import.meta.env.VITE_API_URL
 
 
     const  id  = currentUserData?.id
@@ -13,7 +14,7 @@ const WishContextProvider = ({ children }) => {
     const [myWish, setMyWish] = useState([])
     const fetchData = async () => {
         try {
-            const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/user/viewwishlist/${id}`, { withCredentials: true })
+            const resp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true })
             const data = resp.data.products || []
             setMyWish(data);
         } catch (error) {

@@ -9,11 +9,12 @@ const UserDetails = () => {
   const eachUser = usersData.find((val) => val._id === params.id);
   const [pendDetail, setPendDetail] = useState([]);
   const [compDetail, setCompDetail] = useState([]);
+  const apiorigin = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`https://ecommerce-backend-r65b.onrender.com/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
+        const resp = await axios.get(`${apiorigin}/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
         const { pendingOrders, completedOrders } = resp.data;
         console.log(resp);
 
