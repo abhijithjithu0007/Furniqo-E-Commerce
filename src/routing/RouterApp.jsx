@@ -20,6 +20,8 @@ import Orders from '../component/Orders';
 import axios from 'axios';
 import UserProtectedRoute from '../component/ProtectedRouteUser';
 import Spinner from '../Pages/Spinner';
+import { LoadingProvider } from '../Context/LoadingContext';
+import LoadSpinner from '../Pages/LoadSpinner';
 
 export const Mycontext = createContext();
 
@@ -56,9 +58,11 @@ const RouterApp = () => {
           <Spinner />
         </div> :
         <div>
-          <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}>
-            <CartContextProvider>
-              <WishContextProvider>
+          <LoadingProvider>
+            <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}>
+              <CartContextProvider>
+                <WishContextProvider>
+                  <LoadSpinner />
                   {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
                   <Routes>
                     <Route path="/" element={<Home />} />
@@ -75,10 +79,11 @@ const RouterApp = () => {
                     <Route path="/admin/*" element={<AdminProtectedRoute adminOnly={true}><Admin /></AdminProtectedRoute>} />
                   </Routes>
                   {shouldDisplayFooter && <Footer />}
-              </WishContextProvider>
-            </CartContextProvider>
-            <ScrollToTop />
-          </Mycontext.Provider>
+                </WishContextProvider>
+              </CartContextProvider>
+              <ScrollToTop />
+            </Mycontext.Provider>
+          </LoadingProvider>
         </div>
       }
     </div>
