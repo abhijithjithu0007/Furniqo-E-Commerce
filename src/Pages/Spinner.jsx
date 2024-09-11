@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { PuffLoader } from 'react-spinners';
-import { useLoad } from '../Context/LoadingContext';
+import { RingLoader } from 'react-spinners';
 
 const Spinner = () => {
     const [timeleft, setTimeleft] = useState(50);
@@ -16,7 +15,7 @@ const Spinner = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-            <PuffLoader color="red" size={60} />
+            <RingLoader color="red" size={60} />
             <p className="mt-4 text-lg text-gray-700">This may take a few moments</p>
             <p className="mt-2 text-sm text-gray-500">Expected time : {timeleft} seconds</p>
         </div>
