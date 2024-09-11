@@ -6,6 +6,7 @@ import { IoMdShareAlt } from "react-icons/io";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';
+import { useLoad } from '../Context/LoadingContext';
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
@@ -15,9 +16,11 @@ const ProductDetails = () => {
   const { setMyWish, fetchData } = useContext(wishContext);
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
   const apiorigin = import.meta.env.VITE_API_URL
+  const {startLoad,stopLoad} = useLoad(useContext)
 
   useEffect(() => {
     const fetchData = async () => {
+      startLoad()
       try {
         const resp = await axios.get(`${apiorigin}/api/user/${id}`);
         setCarts(resp.data);
@@ -26,6 +29,8 @@ const ProductDetails = () => {
         setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
         console.log(error);
+      }finally{
+        stopLoad()
       }
     };
     fetchData();
@@ -38,6 +43,7 @@ const ProductDetails = () => {
   };
 
   const addToWish = async (productId) => {
+    startLoad()
     try {
       if (isFilled) {
         await axios.delete(`${apiorigin}/api/user/removefromwish`, {
@@ -61,6 +67,8 @@ const ProductDetails = () => {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      stopLoad()
     }
   };
 

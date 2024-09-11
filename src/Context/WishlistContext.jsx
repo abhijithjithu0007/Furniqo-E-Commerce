@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
+import { useLoad } from './LoadingContext';
 
 export const wishContext = createContext()
 const WishContextProvider = ({ children }) => {
@@ -10,16 +11,19 @@ const WishContextProvider = ({ children }) => {
 
 
     const  id  = currentUserData?.id    
+    const {startLoad,stopLoad} = useLoad(useContext)
 
     const [myWish, setMyWish] = useState([])
     const fetchData = async () => {
-    
+    startLoad()
         try {
             const resp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true })
             const data = resp.data.products || []
             setMyWish(data);
         } catch (error) {
             console.log(error);
+        }finally{
+            stopLoad()
         }
     };
 

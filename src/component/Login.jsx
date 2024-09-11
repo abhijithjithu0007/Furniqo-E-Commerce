@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Mycontext } from '../routing/RouterApp';
+import { useLoad } from '../Context/LoadingContext';
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState('');
@@ -10,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {setIsLoggedIn} = useContext(Mycontext)
   const apiorigin = import.meta.env.VITE_API_URL
+  const {startLoad,stopLoad} =useLoad()
 
   const handleEmail = (e) => {
     setUserEmail(e.target.value);
@@ -20,6 +22,7 @@ const Login = () => {
   };
 
   const handleClick = async () => {
+    startLoad()
     try {
       const response = await axios.post(`${apiorigin}/api/user/login`, {
         email: userEmail,
@@ -38,6 +41,8 @@ const Login = () => {
     } catch (error) {
       console.error('Error fetching user data:', error);
       toast.error("Invalid Credentials", { position: 'top-right' });
+    }finally{
+      stopLoad()
     }
   };
 

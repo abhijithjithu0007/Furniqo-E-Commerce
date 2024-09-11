@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ScrollReveal from 'scrollreveal';
 import axios from 'axios';
+import { useLoad } from '../Context/LoadingContext';
 
 const Categories = () => {
   const apiorigin = import.meta.env.VITE_API_URL
+  const { startLoad, stopLoad } = useLoad(useContext)
 
   useEffect(() => {
     const sr = ScrollReveal();
@@ -61,11 +63,14 @@ const Categories = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      startLoad()
       try {
         const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
         setProducts(resp.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        stopLoad()
       }
     }
     fetchData();

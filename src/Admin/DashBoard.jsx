@@ -4,6 +4,7 @@ import { RiMoneyRupeeCircleFill } from 'react-icons/ri';
 import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { Admincontext } from '../Context/ContextAdmin';
 import axios from 'axios';
+import { useLoad } from '../Context/LoadingContext';
 
 const pieData = [
   { name: 'Baby Boy Fashion', value: 50 },
@@ -25,16 +26,20 @@ const DashBoard = () => {
   const [pro, setPro] = useState([]);
   const [revenue, setRevenue] = useState('');
   const apiorigin = import.meta.env.VITE_API_URL
+  const {startLoad,stopLoad} = useLoad(useContext)
 
   const { usersData } = useContext(Admincontext);
 
   useEffect(() => {
     const fetData = async () => {
+      startLoad()
       try {
         const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
         setPro(resp.data);
       } catch (error) {
         console.log(error);
+      }finally{
+        stopLoad()
       }
     };
     fetData();

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useLoad } from '../Context/LoadingContext';
 
 const Orders = () => {
 
@@ -10,9 +11,11 @@ const Orders = () => {
   const [compOrders, setCompOrders] = useState([]);
   const [sum, setSum] = useState(0);
   const [viewPending, setViewPending] = useState(true)
+  const {startLoad,stopLoad} =useLoad(useContext)
 
   useEffect(() => {
     const fetchData = async () => {
+      startLoad()
       try {
         const resp = await axios.get(`${apiorigin}/api/user/order/getorderdetails`, { withCredentials: true });
         console.log(resp.data);
@@ -27,6 +30,8 @@ const Orders = () => {
         setSum(total);
       } catch (error) {
         console.log(error);
+      }finally{
+        stopLoad()
       }
     };
     fetchData();

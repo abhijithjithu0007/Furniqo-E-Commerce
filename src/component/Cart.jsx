@@ -6,12 +6,14 @@ import toast from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { cartContext } from '../Context/CartContext';
+import { useLoad } from '../Context/LoadingContext';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const { myPro, setMyPro } = useContext(cartContext);
   const apiorigin = import.meta.env.VITE_API_URL
+  const {startLoad,stopLoad} = useLoad(useContext)
 
   useEffect(() => {
     AOS.init({
@@ -22,6 +24,7 @@ const Cart = () => {
   }, []);
 
   const increment = async (productId, action) => {
+    startLoad()
     try {
       const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
         productId: productId,
@@ -31,10 +34,13 @@ const Cart = () => {
       setMyPro(data);
     } catch (error) {
       console.log(error);
+    }finally{
+      stopLoad()
     }
   };
 
   const decrement = async (productId, action) => {
+    startLoad()
     try {
       const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
         productId: productId,
@@ -44,10 +50,13 @@ const Cart = () => {
       setMyPro(data);
     } catch (error) {
       console.log(error);
+    }finally{
+      stopLoad()
     }
   };
 
   const handleRemove = async (productId) => {
+    startLoad()
     try {
       const resp = await axios.delete(`${apiorigin}/api/user/removefromcart`, {
         data: { productId: productId },
@@ -60,6 +69,8 @@ const Cart = () => {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      stopLoad()
     }
   };
 
@@ -72,6 +83,7 @@ const Cart = () => {
   };
 
   const handlePay = async () => {
+    startLoad()
     try {
       const { data } = await axios.post(`${apiorigin}/api/user/create-order`, {}, { withCredentials: true });
       const { razorpayOrderId } = data;
@@ -121,6 +133,8 @@ const Cart = () => {
     } catch (error) {
       console.error('Payment Error:', error);
       Swal.fire('Payment Failed!', 'There was an error processing your payment.', 'error');
+    }finally{
+      stopLoad()
     }
   };
 

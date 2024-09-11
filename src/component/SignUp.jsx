@@ -1,7 +1,8 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useLoad } from '../Context/LoadingContext';
 
 const SignUp = () => {
   const apiorigin = import.meta.env.VITE_API_URL
@@ -14,6 +15,7 @@ const SignUp = () => {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const {startLoad,stopLoad} = useLoad(useContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,12 +38,15 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
+      startLoad()
       try {
         await axios.post(`${apiorigin}/api/user/signup`, formData);
         toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {
         toast.error('Registration failed. Please try again.');
+      }finally{
+        stopLoad()
       }
     }
   };

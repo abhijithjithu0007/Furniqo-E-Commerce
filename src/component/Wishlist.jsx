@@ -5,18 +5,19 @@ import { BiCartDownload } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
 import { wishContext } from "../Context/WishlistContext";
 import toast from "react-hot-toast";
+import { useLoad } from "../Context/LoadingContext";
 
 const Wishlist = () => {
     const { myWish, setMyWish } = useContext(wishContext);
     const { addToCart } = useFetchProducts();
     const apiorigin = import.meta.env.VITE_API_URL
-console.log(apiorigin);
-
+    const {startLoad,stopLoad} = useLoad(useContext)
     const handleAddPro = async (id, price) => {
         addToCart(id, price);
     };
 
     const handleRemove = async (productId) => {
+        startLoad()
         try {
             const resp = await axios.delete(`${apiorigin}/api/user/removefromwish`, {
                 data: { productId },
@@ -29,6 +30,8 @@ console.log(apiorigin);
             setMyWish(data);
         } catch (error) {
             console.log(error);
+        }finally{
+            stopLoad()
         }
     };
 
