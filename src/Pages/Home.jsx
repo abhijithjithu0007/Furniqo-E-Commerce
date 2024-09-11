@@ -22,7 +22,7 @@ const Home = () => {
     <div className="bg-cover bg-homeBg bg-center relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center justify-between h-screen">
         <div className="md:w-1/2 w-full">
-          <img src={homelogo} alt="" className="w-[500px] imgclass" data-aos="fade-right" />
+          <img src={homelogo} alt="" className="w-[500px]" data-aos="fade-right" />
         </div>
         <div className="scrollsample md:w-1/2 md:pr-8 mb-40 p-8 rounded-lg" data-aos="fade-left">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-8 text-black md:mt-20">

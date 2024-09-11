@@ -19,8 +19,7 @@ import WishContextProvider from '../component/WishlistContext';
 import Orders from '../component/Orders';
 import axios from 'axios';
 import UserProtectedRoute from '../component/ProtectedRouteUser';
-import NetworkStatus from '../Pages/NetworkStatus';
-import OfflinePage from '../Pages/OfflinePage';
+import Spinner from '../Pages/Spinner';
 
 export const Mycontext = createContext();
 
@@ -28,12 +27,14 @@ const RouterApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [products, setProducts] = useState([]);
   const apiorigin = import.meta.env.VITE_API_URL
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
         setProducts(resp.data);
+        setLoading(false)
       } catch (error) {
         console.log(error);
       }
@@ -41,38 +42,45 @@ const RouterApp = () => {
     fetchData();
   }, []);
 
+
+
+
   const location = useLocation();
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const shouldDisplayFooter = !location.pathname.startsWith('/admin');
 
   return (
     <div>
-      <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}>
-        <CartContextProvider>
-          <WishContextProvider>
-            <NetworkStatus>
-              {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/contactus" element={<ContactUs />} />
-                <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-                <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-                <Route path="/category/:id" element={<ProductDetails />} />
-                <Route path="/category" element={<Categories />} />
-                <Route path="/offline" element={<OfflinePage/>} />
-                <Route path="/cart" element={<UserProtectedRoute><Cart /></UserProtectedRoute>} />
-                <Route path="/wishlist" element={<UserProtectedRoute><Wishlist /></UserProtectedRoute>} />
-                <Route path="/orders" element={<UserProtectedRoute><Orders /></UserProtectedRoute>} />
-                <Route path="/admin/*" element={<AdminProtectedRoute adminOnly={true}><Admin /></AdminProtectedRoute>} />
-              </Routes>
-              {shouldDisplayFooter && <Footer />}
-            </NetworkStatus>
-          </WishContextProvider>
-        </CartContextProvider>
-        <ScrollToTop />
-      </Mycontext.Provider>
+      {loading ?
+        <div>
+          <Spinner />
+        </div> :
+        <div>
+          <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}>
+            <CartContextProvider>
+              <WishContextProvider>
+                  {shouldDisplayFooter && <Navbar isLoggedIn={isLoggedIn} />}
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/contactus" element={<ContactUs />} />
+                    <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                    <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+                    <Route path="/category/:id" element={<ProductDetails />} />
+                    <Route path="/category" element={<Categories />} />
+                    <Route path="/cart" element={<UserProtectedRoute><Cart /></UserProtectedRoute>} />
+                    <Route path="/wishlist" element={<UserProtectedRoute><Wishlist /></UserProtectedRoute>} />
+                    <Route path="/orders" element={<UserProtectedRoute><Orders /></UserProtectedRoute>} />
+                    <Route path="/admin/*" element={<AdminProtectedRoute adminOnly={true}><Admin /></AdminProtectedRoute>} />
+                  </Routes>
+                  {shouldDisplayFooter && <Footer />}
+              </WishContextProvider>
+            </CartContextProvider>
+            <ScrollToTop />
+          </Mycontext.Provider>
+        </div>
+      }
     </div>
   );
 };
