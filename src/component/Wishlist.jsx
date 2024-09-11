@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import useFetchProducts from "./CoustumeHook";
 import { BiCartDownload } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
-import { wishContext } from "./WishlistContext";
+import { wishContext } from "../Context/WishlistContext";
 import toast from "react-hot-toast";
 
 const Wishlist = () => {

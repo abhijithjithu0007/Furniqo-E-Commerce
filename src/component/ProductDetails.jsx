@@ -5,7 +5,7 @@ import { BiCartDownload } from "react-icons/bi";
 import { IoMdShareAlt } from "react-icons/io";
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { wishContext } from './WishlistContext';
+import { wishContext } from '../Context/WishlistContext';
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();

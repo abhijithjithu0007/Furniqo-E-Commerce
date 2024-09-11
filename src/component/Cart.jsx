@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { cartContext } from './CartContext';
+import { cartContext } from '../Context/CartContext';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);

@@ -4,7 +4,7 @@ import SideBar from './SideBar';
 import Products from './Products';
 import Users from './Users';
 import DashBoard from './DashBoard';
-import ContextAdmin from './ContextAdmin';
+import ContextAdmin from '../Context/ContextAdmin';
 import UserDetails from './UserDetails';
 
 

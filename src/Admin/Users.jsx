@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Admincontext } from './ContextAdmin';
+import { Admincontext } from '../Context/ContextAdmin';
 import { MdDeleteForever } from 'react-icons/md';
 import axios from 'axios';
 

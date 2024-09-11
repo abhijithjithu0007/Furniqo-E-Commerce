@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import toast from 'react-hot-toast';
-import { cartContext } from './CartContext';
+import { cartContext } from '../Context/CartContext';
 
 
 const useFetchProducts = () => {

@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Mycontext } from '../routing/RouterApp';
-import { wishContext } from '../component/WishlistContext';
-import { cartContext } from '../component/CartContext';
+import { wishContext } from '../Context/WishlistContext';
+import { cartContext } from '../Context/CartContext';
 
 const Profile = () => {
   const { setIsLoggedIn } = useContext(Mycontext);

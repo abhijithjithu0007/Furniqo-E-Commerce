@@ -9,8 +9,8 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
-import { cartContext } from '../component/CartContext';
-import { wishContext } from '../component/WishlistContext';
+import { cartContext } from '../Context/CartContext';
+import { wishContext } from '../Context/WishlistContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

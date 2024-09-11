@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaUsers, FaClipboardList, FaBoxOpen } from 'react-icons/fa';
 import { RiMoneyRupeeCircleFill } from 'react-icons/ri';
 import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
-import { Admincontext } from './ContextAdmin';
+import { Admincontext } from '../Context/ContextAdmin';
 import axios from 'axios';
 
 const pieData = [
