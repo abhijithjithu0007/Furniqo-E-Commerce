@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MdFavoriteBorder, MdContactMail } from 'react-icons/md';
+import { MdFavoriteBorder } from 'react-icons/md';
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { FaCircleArrowRight } from 'react-icons/fa6';
 import { CgProfile } from 'react-icons/cg';
@@ -148,9 +148,6 @@ const Navbar = () => {
               {myPro.length}
             </span>
           </Link>
-          <Link to={'/contactus'}>
-            <MdContactMail className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
-          </Link>
           <div className="relative group">
             <div className="flex items-center">
               <CgProfile className="text-black h-6 w-6 hover:text-gray-900 cursor-pointer" />
@@ -169,6 +166,12 @@ const Navbar = () => {
                 onClick={() => handleOptionClick('/profile')}
               >
                 Profile
+              </li>
+              <li
+                className="py-2 hover:pl-2 transition-all duration-300 border-l-2 border-transparent hover:border-blue-500 cursor-pointer"
+                onClick={() => handleOptionClick('/contactus')}
+              >
+                Contact Us
               </li>
             </ul>
           </div>

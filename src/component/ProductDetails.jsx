@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
 import { BiCartDownload } from "react-icons/bi";
 import { IoMdShareAlt } from "react-icons/io";
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';
 import { useLoad } from '../Context/LoadingContext';
@@ -49,12 +48,12 @@ const ProductDetails = () => {
         await axiosInstance.delete(`/api/user/removefromwish`, {
           data: { productId: productId },
           withCredentials: true,
-        });
+        })
         setIsFilled(false);
         await fetchData();
       } else {
         if (islogin === false) {
-          toast.error("Log in to add items to cart!", { position: 'top-right' });
+          toast.error("Log in to add items to wishlist !", { position: 'top-right' });
         } else {
           const { data } = await axiosInstance.post(`/api/user/wishlist`, {
             productId: productId,

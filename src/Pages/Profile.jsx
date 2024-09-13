@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Mycontext } from '../routing/RouterApp';
 import { wishContext } from '../Context/WishlistContext';
 import { cartContext } from '../Context/CartContext';
@@ -34,12 +33,10 @@ const Profile = () => {
 
 
   const adress = localStorage.getItem('currentUser');
-  const { name = '', email = '' } = adress ? JSON.parse(adress) : {};
-
+  const { name = '', email = '' } = adress ? JSON.parse(adress) : {}
 
   return (
-    <section class=" bg-white flex font-medium items-center justify-center h-screen">
-
+    <section class=" bg-white flex font-medium items-center justify-center h-screen"> 
       <section className="w-80 mx-auto bg-gray-200 rounded-2xl px-8 py-6 shadow-lg">
         <div className="flex items-center justify-between">
           <span className="text-btnColor">
