@@ -7,6 +7,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
@@ -15,17 +16,16 @@ const ProductDetails = () => {
   const [isFilled, setIsFilled] = useState(false);
   const { setMyWish, fetchData } = useContext(wishContext);
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
-  const apiorigin = import.meta.env.VITE_API_URL
   const {startLoad,stopLoad} = useLoad(useContext)
 
   useEffect(() => {
     const fetchData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/${id}`);
+        const resp = await axiosInstance.get(`/api/user/${id}`);
         setCarts(resp.data);
 
-        const wishlistResp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true });
+        const wishlistResp = await axiosInstance.get(`/api/user/viewwishlist/${id}`, { withCredentials: true });
         setIsFilled(wishlistResp.data.isInWishlist);
       } catch (error) {
         console.log(error);
@@ -46,7 +46,7 @@ const ProductDetails = () => {
     startLoad()
     try {
       if (isFilled) {
-        await axios.delete(`${apiorigin}/api/user/removefromwish`, {
+        await axiosInstance.delete(`/api/user/removefromwish`, {
           data: { productId: productId },
           withCredentials: true,
         });
@@ -56,7 +56,7 @@ const ProductDetails = () => {
         if (islogin === false) {
           toast.error("Log in to add items to cart!", { position: 'top-right' });
         } else {
-          const { data } = await axios.post(`${apiorigin}/api/user/wishlist`, {
+          const { data } = await axiosInstance.post(`/api/user/wishlist`, {
             productId: productId,
           }, { withCredentials: true });
           setMyWish(data.products);

@@ -3,22 +3,19 @@ import { useState, useEffect, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { cartContext } from '../Context/CartContext';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 
 const useFetchProducts = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { setMyPro } = useContext(cartContext)
-  const islogin = JSON.parse(localStorage.getItem('isLogin'));
-  const apiorigin = import.meta.env.VITE_API_URL
   const {startLoad,stopLoad} = useLoad(useContext)
   
   useEffect(() => {
     const fetchData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/allproducts`)
+        const resp = await axiosInstance.get(`/api/user/allproducts`)
         setProducts(resp.data)
       } catch (error) {
         console.log(error);
@@ -34,7 +31,7 @@ const useFetchProducts = () => {
   const addToCart = async (id, price) => {
     startLoad()
     try {
-      const { data } = await axios.post(`${apiorigin}/api/user/addtocart`, {
+      const { data } = await axiosInstance.post(`/api/user/addtocart`, {
         productId: id,
         quantity: 1,
         price: price

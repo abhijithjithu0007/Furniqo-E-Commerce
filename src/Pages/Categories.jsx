@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import ScrollReveal from 'scrollreveal';
 import axios from 'axios';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const Categories = () => {
-  const apiorigin = import.meta.env.VITE_API_URL
   const { startLoad, stopLoad } = useLoad(useContext)
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Categories = () => {
     const fetchData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
+        const resp = await axiosInstance.get(`/api/user/allproducts`);
         setProducts(resp.data);
       } catch (error) {
         console.log(error);

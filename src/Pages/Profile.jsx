@@ -5,20 +5,20 @@ import { Mycontext } from '../routing/RouterApp';
 import { wishContext } from '../Context/WishlistContext';
 import { cartContext } from '../Context/CartContext';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const Profile = () => {
   const { setIsLoggedIn } = useContext(Mycontext);
   const navigate = useNavigate();
   const { setMyWish } = useContext(wishContext)
   const { setMyPro } = useContext(cartContext)
-  const apiorigin = import.meta.env.VITE_API_URL
   const { startLoad, stopLoad } = useLoad(useContext)
 
 
   const handleLogout = async () => {
     startLoad()
     try {
-      await axios.post(`${apiorigin}/api/user/logout`, {}, { withCredentials: true })
+      await axiosInstance.post(`/api/user/logout`, {}, { withCredentials: true })
       navigate('/login')
       localStorage.setItem('isLogin', JSON.stringify(false));
       navigate('/login');

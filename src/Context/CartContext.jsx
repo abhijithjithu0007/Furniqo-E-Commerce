@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import { useLoad } from './LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 
 export const cartContext = createContext()
@@ -13,12 +13,11 @@ const {startLoad,stopLoad} = useLoad(useContext)
 
   const [total, setTotal] = useState([])
   const [myPro, setMyPro] = useState([])
-  const apiorigin = import.meta.env.VITE_API_URL
   useEffect(() => {
     const fetchData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/viewcartproducts/${id}`, {
+        const resp = await axiosInstance.get(`/api/user/viewcartproducts/${id}`, {
           withCredentials: true
         });
         const data = resp.data.products || [];

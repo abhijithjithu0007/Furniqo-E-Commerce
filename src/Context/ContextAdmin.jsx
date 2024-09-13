@@ -1,20 +1,20 @@
 import axios from 'axios'
 import React, { createContext, useState ,useEffect, useContext} from 'react'
 import { useLoad } from './LoadingContext'
+import axiosInstance from '../axiosInstance'
 
 
 export const Admincontext = createContext()
 const ContextAdmin = ({children}) => { 
 
     const [usersData, setUsersData] = useState([])
-    const apiorigin = import.meta.env.VITE_API_URL
     const {startLoad,stopLoad} = useLoad(useContext)
 
     useEffect(() => {
       const userFetch = async () => {
         startLoad()
         try {
-          const resp = await axios.get(`${apiorigin}/api/admin/alluser`,{withCredentials:true})
+          const resp = await axiosInstance.get(`/api/admin/alluser`,{withCredentials:true})
           setUsersData(resp.data)
         } catch (error) {
           

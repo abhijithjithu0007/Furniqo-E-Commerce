@@ -22,19 +22,19 @@ import UserProtectedRoute from '../component/ProtectedRouteUser';
 import Spinner from '../Pages/Spinner';
 import { LoadingProvider } from '../Context/LoadingContext';
 import LoadSpinner from '../Pages/LoadSpinner';
+import axiosInstance from '../axiosInstance';
 
 export const Mycontext = createContext();
 
 const RouterApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [products, setProducts] = useState([]);
-  const apiorigin = import.meta.env.VITE_API_URL
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
+        const resp = await axiosInstance.get(`/api/user/allproducts`);
         setProducts(resp.data);
         setLoading(false)
       } catch (error) {

@@ -4,13 +4,13 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Mycontext } from '../routing/RouterApp';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
   const {setIsLoggedIn} = useContext(Mycontext)
-  const apiorigin = import.meta.env.VITE_API_URL
   const {startLoad,stopLoad} =useLoad()
 
   const handleEmail = (e) => {
@@ -24,7 +24,7 @@ const Login = () => {
   const handleClick = async () => {
     startLoad()
     try {
-      const response = await axios.post(`${apiorigin}/api/user/login`, {
+      const response = await axiosInstance.post(`/api/user/login`, {
         email: userEmail,
         password: userPass,
       },{ withCredentials: true });

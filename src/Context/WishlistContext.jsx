@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import { useLoad } from './LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 export const wishContext = createContext()
 const WishContextProvider = ({ children }) => {
 
     const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
     const islogin = JSON.parse(localStorage.getItem('isLogin'));
-    const apiorigin = import.meta.env.VITE_API_URL
 
 
     const  id  = currentUserData?.id    
@@ -17,7 +17,7 @@ const WishContextProvider = ({ children }) => {
     const fetchData = async () => {
     startLoad()
         try {
-            const resp = await axios.get(`${apiorigin}/api/user/viewwishlist/${id}`, { withCredentials: true })
+            const resp = await axiosInstance.get(`/api/user/viewwishlist/${id}`, { withCredentials: true })
             const data = resp.data.products || []
             setMyWish(data);
         } catch (error) {

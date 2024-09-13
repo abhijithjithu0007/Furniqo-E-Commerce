@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const Orders = () => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
   const { name } = currentUserData;
-  const apiorigin = import.meta.env.VITE_API_URL
   const [pendOrders, setPendOrders] = useState([]);
   const [compOrders, setCompOrders] = useState([]);
   const [sum, setSum] = useState(0);
@@ -17,7 +17,7 @@ const Orders = () => {
     const fetchData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/order/getorderdetails`, { withCredentials: true });
+        const resp = await axiosInstance.get(`/api/user/order/getorderdetails`, { withCredentials: true });
         console.log(resp.data);
         
         const { pendingOrders,completedOrders } = resp.data;

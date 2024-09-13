@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const SignUp = () => {
-  const apiorigin = import.meta.env.VITE_API_URL
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,7 +40,7 @@ const SignUp = () => {
     if (validateForm()) {
       startLoad()
       try {
-        await axios.post(`${apiorigin}/api/user/signup`, formData);
+        await axiosInstance.post(`/api/user/signup`, formData);
         toast.success('Registration successful!');
         navigate('/login');
       } catch (error) {

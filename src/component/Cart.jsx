@@ -7,12 +7,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { cartContext } from '../Context/CartContext';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('card');
   const { myPro, setMyPro } = useContext(cartContext);
-  const apiorigin = import.meta.env.VITE_API_URL
   const {startLoad,stopLoad} = useLoad(useContext)
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const Cart = () => {
   const increment = async (productId, action) => {
     startLoad()
     try {
-      const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
+      const resp = await axiosInstance.put(`/api/user/updateproquantity`, {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -42,7 +41,7 @@ const Cart = () => {
   const decrement = async (productId, action) => {
     startLoad()
     try {
-      const resp = await axios.put(`${apiorigin}/api/user/updateproquantity`, {
+      const resp = await axiosInstance.put(`/api/user/updateproquantity`, {
         productId: productId,
         action: action
       }, { withCredentials: true });
@@ -58,7 +57,7 @@ const Cart = () => {
   const handleRemove = async (productId) => {
     startLoad()
     try {
-      const resp = await axios.delete(`${apiorigin}/api/user/removefromcart`, {
+      const resp = await axiosInstance.delete(`/api/user/removefromcart`, {
         data: { productId: productId },
         withCredentials: true
       });
@@ -85,7 +84,7 @@ const Cart = () => {
   const handlePay = async () => {
     startLoad()
     try {
-      const { data } = await axios.post(`${apiorigin}/api/user/create-order`, {}, { withCredentials: true });
+      const { data } = await axiosInstance.post(`/api/user/create-order`, {}, { withCredentials: true });
       const { razorpayOrderId } = data;
 
       const options = {
@@ -97,8 +96,8 @@ const Cart = () => {
         order_id: razorpayOrderId,
         handler: async function (response) {
           try {
-            const verifyResponse = await axios.post(
-              `${apiorigin}/api/user/verify-payment`,
+            const verifyResponse = await axiosInstance.post(
+              `/api/user/verify-payment`,
               {
                 razorpayOrderId: razorpayOrderId,
                 razorpayPaymentId: response.razorpay_payment_id,

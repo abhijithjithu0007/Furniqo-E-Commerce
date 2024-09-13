@@ -6,11 +6,11 @@ import { MdDeleteOutline } from "react-icons/md";
 import { wishContext } from "../Context/WishlistContext";
 import toast from "react-hot-toast";
 import { useLoad } from "../Context/LoadingContext";
+import axiosInstance from "../axiosInstance";
 
 const Wishlist = () => {
     const { myWish, setMyWish } = useContext(wishContext);
     const { addToCart } = useFetchProducts();
-    const apiorigin = import.meta.env.VITE_API_URL
     const {startLoad,stopLoad} = useLoad(useContext)
     const handleAddPro = async (id, price) => {
         addToCart(id, price);
@@ -19,7 +19,7 @@ const Wishlist = () => {
     const handleRemove = async (productId) => {
         startLoad()
         try {
-            const resp = await axios.delete(`${apiorigin}/api/user/removefromwish`, {
+            const resp = await axiosInstance.delete(`/api/user/removefromwish`, {
                 data: { productId },
                 withCredentials: true,
             });
