@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useFetchProducts from './CoustumeHook';
-import { BiCartDownload } from "react-icons/bi";
 import { IoMdShareAlt } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';
@@ -16,6 +15,10 @@ const ProductDetails = () => {
   const { setMyWish, fetchData } = useContext(wishContext);
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
   const { startLoad, stopLoad } = useLoad();
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; // Number of items to show per page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,32 +42,21 @@ const ProductDetails = () => {
 
   const handleAddcart = async () => {
     addToCart(carts._id, carts.price);
-    toast.success('Added to Cart', { position: 'top-right' });
   };
 
   const addToWish = async (productId) => {
     startLoad();
     try {
-      if (isFilled) {
-        await axiosInstance.delete(`/api/user/removefromwish`, {
-          data: { productId: productId },
-          withCredentials: true,
-        });
-        setIsFilled(false);
-        await fetchData();
-        toast.success('Removed from Wishlist', { position: 'top-right' });
+      if (islogin === false) {
+        toast.error("Log in to add items to wishlist!", { position: 'top-right' });
       } else {
-        if (islogin === false) {
-          toast.error("Log in to add items to wishlist!", { position: 'top-right' });
-        } else {
-          const { data } = await axiosInstance.post(`/api/user/wishlist`, {
-            productId: productId,
-          }, { withCredentials: true });
-          setMyWish(data.products);
-          setIsFilled(true);
-          toast.success('Added to Wishlist', { position: 'top-right' });
-          await fetchData();
-        }
+        const { data } = await axiosInstance.post(`/api/user/wishlist`, {
+          productId: productId,
+        }, { withCredentials: true });
+        setMyWish(data.products);
+        setIsFilled(true);
+        toast.success('Added to Wishlist', { position: 'top-right' });
+        await fetchData();
       }
     } catch (error) {
       console.log(error);
@@ -83,6 +75,14 @@ const ProductDetails = () => {
   };
 
   const related = products.filter((rel) => rel.category === (carts ? carts.category : ''));
+  const totalPages = Math.ceil(related.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = related.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className="container mx-auto p-4 mt-2">
@@ -124,28 +124,26 @@ const ProductDetails = () => {
                 >
                   Add to Cart
                 </button>
-
                 <button
                   onClick={() => addToWish(carts._id)}
                   className="bg-transparent border border-gray-300 text-gray-800 text-xs uppercase py-3 px-6 transition-all duration-300 hover:border-black hover:text-red-400"
                 >
-                  {isFilled ? "Remove from Wishlist" : "Add to Wishlist"}
+                  {isFilled ? "In Wishlist" : "Add to Wishlist"}
                 </button>
               </div>
             </div>
           </div>
         </div>
-
       )}
 
-      <div className="mt-6">
+      <div className="mt-6 px-4 lg:px-8 md:mt-32">
         <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 border-b-2 border-btnColor">You may also like...</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {related.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 p-12 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+          {paginatedProducts.map((item) => (
             <Link to={`/category/${item._id}`} key={item._id}>
               <div className="flex flex-col justify-center items-center bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden mx-auto">
                 <img
-                  className="h-40 w-full object-cover"
+                  className="h-40 w-full object-cover md:h-[300px] "
                   src={item.image}
                   alt={item.name}
                 />
@@ -154,14 +152,33 @@ const ProductDetails = () => {
                   <p className="text-gray-600 text-xs md:text-sm">₹ {item.price}</p>
                   <button
                     onClick={() => addToWish(item._id)}
-                    className="mt-4 bg-btnColor text-white py-1 px-3 rounded-full hover:bg-blue-600 transition-colors duration-300"
+                    className="mt-4 bg-btnColor text-white py-1 px-3 rounded-full"
                   >
-                    {isFilled ? "Remove from Wishlist" : "Add to Wishlist"}
+                    Add to Wishlist
                   </button>
                 </div>
               </div>
             </Link>
           ))}
+        </div>
+        <div className="flex justify-between items-center mt-4 px-2 lg:px-8">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-l-lg hover:bg-gray-300 transition-colors duration-300"
+          >
+            &lt; Prev
+          </button>
+          <div className="text-gray-600">
+            Page {currentPage} of {totalPages}
+          </div>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-r-lg hover:bg-gray-300 transition-colors duration-300"
+          >
+            Next &gt;
+          </button>
         </div>
       </div>
     </div>

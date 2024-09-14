@@ -56,6 +56,7 @@ const Navbar = () => {
     navigate(path);
   };
 
+  
   return (
     <header className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[87px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">

@@ -20,6 +20,8 @@ const WishContextProvider = ({ children }) => {
             const resp = await axiosInstance.get(`/api/user/viewwishlist/${id}`, { withCredentials: true })
             const data = resp.data.products || []
             setMyWish(data);
+            console.log(data);
+            
         } catch (error) {
             console.log(error);
         }finally{
