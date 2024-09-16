@@ -9,7 +9,7 @@ export default {
       colors: {
         greenColor: '#e40443',
         whiteColor:'#f1facf',
-        btnColor:'#e40443',
+        btnColor:'#cd4632',
         homeBg:'#f7f7f7',
         'custom-dark': '#1E1E1E'
       },

@@ -16,9 +16,8 @@ const ProductDetails = () => {
   const islogin = JSON.parse(localStorage.getItem('isLogin'));
   const { startLoad, stopLoad } = useLoad();
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of items to show per page
+  const itemsPerPage = 3
 
   useEffect(() => {
     const fetchData = async () => {

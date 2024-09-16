@@ -7,10 +7,10 @@ import { FaCircleArrowRight } from 'react-icons/fa6';
 import { CgProfile } from 'react-icons/cg';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
-import img from '../assets/logo@img.png';
 import useFetchProducts from '../component/CoustumeHook';
 import { cartContext } from '../Context/CartContext';
 import { wishContext } from '../Context/WishlistContext';
+import navimg from '../assets/navlogo.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,6 +23,7 @@ const Navbar = () => {
   const { myWish } = useContext(wishContext);
   const navigate = useNavigate();
   const { products } = useFetchProducts();
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,7 +62,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[87px]">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to="/home">
-          <img src={img} alt="Logo" className="h-12 w-60 md:h-14" />
+          <img src={navimg} alt="Logo" className="h-12 w-60 md:h-14" />
         </Link>
         <div className="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden xl:flex items-center">
           <div>
