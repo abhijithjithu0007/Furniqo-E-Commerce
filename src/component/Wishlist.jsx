@@ -11,13 +11,14 @@ import axiosInstance from "../axiosInstance";
 const Wishlist = () => {
     const { myWish, setMyWish } = useContext(wishContext);
     const { addToCart } = useFetchProducts();
-    const {startLoad,stopLoad} = useLoad(useContext)
+    const { startLoad, stopLoad } = useLoad(useContext);
+
     const handleAddPro = async (id, price) => {
         addToCart(id, price);
     };
 
     const handleRemove = async (productId) => {
-        startLoad()
+        startLoad();
         try {
             const resp = await axiosInstance.delete(`/api/user/removefromwish`, {
                 data: { productId },
@@ -30,67 +31,46 @@ const Wishlist = () => {
             setMyWish(data);
         } catch (error) {
             console.log(error);
-        }finally{
-            stopLoad()
+        } finally {
+            stopLoad();
         }
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-4 md:p-6 rounded-lg shadow-lg border border-gray-200 mt-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4 md:mb-6">
-                Your Favorite Items
-            </h2>
+        <div className="max-w-6xl mx-auto px-4 py-10">
+            <h2 className="text-3xl font-semibold text-center mb-8">Favourites</h2>
+            <div className="text-center mb-6">
+                <p>{myWish ? myWish.length : 0} Items</p>
+            </div>
             {myWish.length === 0 ? (
                 <p className="text-center text-gray-500 mb-4">
                     There are no products in your wishlist.
                 </p>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full text-left border-collapse">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Product</th>
-                                <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Price</th>
-                                <th className="py-3 px-2 md:px-4 text-gray-600 font-medium">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {myWish.map((product, key) => (
-                                <tr
-                                    key={key}
-                                    className="border-t hover:bg-gray-50 transition duration-200"
-                                >
-                                    <td className="flex items-center py-4 px-2 md:px-4">
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="h-10 w-10 md:h-12 md:w-12 rounded-full border mr-2 md:mr-4 object-cover shadow-sm"
-                                        />
-                                        <span className="font-semibold text-gray-800 text-sm md:text-base">
-                                            {product.name}
-                                        </span>
-                                    </td>
-                                    <td className="py-4 px-2 md:px-4 font-semibold text-sm md:text-base">
-                                        ₹{product.price}
-                                    </td>
-                                    <td className="py-4 px-2 md:px-4 flex items-center">
-                                        <button
-                                            onClick={() => handleAddPro(product._id, product.price)}
-                                            className="p-2 rounded-lg text-xl md:text-2xl shadow-md transition-all duration-300 hover:bg-gray-100"
-                                        >
-                                            <BiCartDownload />
-                                        </button>
-                                        <button
-                                            onClick={() => handleRemove(product._id)}
-                                            className="ml-2 md:ml-3 p-2 rounded-lg shadow-md transition-all duration-300 text-xl md:text-2xl hover:text-red-600 hover:bg-gray-100"
-                                        >
-                                            <MdDeleteOutline />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {myWish.map((product, key) => (
+                        <div key={key} className="border rounded-lg p-4 shadow-lg relative">
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-40 object-cover mb-4 rounded"
+                            />
+                            <button
+                                onClick={() => handleRemove(product._id)}
+                                className="absolute top-2 right-2 p-2 bg-gray-200 rounded-full"
+                            >
+                                <MdDeleteOutline className="text-gray-600 hover:text-red-600 text-xl" />
+                            </button>
+                            <h3 className="text-lg font-medium mb-2">{product.name}</h3>
+                            <p className="text-xl font-semibold mb-4">₹{product.price}</p>
+                            <button
+                                onClick={() => handleAddPro(product._id, product.price)}
+                                className="w-full bg-black text-white p-2 rounded transition-all duration-300 hover:bg-white hover:text-black border border-black flex items-center justify-center"
+                            >
+                                <BiCartDownload className="mr-2" /> Add to cart
+                            </button>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
