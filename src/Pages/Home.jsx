@@ -48,7 +48,7 @@ const Home = () => {
         </div>
       </div>
       <div className="bg-mist py-12">
-        <h2 className="text-2xl font-bold mb-6 text-center text-richCharcoal" data-aos="zoom-in">Latest Arrivals</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-richCharcoal" data-aos="zoom-in">Upcoming Arrivals</h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
             <div key={index} className="relative border p-4 text-center bg-white shadow-md" data-aos="flip-left" data-aos-delay={index * 100}>
