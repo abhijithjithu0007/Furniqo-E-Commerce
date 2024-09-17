@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';
 import { useLoad } from '../Context/LoadingContext';
 import axiosInstance from '../axiosInstance';
+import { CiStar } from "react-icons/ci";
+
 
 const ProductDetails = () => {
   const { products } = useFetchProducts();
@@ -114,6 +116,11 @@ const ProductDetails = () => {
             <div className="w-full md:w-1/2 border-l-2 border-gray-200 pl-8">
               <h2 className="text-gray-600 text-sm font-medium uppercase">{carts.name}</h2>
               <h4 className="text-gray-600 text-xs font-medium uppercase mt-1">{carts.category}</h4>
+              <h4 className="text-gray-600 text-xs font-medium mt-1">Material : {carts.material}</h4>
+              <div className='flex justify-start'>
+                <h4 className="text-gray-600 text-xs font-medium mt-1">Rating : {carts.rating} </h4>
+                <CiStar className='pt-1 text-xl text-yellow-600' />
+              </div>
               <h1 className="text-gray-800 text-4xl font-light mt-4">${carts.price}</h1>
               <p className="text-gray-600 text-sm leading-6 mt-4 mb-6">{carts.description}</p>
               <div className="flex flex-col space-y-2">

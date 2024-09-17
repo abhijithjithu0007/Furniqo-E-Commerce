@@ -7,23 +7,6 @@ import axiosInstance from '../axiosInstance';
 
 const Categories = () => {
   const { startLoad, stopLoad } = useLoad(useContext)
-
-  useEffect(() => {
-    const sr = ScrollReveal();
-
-    sr.reveal('.scroll-reveal', {
-      delay: 100,
-      distance: '50px',
-      origin: 'bottom',
-      interval: 100,
-      reset: true
-    });
-
-    return () => {
-      sr.destroy();
-    };
-  }, []);
-
   const [cate, setCate] = useState([]);
   const [fullFilter, setFullFilter] = useState(false);
   const [sort, setSort] = useState('');
@@ -89,16 +72,34 @@ const Categories = () => {
               All
             </button>
             <button
-              onClick={() => handleCategory("Baby boy")}
+              onClick={() => handleCategory("Dining Room")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-              Boys Fashion
+             Dining Room
             </button>
             <button
-              onClick={() => handleCategory("Baby girl")}
+              onClick={() => handleCategory("Living Room")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-              Girls Fashion
+              Living Room
+            </button>
+            <button
+              onClick={() => handleCategory("Office")}
+              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
+            >
+             Office
+            </button>
+            <button
+              onClick={() => handleCategory("Bedroom")}
+              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
+            >
+             Bedroom
+            </button>
+            <button
+              onClick={() => handleCategory("Outdoor")}
+              className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
+            >
+             Outdoor
             </button>
           </div>
         </div>
