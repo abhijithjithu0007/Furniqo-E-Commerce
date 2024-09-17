@@ -7,6 +7,8 @@ import { wishContext } from '../Context/WishlistContext';
 import { useLoad } from '../Context/LoadingContext';
 import axiosInstance from '../axiosInstance';
 import { CiStar } from "react-icons/ci";
+import { FiArrowLeftCircle,FiArrowRightCircle } from "react-icons/fi";
+
 
 
 const ProductDetails = () => {
@@ -155,7 +157,7 @@ const ProductDetails = () => {
                 />
                 <div className="w-full p-4 text-center">
                   <h1 className="text-gray-900 font-bold text-sm md:text-base lg:text-lg">{item.name}</h1>
-                  <p className="text-gray-600 text-xs md:text-sm">₹ {item.price}</p>
+                  <p className="text-gray-600 text-xs md:text-sm">$ {item.price}</p>
                   <button
                     onClick={() => addToWish(item._id)}
                     className="mt-4 bg-btnColor text-white py-1 px-3 rounded-full"
@@ -163,17 +165,19 @@ const ProductDetails = () => {
                     Add to Wishlist
                   </button>
                 </div>
+                
               </div>
             </Link>
           ))}
         </div>
-        <div className="flex justify-between items-center mt-4 px-2 lg:px-8">
+        <div className="flex justify-evenly items-center mt-4 px-2 border-t-2 lg:px-8">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-l-lg hover:bg-gray-300 transition-colors duration-300"
+            className="px-4 py-2 text-gray-800 rounded-2xl hover:bg-gray-300 transition-colors duration-300"
           >
-            &lt; Prev
+            <FiArrowLeftCircle className='text-3xl'/>
+
           </button>
           <div className="text-gray-600">
             Page {currentPage} of {totalPages}
@@ -181,9 +185,9 @@ const ProductDetails = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-r-lg hover:bg-gray-300 transition-colors duration-300"
+            className="px-4 py-2  text-gray-800 rounded-2xl hover:bg-gray-300 transition-colors duration-300"
           >
-            Next &gt;
+            <FiArrowRightCircle className='text-3xl' />
           </button>
         </div>
       </div>

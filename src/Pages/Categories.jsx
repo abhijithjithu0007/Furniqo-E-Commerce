@@ -115,7 +115,7 @@ const Categories = () => {
               onChange={handleChange}
               className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Select</option>
+              <option value="">None</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
             </select>
@@ -134,7 +134,7 @@ const Categories = () => {
                       <p className="text-yellow-500 text-xl md:text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
                     </div>
                     <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
-                      <span className="text-md md:text-lg">₹{item.price}</span>
+                      <span className="text-md md:text-lg">${item.price}</span>
                     </div>
                   </div>
                 </div>

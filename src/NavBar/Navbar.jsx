@@ -165,15 +165,15 @@ const Navbar = () => {
               </li>
               <li
                 className="py-2 hover:pl-2 transition-all duration-300 border-l-2 border-transparent hover:border-blue-500 cursor-pointer"
-                onClick={() => handleOptionClick('/profile')}
-              >
-                Profile
-              </li>
-              <li
-                className="py-2 hover:pl-2 transition-all duration-300 border-l-2 border-transparent hover:border-blue-500 cursor-pointer"
                 onClick={() => handleOptionClick('/contactus')}
               >
                 Contact Us
+              </li>
+              <li
+                className="py-2 hover:pl-2 transition-all duration-300 border-l-2 border-transparent hover:border-blue-500 cursor-pointer"
+                onClick={() => handleOptionClick('/profile')}
+              >
+                Profile
               </li>
             </ul>
           </div>

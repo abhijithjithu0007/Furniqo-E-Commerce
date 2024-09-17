@@ -6,7 +6,6 @@ import axiosInstance from '../axiosInstance';
 const Orders = () => {
 
   const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-  const { name } = currentUserData;
   const [pendOrders, setPendOrders] = useState([]);
   const [compOrders, setCompOrders] = useState([]);
   const [sum, setSum] = useState(0);
@@ -69,7 +68,7 @@ const Orders = () => {
                       </div>
                       <div className="ml-auto">
                         <div className="text-lg font-medium text-green-600">
-                          ₹{(item.product.price * item.quantity).toFixed(2)}
+                          ${(item.product.price * item.quantity).toFixed(2)}
                         </div>
                       </div>
                     </div>
@@ -79,7 +78,7 @@ const Orders = () => {
                     <div className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200 w-full md:w-1/2">
                       <div className="flex justify-between text-gray-800">
                         <p className="font-bold">Order Details</p>
-                        <p className="font-bold text-green-600">₹{order.totalprice}</p>
+                        <p className="font-bold text-green-600">${order.totalprice}</p>
                       </div>
                       <div className="flex justify-between text-gray-800">
                         <p className="font-bold">Delivery Charges</p>
@@ -88,14 +87,13 @@ const Orders = () => {
                     </div>
                     <div className="bg-red-100 p-4 rounded-lg shadow border border-red-200 w-full md:w-1/3 mt-4 md:mt-0">
                     <h2 className="text-2xl font-bold text-red-600">AMOUNT</h2>
-                      <h1 className="text-4xl font-bold text-red-600">₹{order.totalprice}</h1>
+                      <h1 className="text-4xl font-bold text-red-600">${order.totalprice}</h1>
                       <h2 className="text-lg font-bold text-red-600">Payment status : <span className='text-lg text-black'>{order.paymentStatus}</span></h2>
                     </div>
                   </div>
 
                   <div className="my-4 text-gray-600">
                     <p>Invoice Date: {order.purchaseDate}</p>
-                    <p>Receipt Voucher: 18KU-62IIK</p>
                   </div>
                 </div>
               ))}
