@@ -7,7 +7,7 @@ import { FaCircleArrowRight } from 'react-icons/fa6';
 import { CgProfile } from 'react-icons/cg';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
-import useFetchProducts from '../component/CoustumeHook';
+import useFetchProducts from '../CustomHook/CoustumeHook';
 import { cartContext } from '../Context/CartContext';
 import { wishContext } from '../Context/WishlistContext';
 import navimg from '../assets/navlogo.png'

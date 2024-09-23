@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import useFetchProducts from './CoustumeHook';
+import useFetchProducts from '../CustomHook/CoustumeHook';
 import { IoMdShareAlt } from "react-icons/io";
 import toast from 'react-hot-toast';
 import { wishContext } from '../Context/WishlistContext';

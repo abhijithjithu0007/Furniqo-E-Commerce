@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import useFetchProducts from "./CoustumeHook";
+import useFetchProducts from "../CustomHook/CoustumeHook";
 import { BiCartDownload } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
 import { wishContext } from "../Context/WishlistContext";

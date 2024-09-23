@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TiTick } from "react-icons/ti";
-import Testimonials from '../component/Testimonials';
+import Testimonials from '../Components/Testimonials';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import homelogo from '../assets/homelogo.jpg';
