@@ -10,8 +10,10 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPass, setUserPass] = useState('');
   const navigate = useNavigate();
-  const {setIsLoggedIn} = useContext(Mycontext)
-  const {startLoad,stopLoad} =useLoad()
+  const { setIsLoggedIn } = useContext(Mycontext)
+  const { startLoad, stopLoad } = useLoad()
+
+
 
   const handleEmail = (e) => {
     setUserEmail(e.target.value);
@@ -27,24 +29,34 @@ const Login = () => {
       const response = await axiosInstance.post(`/api/user/login`, {
         email: userEmail,
         password: userPass,
-      },{ withCredentials: true });
-  
+      }, { withCredentials: true });
+
       if (response.status === 200) {
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
         localStorage.setItem('isLogin', JSON.stringify(true));
         toast.success("Login Completed", { position: 'top-right' });
         setIsLoggedIn(true)
-        navigate('/');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        console.log(currentUser);
+        
+        if (currentUser?.role === 'admin') {
+          navigate('/admin/dashboard');
+
+        } else {
+          navigate('/');
+        }
       } else {
         alert('Error occurred');
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
       toast.error("Invalid Credentials", { position: 'top-right' });
-    }finally{
+    } finally {
       stopLoad()
     }
   };
+
+
 
   return (
     <div className="bg-gray-200 h-screen flex items-center justify-center">
@@ -82,7 +94,7 @@ const Login = () => {
                     placeholder="**************"
                   />
                 </div>
-               
+
                 <div className="mb-6 text-center">
                   <button
                     onClick={handleClick}
@@ -101,7 +113,7 @@ const Login = () => {
                     Create an Account!
                   </Link>
                 </div>
-              
+
               </form>
             </div>
           </div>
