@@ -18,7 +18,7 @@ import Wishlist from '../Components/Wishlist';
 import WishContextProvider from '../Context/WishlistContext';
 import Orders from '../Components/Orders';
 import UserProtectedRoute from '../ProtectedRoute/ProtectedRouteUser';
-import Spinner from '../Pages/Spinner';
+import Spinner from '../Components/Spinner';
 import { LoadingProvider } from '../Context/LoadingContext';
 import LoadSpinner from '../Components/LoadSpinner';
 import axiosInstance from '../axiosInstance';

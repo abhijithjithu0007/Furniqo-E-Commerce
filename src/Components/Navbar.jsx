@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useFetchProducts from '../CustomHook/CoustumeHook';
 import { cartContext } from '../Context/CartContext';
 import { wishContext } from '../Context/WishlistContext';
-import navimg from '../assets/navlogo.png'
+import navimg from '../Assets/navlogo.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

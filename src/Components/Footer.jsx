@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
-import img from '../assets/navlogo.png';
+import img from '../Assets/navlogo.png';
 
 const Footer = () => {
     return (
