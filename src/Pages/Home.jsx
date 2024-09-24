@@ -4,12 +4,14 @@ import { TiTick } from "react-icons/ti";
 import Testimonials from '../Components/Testimonials';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import homelogo from '../Assets/homelogo.jpg';
+import homelogo from '../assets/homelogo.jpg';
 
 const Home = () => {
   useEffect(() => {
     AOS.init({ duration: 1000, once: false });
   }, []);
+
+  
 
   const products = [
     { image: 'https://i.pinimg.com/736x/92/0b/00/920b007e46b66701c93329b45add89b6.jpg', title: 'Sofa Set', price: 5499 },

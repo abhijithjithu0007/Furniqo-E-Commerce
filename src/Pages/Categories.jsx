@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ScrollReveal from 'scrollreveal';
-import axios from 'axios';
 import { useLoad } from '../Context/LoadingContext';
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
 import axiosInstance from '../axiosInstance';
 
 const Categories = () => {
@@ -11,6 +11,10 @@ const Categories = () => {
   const [fullFilter, setFullFilter] = useState(false);
   const [sort, setSort] = useState('');
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  //<Skeleton height={50} width={50} circle={true} />
+
 
   const handleCategory = (category) => {
     const filtering = products.filter((item) => item.category === category);
@@ -46,14 +50,12 @@ const Categories = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      startLoad()
       try {
         const resp = await axiosInstance.get(`/api/user/allproducts`);
         setProducts(resp.data);
+        setLoading(false)
       } catch (error) {
         console.log(error);
-      } finally {
-        stopLoad()
       }
     }
     fetchData();
@@ -75,7 +77,7 @@ const Categories = () => {
               onClick={() => handleCategory("Dining Room")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-             Dining Room
+              Dining Room
             </button>
             <button
               onClick={() => handleCategory("Living Room")}
@@ -87,19 +89,19 @@ const Categories = () => {
               onClick={() => handleCategory("Office")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-             Office
+              Office
             </button>
             <button
               onClick={() => handleCategory("Bedroom")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-             Bedroom
+              Bedroom
             </button>
             <button
               onClick={() => handleCategory("Outdoor")}
               className="flex items-center bg-gray-200 text-black gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-greenColor duration-300 hover:gap-2 hover:translate-x-3 scroll-reveal"
             >
-             Outdoor
+              Outdoor
             </button>
           </div>
         </div>
@@ -122,25 +124,50 @@ const Categories = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedProducts().map((item, id) => (
-            <Link to={`/category/${item._id}`} key={id} className="w-full">
-              <div className="flex justify-center">
-                <div className="max-w-xs md:max-w-sm">
-                  <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-                    <img className="rounded-t-lg md:h-[250px] w-full object-cover" src={item.image} alt={item.name} />
-                    <div className="py-6 px-4 md:px-8 rounded-lg bg-white">
-                      <h1 className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">{item.name}</h1>
-                      <p className="text-gray-700 text-sm md:text-base tracking-wide">{item.description}</p>
-                      <p className="text-yellow-500 text-xl md:text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
-                    </div>
-                    <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
-                      <span className="text-md md:text-lg">${item.price}</span>
+          {loading ? (
+            <div className='flex gap-5'>
+              {[...Array(3)].map((_, index) => (
+                <div className="flex justify-center">
+                  <div className="max-w-xs md:max-w-sm">
+                    <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
+                      <Skeleton className="rounded-t-lg" height={300} width={300} />
+                      <div className="py-6 px-4 md:px-8 rounded-lg bg-white">
+                        <Skeleton className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer"></Skeleton>
+                        <Skeleton className="text-gray-700 text-sm md:text-base tracking-wide"></Skeleton>
+                        <Skeleton className="text-yellow-500 text-xl md:text-2xl" />
+                      </div>
+                      <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
+                        <Skeleton className="text-md md:text-lg" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              ))}
+            </div>
+          ) : (
+
+            sortedProducts().map((item, id) => (
+              <Link to={`/category/${item._id}`} key={id} className="w-full">
+                <div className="flex justify-center">
+                  <div className="max-w-xs md:max-w-sm">
+                    <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
+                      <img className="rounded-t-lg md:h-[250px] w-full object-cover" src={item.image} alt={item.name} />
+                      <div className="py-6 px-4 md:px-8 rounded-lg bg-white">
+                        <h1 className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">{item.name}</h1>
+                        <p className="text-gray-700 text-sm md:text-base tracking-wide">{item.description}</p>
+                        <p className="text-yellow-500 text-xl md:text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
+                      </div>
+                      <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
+                        <span className="text-md md:text-lg">${item.price}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))
+
+          )}
+
         </div>
       </div>
     </div>

@@ -18,7 +18,6 @@ import Wishlist from '../Components/Wishlist';
 import WishContextProvider from '../Context/WishlistContext';
 import Orders from '../Components/Orders';
 import UserProtectedRoute from '../ProtectedRoute/ProtectedRouteUser';
-import Spinner from '../Components/Spinner';
 import { LoadingProvider } from '../Context/LoadingContext';
 import LoadSpinner from '../Components/LoadSpinner';
 import axiosInstance from '../axiosInstance';
@@ -29,15 +28,13 @@ export const Mycontext = createContext();
 const RouterApp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLogin')));
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isToken, setIsToken] = useState(false);
+    const [isToken, setIsToken] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const resp = await axiosInstance.get(`/api/user/allproducts`);
         setProducts(resp.data);
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +46,6 @@ const RouterApp = () => {
     const handleResponse = response => response;
     const handleError = error => {
       if (error.response && error.response.status === 405) {
-        console.log('Setting isToken to true');
         setIsToken(true);
         localStorage.setItem('isLogin','false')
       }
@@ -69,9 +65,6 @@ const RouterApp = () => {
 
   return (
     <div>
-      {loading ? (
-        <Spinner />
-      ) : (
         <LoadingProvider>
           <Mycontext.Provider value={{ isLoggedIn, setIsLoggedIn, products, currentUser }}>
             <CartContextProvider>
@@ -99,7 +92,6 @@ const RouterApp = () => {
             <ScrollToTop />
           </Mycontext.Provider>
         </LoadingProvider>
-      )}
     </div>
   );
 };
