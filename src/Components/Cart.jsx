@@ -172,7 +172,7 @@ const Cart = () => {
                         <button onClick={() => increment(item.product._id, "increment")} className="px-2">+</button>
                       </div>
                       <div className="flex items-center justify-between">
-                        <div className="ml-auto">₹{(item.product.price * item.quantity).toFixed(2)}
+                        <div className="ml-auto">$ {(item.product.price * item.quantity).toFixed(2)}
                           <span onClick={() => handleRemove(item.product._id)} className="ml-4 cursor-pointer">&#10005;</span>
                         </div>
                       </div>
@@ -192,11 +192,11 @@ const Cart = () => {
                 <hr className="my-5" />
                 <div className="flex justify-between">
                   <div className="text-left">ITEMS {myPro.length}</div>
-                  <div className="text-right">₹{myPro.reduce((acc, item) => acc + item.product.price * item.quantity, 0).toFixed(2)}</div>
+                  <div className="text-right">$ {myPro.reduce((acc, item) => acc + item.product.price * item.quantity, 0).toFixed(2)}</div>
                 </div>
                 <div className="flex justify-between border-t py-5">
                   <div>TOTAL PRICE</div>
-                  <div className="text-right">₹{(myPro.reduce((acc, item) => acc + item.product.price * item.quantity, 0)).toFixed(2)}</div>
+                  <div className="text-right">$ {(myPro.reduce((acc, item) => acc + item.product.price * item.quantity, 0)).toFixed(2)}</div>
                 </div>
                 <button onClick={openCheckoutPopup} className="btn bg-black border-black text-white w-full text-sm mt-10 py-2">CHECKOUT</button>
               </div>
@@ -214,7 +214,7 @@ const Cart = () => {
                         <img className="w-14 h-14 md:w-16 md:h-16" src={item.product.image} alt="Product" />
                         <div>
                           <div className="font-semibold">{item.product.name}</div>
-                          <div className="text-gray-600">₹{(item.product.price * item.quantity).toFixed(2)}</div>
+                          <div className="text-gray-600">$ {(item.product.price * item.quantity).toFixed(2)}</div>
                           <div className="text-gray-600">Quantity: {item.quantity}</div>
                         </div>
                       </div>

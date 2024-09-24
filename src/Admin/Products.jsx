@@ -155,15 +155,25 @@ const Products = () => {
               <LuPlusCircle className="mr-2" />
               Add Product
             </button>
-            <button onClick={() => handleCategory('Baby boy')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-              Baby Boys
+            <button onClick={() => handleCategory('Dining Room')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+              Dining Room
             </button>
-            <button onClick={() => handleCategory('Baby girl')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-              Baby Girls
+            <button onClick={() => handleCategory('Living Room')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            Living Room
+            </button>
+            <button onClick={() => handleCategory('Office')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            Office
+            </button>
+            <button onClick={() => handleCategory('Bedroom')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            Bedroom
+            </button>
+            <button onClick={() => handleCategory('Outdoor')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            Outdoor
             </button>
             <button onClick={handleAll} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
               All Products
             </button>
+
           </div>
         </div>
 
@@ -179,7 +189,7 @@ const Products = () => {
                       className="w-full h-40 object-cover mb-4 rounded-md"
                     />
                     <h3 className="text-xl font-semibold text-center text-white">{item.name}</h3>
-                    <p className="text-green-400 text-lg font-bold text-center my-2">Rs: {item.price}</p>
+                    <p className="text-green-400 text-lg font-bold text-center my-2">Price: $ {item.price}</p>
                     <div className="flex justify-center gap-2 mt-4">
                       <button
                         onClick={() => handleEdit(item._id)}

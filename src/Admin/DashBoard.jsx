@@ -3,16 +3,18 @@ import { FaUsers, FaClipboardList, FaBoxOpen } from 'react-icons/fa';
 import { RiMoneyRupeeCircleFill } from 'react-icons/ri';
 import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
 import { Admincontext } from '../Context/ContextAdmin';
-import axios from 'axios';
 import { useLoad } from '../Context/LoadingContext';
 import axiosInstance from '../axiosInstance';
 
 const pieData = [
-  { name: 'Baby Boy Fashion', value: 50 },
-  { name: 'Baby Girl Fashion', value: 50 },
+  { name: 'Outdoor', value: 1 },
+  { name: 'Living Room', value: 8 },
+  { name: 'Office', value: 4 },
+  { name: 'Bed Room', value: 3 },
+  { name: 'Dining Room', value: 3 },
 ];
 
-const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#F87171'];
+const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#F87171', '#6366F1'];
 
 const lineData = [
   { name: 'Jan', value: 400 },
@@ -25,20 +27,20 @@ const lineData = [
 
 const DashBoard = () => {
   const [pro, setPro] = useState([]);
-  const { startLoad, stopLoad } = useLoad(useContext)
-const [revenue,setRevenue]  =useState()
+  const { startLoad, stopLoad } = useLoad(useContext);
+  const [revenue, setRevenue] = useState();
   const { usersData } = useContext(Admincontext);
 
   useEffect(() => {
     const fetData = async () => {
-      startLoad()
+      startLoad();
       try {
         const resp = await axiosInstance.get(`/api/user/allproducts`);
         setPro(resp.data);
       } catch (error) {
         console.log(error);
       } finally {
-        stopLoad()
+        stopLoad();
       }
     };
     fetData();
@@ -49,14 +51,12 @@ const [revenue,setRevenue]  =useState()
       try {
         const resp = await axiosInstance.get(`/api/admin/total-revenue`, { withCredentials: true });
         setRevenue(resp.data[0].totalRevenue);
-        
       } catch (error) {
         console.log(error);
       }
     };
     revenueData();
   }, []);
-  
 
   return (
     <div className="p-8 bg-gray-800 min-h-screen">
@@ -79,12 +79,13 @@ const [revenue,setRevenue]  =useState()
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <RiMoneyRupeeCircleFill className="text-4xl text-red-400 mb-4" />
           <h2 className="text-2xl font-bold mb-2 text-white">Revenue</h2>
-          <p className="text-gray-300">Revenue : {revenue}</p>
+          <p className="text-gray-300">Revenue : $ {revenue}</p>
         </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-bold mb-4 text-white">Production</h2>
+          <h2 className="text-2xl font-bold mb-4 text-white">Furniture Categories</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -105,6 +106,7 @@ const [revenue,setRevenue]  =useState()
             </PieChart>
           </ResponsiveContainer>
         </div>
+
         <div className="bg-gray-900 shadow-md rounded-lg p-6 text-center">
           <h2 className="text-2xl font-bold mb-4 text-white">Company Growth</h2>
           <ResponsiveContainer width="100%" height={300}>
