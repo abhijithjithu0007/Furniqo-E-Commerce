@@ -48,6 +48,7 @@ const RouterApp = () => {
       if (error.response && error.response.status === 405) {
         setIsToken(true);
         localStorage.setItem('isLogin','false')
+        localStorage.removeItem('currentUser')
       }
       return Promise.reject(error);
     };
