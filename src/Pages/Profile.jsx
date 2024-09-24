@@ -20,6 +20,7 @@ const Profile = () => {
       await axiosInstance.post(`/api/user/logout`, {}, { withCredentials: true })
       navigate('/login')
       localStorage.setItem('isLogin', JSON.stringify(false));
+      localStorage.removeItem('currentUser')
       navigate('/login');
       setIsLoggedIn(false);
       setMyWish([])
