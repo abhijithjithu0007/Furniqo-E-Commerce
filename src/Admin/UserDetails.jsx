@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Admincontext } from '../Context/ContextAdmin';
 import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const UserDetails = () => {
   const params = useParams();
@@ -9,12 +10,11 @@ const UserDetails = () => {
   const eachUser = usersData.find((val) => val._id === params.id);
   const [pendDetail, setPendDetail] = useState([]);
   const [compDetail, setCompDetail] = useState([]);
-  const apiorigin = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resp = await axios.get(`${apiorigin}/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
+        const resp = await axiosInstance.get(`/api/admin/getorderbyuser/${params.id}`, { withCredentials: true });
         const { pendingOrders, completedOrders } = resp.data;
         console.log(resp);
 

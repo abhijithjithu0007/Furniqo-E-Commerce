@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Admincontext } from '../Context/ContextAdmin';
 import { MdDeleteForever } from 'react-icons/md';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const Users = () => {
   const { usersData, setUsersData } = useContext(Admincontext);
-  const apiorigin = import.meta.env.VITE_API_URL
 
   const handleDelete = async (id) => {
     try {
-      const resp = await axios.delete(`${apiorigin}/api/admin/deleteuser/${id}`, {
+      const resp = await axiosInstance.delete(`/api/admin/deleteuser/${id}`, {
         withCredentials: true
       });
 

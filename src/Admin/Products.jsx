@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { LuPlusCircle } from "react-icons/lu";
+import axiosInstance from '../axiosInstance';
 
 const Products = () => {
   const [productData, setProductData] = useState([]);
@@ -10,7 +11,6 @@ const Products = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
-  const apiorigin = import.meta.env.VITE_API_URL
   const [productDetails, setProductDetails] = useState({
     name: '',
     description: '',
@@ -18,11 +18,12 @@ const Products = () => {
     image: '',
     category: '',
   });
+  let totalRevenue
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${apiorigin}/api/admin/allproducts`, { withCredentials: true });
+        const response = await axiosInstance.get(`/api/admin/allproducts`, { withCredentials: true });
         setProductData(response.data);
         setAll(response.data);
       } catch (error) {
@@ -39,7 +40,7 @@ const Products = () => {
 
   const addProduct = async () => {
     try {
-      const response = await axios.post(`${apiorigin}/api/admin/addproduct`, productDetails, {
+      const response = await axiosInstance.post(`/api/admin/addproduct`, productDetails, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
@@ -56,7 +57,7 @@ const Products = () => {
 
   const editProduct = async () => {
     try {
-      const response = await axios.put(`${apiorigin}/api/admin/updateproduct/${editProductId}`, productDetails, {
+      const response = await axiosInstance.put(`/api/admin/updateproduct/${editProductId}`, productDetails, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
@@ -111,7 +112,7 @@ const Products = () => {
 
   const handleDelete = async (proID) => {
     try {
-      const resp = await axios.delete(`${apiorigin}/api/admin/deleteproduct/${proID}`, {
+      const resp = await axiosInstance.delete(`/api/admin/deleteproduct/${proID}`, {
         withCredentials: true,
       });
       if (resp.status === 200) {
@@ -132,12 +133,14 @@ const Products = () => {
 
   const handleCategory = async (cate) => {
     try {
-      const resp = await axios.get(`${apiorigin}/api/admin/category/${cate}`, { withCredentials: true });
+      const resp = await axiosInstance.get(`/api/admin/category/${cate}`, { withCredentials: true });
       setProductData(resp.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-900 min-h-screen">

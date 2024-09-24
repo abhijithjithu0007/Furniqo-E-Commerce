@@ -5,6 +5,7 @@ import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianG
 import { Admincontext } from '../Context/ContextAdmin';
 import axios from 'axios';
 import { useLoad } from '../Context/LoadingContext';
+import axiosInstance from '../axiosInstance';
 
 const pieData = [
   { name: 'Baby Boy Fashion', value: 50 },
@@ -24,21 +25,19 @@ const lineData = [
 
 const DashBoard = () => {
   const [pro, setPro] = useState([]);
-  const [revenue, setRevenue] = useState('');
-  const apiorigin = import.meta.env.VITE_API_URL
-  const {startLoad,stopLoad} = useLoad(useContext)
-
+  const { startLoad, stopLoad } = useLoad(useContext)
+const [revenue,setRevenue]  =useState()
   const { usersData } = useContext(Admincontext);
 
   useEffect(() => {
     const fetData = async () => {
       startLoad()
       try {
-        const resp = await axios.get(`${apiorigin}/api/user/allproducts`);
+        const resp = await axiosInstance.get(`/api/user/allproducts`);
         setPro(resp.data);
       } catch (error) {
         console.log(error);
-      }finally{
+      } finally {
         stopLoad()
       }
     };
@@ -48,14 +47,16 @@ const DashBoard = () => {
   useEffect(() => {
     const revenueData = async () => {
       try {
-        const resp = await axios.get(`${apiorigin}/api/admin/total-revenue`, { withCredentials: true });
-        setRevenue(resp.data[0]);
+        const resp = await axiosInstance.get(`/api/admin/total-revenue`, { withCredentials: true });
+        setRevenue(resp.data[0].totalRevenue);
+        
       } catch (error) {
         console.log(error);
       }
     };
     revenueData();
   }, []);
+  
 
   return (
     <div className="p-8 bg-gray-800 min-h-screen">
@@ -78,7 +79,7 @@ const DashBoard = () => {
         <div className="bg-gray-900 shadow-md rounded-lg p-6">
           <RiMoneyRupeeCircleFill className="text-4xl text-red-400 mb-4" />
           <h2 className="text-2xl font-bold mb-2 text-white">Revenue</h2>
-          <p className="text-gray-300">Revenue : {revenue.totalRevenue}</p>
+          <p className="text-gray-300">Revenue : {revenue}</p>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
