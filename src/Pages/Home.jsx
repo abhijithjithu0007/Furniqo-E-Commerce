@@ -14,10 +14,10 @@ const Home = () => {
   
 
   const products = [
-    { image: 'https://i.pinimg.com/736x/92/0b/00/920b007e46b66701c93329b45add89b6.jpg', title: 'Sofa Set', price: 5499 },
-    { image: 'https://i.pinimg.com/736x/96/1e/89/961e89091da0344fc7f4afed81b8c671.jpg', title: 'Dining Table', price: 2399 },
-    { image: 'https://i.pinimg.com/564x/cd/81/3d/cd813d1be87b619b65d84c37e5d2eef8.jpg', title: 'Office Chair', price: 1500 },
-    { image: 'https://i.pinimg.com/564x/e7/39/d1/e739d1d5ca2167475d1429fe77257428.jpg', title: 'Bookshelf', price: 1590 },
+    { image: 'https://i.pinimg.com/736x/92/0b/00/920b007e46b66701c93329b45add89b6.jpg', title: 'Sofa Set', price: 549 },
+    { image: 'https://i.pinimg.com/736x/96/1e/89/961e89091da0344fc7f4afed81b8c671.jpg', title: 'Dining Table', price: 239 },
+    { image: 'https://i.pinimg.com/564x/cd/81/3d/cd813d1be87b619b65d84c37e5d2eef8.jpg', title: 'Office Chair', price: 150 },
+    { image: 'https://i.pinimg.com/564x/e7/39/d1/e739d1d5ca2167475d1429fe77257428.jpg', title: 'Bookshelf', price: 159 },
   ];
 
   return (
@@ -57,7 +57,7 @@ const Home = () => {
               <img src={product.image} alt={product.title} className="w-full h-64 object-cover mb-4" />
              
               <h3 className="text-lg font-semibold mt-4 text-richCharcoal">{product.title}</h3>
-              <p className="text-gray-700">₹{product.price}</p>
+              <p className="text-gray-700">$ {product.price}</p>
             </div>
           ))}
         </div>

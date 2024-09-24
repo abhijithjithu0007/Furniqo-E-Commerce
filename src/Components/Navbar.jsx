@@ -51,6 +51,7 @@ const Navbar = () => {
 
   const linkClick = () => {
     setIsOpen(false);
+    setSearch('')
   };
 
   const handleOptionClick = (path) => {

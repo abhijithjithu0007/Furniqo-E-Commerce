@@ -69,7 +69,7 @@ const ContactUs = () => {
           data-aos="fade-left"
         >
           <div className="flex flex-col text-white">
-            <h1 className="font-bold uppercase text-4xl my-4">Drop in our office</h1>
+            <h1 className="font-bold uppercase text-4xl my-4">Furniqo</h1>
             <p className="text-gray-400">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt arcu diam,
               eu feugiat felis fermentum id. Curabitur vitae nibh viverra, auctor turpis sed, scelerisque ex.
@@ -81,7 +81,7 @@ const ContactUs = () => {
               </div>
               <div className="flex flex-col">
                 <h2 className="text-2xl">Main Office</h2>
-                <p className="text-gray-400">5555 Tailwind RD, Pleasant Grove, UT 73533</p>
+                <p className="text-gray-400">Manjeri Thurakkal</p>
               </div>
             </div>
 
@@ -91,8 +91,7 @@ const ContactUs = () => {
               </div>
               <div className="flex flex-col">
                 <h2 className="text-2xl">Call Us</h2>
-                <p className="text-gray-400">Tel: xxx-xxx-xxx</p>
-                <p className="text-gray-400">Fax: xxx-xxx-xxx</p>
+                <p className="text-gray-400">Tel: 10101010101</p>
               </div>
             </div>
 
