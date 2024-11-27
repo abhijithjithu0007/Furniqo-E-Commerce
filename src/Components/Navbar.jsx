@@ -63,7 +63,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-gray-100 opacity-95 md:h-[80px] md:pl-20 md:pr-20">
       <div className="container mx-auto px-4 py-2 md:px-8 md:py-4 flex justify-between items-center">
         <Link to="/home">
-          <img src={navimg} alt="Logo" className="h-12 w-60 md:h-[50px] md:w-52" />
+          <img src={navimg} alt="Logo" className="h-8 w-4 sm:h-12 sm:w-60 md:h-[50px] md:w-52" />
         </Link>
         <div className="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden xl:flex items-center">
           <div>

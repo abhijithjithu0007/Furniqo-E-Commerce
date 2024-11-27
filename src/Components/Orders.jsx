@@ -1,41 +1,48 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { useLoad } from '../Context/LoadingContext';
-import axiosInstance from '../axiosInstance';
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { useLoad } from "../Context/LoadingContext";
+import axiosInstance from "../axiosInstance";
 
 const Orders = () => {
-
-  const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUserData = JSON.parse(localStorage.getItem("currentUser"));
   const [pendOrders, setPendOrders] = useState([]);
   const [compOrders, setCompOrders] = useState([]);
   const [sum, setSum] = useState(0);
-  const [viewPending, setViewPending] = useState(true)
-  const {startLoad,stopLoad} =useLoad(useContext)
+  const [viewPending, setViewPending] = useState(true);
+  const { startLoad, stopLoad } = useLoad(useContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      startLoad()
+      startLoad();
       try {
-        const resp = await axiosInstance.get(`/api/user/order/getorderdetails`, { withCredentials: true });
+        const resp = await axiosInstance.get(
+          `/api/user/order/getorderdetails`,
+          { withCredentials: true }
+        );
         console.log(resp.data);
-        
-        const { pendingOrders,completedOrders } = resp.data;
+
+        const { pendingOrders, completedOrders } = resp.data;
         setPendOrders(pendingOrders);
         setCompOrders(completedOrders);
 
         const total = pendingOrders.reduce((acc, order) => {
-          return acc + order.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+          return (
+            acc +
+            order.products.reduce(
+              (acc, item) => acc + item.product.price * item.quantity,
+              0
+            )
+          );
         }, 0);
         setSum(total);
       } catch (error) {
         console.log(error);
-      }finally{
-        stopLoad()
+      } finally {
+        stopLoad();
       }
     };
     fetchData();
-  }, []);  
-  
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center">
@@ -43,12 +50,14 @@ const Orders = () => {
         <div className="flex flex-col md:flex-row">
           <div className="orders-section bg-white p-8 rounded-l-lg md:rounded-r-none md:rounded-l-lg flex-grow md:w-2/3">
             <div className="title mb-10 flex justify-between items-center">
-              <h4 className="font-bold text-xl">{viewPending ? 'Pending Orders' : 'Completed Orders'}</h4>
+              <h4 className="font-bold text-xl">
+                {viewPending ? "Pending Orders" : "Completed Orders"}
+              </h4>
               <button
                 onClick={() => setViewPending(!viewPending)}
                 className="btn bg-black text-white py-1 px-4 rounded"
               >
-                {viewPending ? 'View Completed Orders' : 'View Pending Orders'}
+                {viewPending ? "View Completed Orders" : "View Pending Orders"}
               </button>
             </div>
             <div className="border-t border-b">
@@ -57,14 +66,25 @@ const Orders = () => {
                   {order.products.map((item, index) => (
                     <div
                       key={index}
-                      className="order-item flex items-center py-5 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                      className="order-item flex items-center py-5 bg-white p-4 rounded-lg shadow-sm border border-gray-200"
+                    >
                       <div className="w-16">
-                        <img className="w-full rounded-lg" src={item.product.image} alt="product" />
+                        <img
+                          className="w-full rounded-lg"
+                          src={item.product.image}
+                          alt="product"
+                        />
                       </div>
                       <div className="flex-1 px-2">
-                        <div className="text-gray-500">{item.product.category}</div>
-                        <div className="text-lg font-medium">{item.product.name}</div>
-                        <div className="text-gray-700">Quantity: {item.quantity}</div>
+                        <div className="text-gray-500">
+                          {item.product.category}
+                        </div>
+                        <div className="text-lg font-medium">
+                          {item.product.name}
+                        </div>
+                        <div className="text-gray-700">
+                          Quantity: {item.quantity}
+                        </div>
                       </div>
                       <div className="ml-auto">
                         <div className="text-lg font-medium text-green-600">
@@ -78,7 +98,9 @@ const Orders = () => {
                     <div className="bg-gray-50 p-4 rounded-lg shadow border border-gray-200 w-full md:w-1/2">
                       <div className="flex justify-between text-gray-800">
                         <p className="font-bold">Order Details</p>
-                        <p className="font-bold text-green-600">${order.totalprice}</p>
+                        <p className="font-bold text-green-600">
+                          ₹{order.totalprice}
+                        </p>
                       </div>
                       <div className="flex justify-between text-gray-800">
                         <p className="font-bold">Delivery Charges</p>
@@ -86,9 +108,18 @@ const Orders = () => {
                       </div>
                     </div>
                     <div className="bg-red-100 p-4 rounded-lg shadow border border-red-200 w-full md:w-1/3 mt-4 md:mt-0">
-                    <h2 className="text-2xl font-bold text-red-600">AMOUNT</h2>
-                      <h1 className="text-4xl font-bold text-red-600">${order.totalprice}</h1>
-                      <h2 className="text-lg font-bold text-red-600">Payment status : <span className='text-lg text-black'>{order.paymentStatus}</span></h2>
+                      <h2 className="text-2xl font-bold text-red-600">
+                        AMOUNT
+                      </h2>
+                      <h1 className="text-4xl font-bold text-red-600">
+                        ₹{order.totalprice}
+                      </h1>
+                      <h2 className="text-lg font-bold text-red-600">
+                        Payment status :{" "}
+                        <span className="text-lg text-black">
+                          {order.paymentStatus}
+                        </span>
+                      </h2>
                     </div>
                   </div>
 
@@ -99,7 +130,6 @@ const Orders = () => {
               ))}
             </div>
           </div>
-         
         </div>
       </div>
     </div>
