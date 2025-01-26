@@ -34,9 +34,7 @@ const Home = () => {
         <div className="scrollsample md:w-1/2 md:pr-8 mb-40 p-8 rounded-lg">
           <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold leading-tight mb-5 text-richCharcoal md:mt-20">
             Elegant furniture for{" "}
-            <span className="text-deepTeal">
-              modern living.
-            </span>
+            <span className="text-deepTeal">modern living.</span>
           </h1>
           <p className="text-lg font-sans text-gray-600 mb-6">
             Discover stylish, high-quality furniture that transforms any space

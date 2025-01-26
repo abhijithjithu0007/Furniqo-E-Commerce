@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
-import { FaEdit } from 'react-icons/fa';
-import { MdDeleteForever } from 'react-icons/md';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import { LuPlusCircle } from "react-icons/lu";
-import axiosInstance from '../axiosInstance';
+import axiosInstance from "../axiosInstance";
 
 const Products = () => {
   const [productData, setProductData] = useState([]);
@@ -12,22 +12,24 @@ const Products = () => {
   const [editMode, setEditMode] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
   const [productDetails, setProductDetails] = useState({
-    name: '',
-    description: '',
-    price: '',
-    image: '',
-    category: '',
+    name: "",
+    description: "",
+    price: "",
+    image: "",
+    category: "",
   });
-  let totalRevenue
+  let totalRevenue;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axiosInstance.get(`/api/admin/allproducts`, { withCredentials: true });
+        const response = await axiosInstance.get(`/api/admin/allproducts`, {
+          withCredentials: true,
+        });
         setProductData(response.data);
         setAll(response.data);
       } catch (error) {
-        console.error('Error fetching products', error);
+        console.error("Error fetching products", error);
       }
     };
     fetchProducts();
@@ -40,38 +42,46 @@ const Products = () => {
 
   const addProduct = async () => {
     try {
-      const response = await axiosInstance.post(`/api/admin/addproduct`, productDetails, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
+      const response = await axiosInstance.post(
+        `/api/admin/addproduct`,
+        productDetails,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         setProductData((prevState) => [...prevState, response.data]);
-        alert('Product added successfully!');
+        alert("Product added successfully!");
         resetForm();
       }
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
     }
   };
 
   const editProduct = async () => {
     try {
-      const response = await axiosInstance.put(`/api/admin/updateproduct/${editProductId}`, productDetails, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
+      const response = await axiosInstance.put(
+        `/api/admin/updateproduct/${editProductId}`,
+        productDetails,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         const updatedProducts = productData.map((product) =>
           product._id === editProductId ? response.data : product
         );
         setProductData(updatedProducts);
-        alert('Product updated successfully!');
+        alert("Product updated successfully!");
         resetForm();
       }
     } catch (error) {
-      console.error('Error editing product:', error);
+      console.error("Error editing product:", error);
     }
   };
 
@@ -88,18 +98,20 @@ const Products = () => {
     setEditMode(false);
     setEditProductId(null);
     setProductDetails({
-      name: '',
-      description: '',
-      price: '',
-      image: '',
-      category: '',
+      name: "",
+      description: "",
+      price: "",
+      image: "",
+      category: "",
     });
   };
 
   const handleEdit = (productId) => {
     setEditMode(true);
     setEditProductId(productId);
-    const productToEdit = productData.find((product) => product._id === productId);
+    const productToEdit = productData.find(
+      (product) => product._id === productId
+    );
     setProductDetails({
       name: productToEdit.name,
       description: productToEdit.description,
@@ -112,15 +124,18 @@ const Products = () => {
 
   const handleDelete = async (proID) => {
     try {
-      const resp = await axiosInstance.delete(`/api/admin/deleteproduct/${proID}`, {
-        withCredentials: true,
-      });
+      const resp = await axiosInstance.delete(
+        `/api/admin/deleteproduct/${proID}`,
+        {
+          withCredentials: true,
+        }
+      );
       if (resp.status === 200) {
         const updatedProducts = productData.map((product) =>
           product._id === proID ? { ...product, deleted: true } : product
         );
         setProductData(updatedProducts);
-        alert('Product temporarily deleted');
+        alert("Product temporarily deleted");
       }
     } catch (error) {
       console.log(error);
@@ -133,14 +148,14 @@ const Products = () => {
 
   const handleCategory = async (cate) => {
     try {
-      const resp = await axiosInstance.get(`/api/admin/category/${cate}`, { withCredentials: true });
+      const resp = await axiosInstance.get(`/api/admin/category/${cate}`, {
+        withCredentials: true,
+      });
       setProductData(resp.data);
     } catch (error) {
       console.log(error);
     }
   };
-
-  
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-900 min-h-screen">
@@ -155,32 +170,52 @@ const Products = () => {
               <LuPlusCircle className="mr-2" />
               Add Product
             </button>
-            <button onClick={() => handleCategory('Dining Room')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            <button
+              onClick={() => handleCategory("Dining Room")}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
               Dining Room
             </button>
-            <button onClick={() => handleCategory('Living Room')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-            Living Room
+            <button
+              onClick={() => handleCategory("Living Room")}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
+              Living Room
             </button>
-            <button onClick={() => handleCategory('Office')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-            Office
+            <button
+              onClick={() => handleCategory("Office")}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
+              Office
             </button>
-            <button onClick={() => handleCategory('Bedroom')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-            Bedroom
+            <button
+              onClick={() => handleCategory("Bedroom")}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
+              Bedroom
             </button>
-            <button onClick={() => handleCategory('Outdoor')} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-            Outdoor
+            <button
+              onClick={() => handleCategory("Outdoor")}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
+              Outdoor
             </button>
-            <button onClick={handleAll} className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+            <button
+              onClick={handleAll}
+              className="w-full py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition"
+            >
               All Products
             </button>
-
           </div>
         </div>
 
         <div className="w-full md:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productData.map((item) => (
-              <div key={item._id} className="bg-gray-800 rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg">
+              <div
+                key={item._id}
+                className="bg-gray-800 rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 hover:shadow-lg"
+              >
                 {!item.deleted && (
                   <div>
                     <img
@@ -188,8 +223,12 @@ const Products = () => {
                       alt={item.name}
                       className="w-full h-40 object-cover mb-4 rounded-md"
                     />
-                    <h3 className="text-xl font-semibold text-center text-white">{item.name}</h3>
-                    <p className="text-green-400 text-lg font-bold text-center my-2">Price: $ {item.price}</p>
+                    <h3 className="text-xl font-semibold text-center text-white">
+                      {item.name}
+                    </h3>
+                    <p className="text-green-400 text-lg font-bold text-center my-2">
+                      Price: $ {item.price}
+                    </p>
                     <div className="flex justify-center gap-2 mt-4">
                       <button
                         onClick={() => handleEdit(item._id)}
@@ -215,7 +254,9 @@ const Products = () => {
           {showPopup && (
             <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
               <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-lg">
-                <h3 className="text-2xl font-semibold mb-4 text-white">{editMode ? 'Edit Product' : 'Add Product'}</h3>
+                <h3 className="text-2xl font-semibold mb-4 text-white">
+                  {editMode ? "Edit Product" : "Add Product"}
+                </h3>
                 <input
                   type="text"
                   name="name"
@@ -260,7 +301,7 @@ const Products = () => {
                     onClick={handleSave}
                     className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-all"
                   >
-                    {editMode ? 'Save Changes' : 'Add Product'}
+                    {editMode ? "Save Changes" : "Add Product"}
                   </button>
                   <button
                     onClick={resetForm}

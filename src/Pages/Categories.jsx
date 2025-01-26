@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useLoad } from '../Context/LoadingContext';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useLoad } from "../Context/LoadingContext";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css';
-import axiosInstance from '../axiosInstance';
+import "react-loading-skeleton/dist/skeleton.css";
+import axiosInstance from "../axiosInstance";
+import Skelton from "../Components/Skelton";
 
 const Categories = () => {
-  const { startLoad, stopLoad } = useLoad(useContext)
+  const { startLoad, stopLoad } = useLoad(useContext);
   const [cate, setCate] = useState([]);
   const [fullFilter, setFullFilter] = useState(false);
-  const [sort, setSort] = useState('');
+  const [sort, setSort] = useState("");
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   //<Skeleton height={50} width={50} circle={true} />
-
 
   const handleCategory = (category) => {
     const filtering = products.filter((item) => item.category === category);
@@ -35,10 +35,10 @@ const Categories = () => {
     let sorted = fullFilter ? [...cate] : [...products];
 
     switch (sort) {
-      case 'price-asc':
+      case "price-asc":
         sorted.sort((a, b) => a.price - b.price);
         break;
-      case 'price-desc':
+      case "price-desc":
         sorted.sort((a, b) => b.price - a.price);
         break;
       default:
@@ -53,11 +53,11 @@ const Categories = () => {
       try {
         const resp = await axiosInstance.get(`/api/user/allproducts`);
         setProducts(resp.data);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     fetchData();
   }, []);
 
@@ -65,7 +65,9 @@ const Categories = () => {
     <div className="container mx-auto p-4 flex flex-col md:flex-row">
       <div className="w-full md:w-1/4 pr-4 mb-8 md:mb-0">
         <div className="mb-8 space-y-4">
-          <h2 className="text-2xl font-semibold mb-4 text-btnColor">Categories</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-btnColor">
+            Categories
+          </h2>
           <div className="flex flex-col space-y-2 p-4 md:p-10">
             <button
               onClick={handleAll}
@@ -111,7 +113,9 @@ const Categories = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-4 border-b-2 pb-2">
           <h2 className="text-2xl font-semibold mb-4 md:mb-0">Products</h2>
           <div className="flex items-center space-x-2">
-            <label htmlFor="sort" className="font-semibold text-gray-700">Sort By:</label>
+            <label htmlFor="sort" className="font-semibold text-gray-700">
+              Sort By:
+            </label>
             <select
               id="sort"
               onChange={handleChange}
@@ -123,51 +127,45 @@ const Categories = () => {
             </select>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div>
           {loading ? (
-            <div className='flex gap-5'>
-              {[...Array(3)].map((_, index) => (
-                <div className="flex justify-center">
-                  <div className="max-w-xs md:max-w-sm">
-                    <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-                      <Skeleton className="rounded-t-lg" height={300} width={300} />
-                      <div className="py-6 px-4 md:px-8 rounded-lg bg-white">
-                        <Skeleton className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer"></Skeleton>
-                        <Skeleton className="text-gray-700 text-sm md:text-base tracking-wide"></Skeleton>
-                        <Skeleton className="text-yellow-500 text-xl md:text-2xl" />
-                      </div>
-                      <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
-                        <Skeleton className="text-md md:text-lg" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div>
+              <Skelton />
             </div>
           ) : (
-
             sortedProducts().map((item, id) => (
               <Link to={`/category/${item._id}`} key={id} className="w-full">
                 <div className="flex justify-center">
                   <div className="max-w-xs md:max-w-sm">
                     <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-                      <img className="rounded-t-lg md:h-[250px] w-full object-cover" src={item.image} alt={item.name} />
+                      <img
+                        className="rounded-t-lg md:h-[250px] w-full object-cover"
+                        src={item.image}
+                        alt={item.name}
+                      />
                       <div className="py-6 px-4 md:px-8 rounded-lg bg-white">
-                        <h1 className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">{item.name}</h1>
-                        <p className="text-gray-700 text-sm md:text-base tracking-wide">{item.description}</p>
-                        <p className="text-yellow-500 text-xl md:text-2xl">{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</p>
+                        <h1 className="text-gray-700 font-bold text-lg md:text-2xl mb-3 hover:text-gray-900 hover:cursor-pointer">
+                          {item.name}
+                        </h1>
+                        <p className="text-gray-700 text-sm md:text-base tracking-wide">
+                          {item.description}
+                        </p>
+                        <p className="text-yellow-500 text-xl md:text-2xl">
+                          {"★".repeat(item.stars)}
+                          {"☆".repeat(5 - item.stars)}
+                        </p>
                       </div>
                       <div className="absolute top-2 right-2 py-2 px-4 bg-homeBg rounded-lg">
-                        <span className="text-md md:text-lg">${item.price}</span>
+                        <span className="text-md md:text-lg">
+                          ${item.price}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
               </Link>
             ))
-
           )}
-
         </div>
       </div>
     </div>
